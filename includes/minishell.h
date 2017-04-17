@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:54:49 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/17 18:18:35 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/04/17 18:24:05 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define PROMPT "$>"
 
 typedef char**	t_input;
-typedef	void	(*t_builtin)(t_input);
+typedef	int		(*t_builtin)(t_input);
 
 /*
 ** Commands execution

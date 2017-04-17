@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 17:27:57 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/17 18:17:48 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/04/17 18:24:07 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*find_exec_path(char *exe_name, char **path)
 	return (exe_full_path);
 }
 
-void	search_for_builtin(char **cmd_ands_args)
+int		search_for_builtin(char **cmd_and_args)
 {
 	const char		*builtins[] = {
 		"echo",
@@ -55,7 +55,17 @@ void	search_for_builtin(char **cmd_ands_args)
 		ft_unsetenv,
 		ft_env,
 		ft_exit
-	}:
+	};
+	size_t	index;
+
+	index = 0;
+	while (cmd_and_args[index] != NULL
+			&& ft_strcmp(cmd_ands_args[0], cmd_and_args[index]) != 0)
+		index++;
+	if (cmd_and_args[index] == NULL)
+		return (-1);
+	else
+		return (functions[index](cmd_and_args));
 }
 
 int		exec_input(t_input com_and_args, char **path)

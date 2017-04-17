@@ -1,0 +1,46 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/04/17 18:24:32 by mgautier          #+#    #+#             */
+/*   Updated: 2017/04/17 19:10:11 by mgautier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+#include <stddef.h>
+#include <sys/param.h>
+
+int	ft_echo(char **argv)
+{
+	size_t	index;
+
+	index = 1;
+	while (argv[index] != NULL)
+	{
+		ft_putstr(argv[index]);
+	index++;
+	}
+	ft_putchar('\n');
+	return (EXIT_SUCCESS);
+}
+
+int	ft_cd(char **argv)
+{
+	return (chdir(argv[1]));
+}
+
+int	ft_exit(char **argv)
+{
+	int	exit_status;
+
+	if (argv[1] != NULL)
+		exit_status = ft_atoi(argv[1]);
+	else
+		exit_status = 1;
+	exit(exit_status);
+	return (exit_status);
+}
