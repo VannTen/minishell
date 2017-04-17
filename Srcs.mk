@@ -6,7 +6,7 @@
 #    By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/19 07:58:53 by mgautier          #+#    #+#              #
-#*   Updated: 2017/04/17 15:58:28 by mgautier         ###   ########.fr       *#
+#*   Updated: 2017/04/17 17:29:24 by mgautier         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@
 TARGET := minishell
 
 SRC :=\
-	main.c
+	main.c\
+	exec_command.c
 
 # Directories
 
