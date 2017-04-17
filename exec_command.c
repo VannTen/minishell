@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 17:27:57 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/17 17:58:32 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/04/17 18:17:48 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
+extern char	**environ;
 char	*find_exec_path(char *exe_name, char **path)
 {
 	size_t	index;
@@ -37,6 +38,26 @@ char	*find_exec_path(char *exe_name, char **path)
 	return (exe_full_path);
 }
 
+void	search_for_builtin(char **cmd_ands_args)
+{
+	const char		*builtins[] = {
+		"echo",
+		"cd",
+		"setenv",
+		"unsetenv",
+		"env",
+		"exit"
+	};
+	const t_builtin	functions[] = {
+		ft_echo,
+		ft_cd,
+		ft_setenv,
+		ft_unsetenv,
+		ft_env,
+		ft_exit
+	}:
+}
+
 int		exec_input(t_input com_and_args, char **path)
 {
 	pid_t	child_process;
@@ -44,6 +65,7 @@ int		exec_input(t_input com_and_args, char **path)
 	int		stat_loc;
 
 	stat_loc = 0;
+	search_for_builtin(com_and_args);
 	child_process = fork();
 	if (child_process == 0)
 	{
@@ -51,7 +73,7 @@ int		exec_input(t_input com_and_args, char **path)
 		exe_path = find_exec_path(com_and_args[0], path);
 		if (exe_path == NULL)
 			return (-1);
-		execve(exe_path, com_and_args, NULL);
+		execve(exe_path, com_and_args, environ);
 	}
 	else if (child_process > 0)
 	{
