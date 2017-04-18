@@ -6,10 +6,11 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:48:04 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/17 17:39:28 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/04/18 18:39:14 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "env_interface.h"
 #include "minishell.h"
 #include "libft.h"
 #include <stddef.h>
@@ -30,16 +31,13 @@ void	print_strings(char **strings)
 
 char	**get_path(void)
 {
-	size_t	index;
+	const char	*path;
 
-	index = 0;
-	while (environ[index] != NULL
-			&& ft_strncmp("PATH=", environ[index], ft_strlen("PATH=")) != 0)
-			index++;
-	if (environ[index] == NULL)
+	path = get_env_value("PATH");
+	if (path == NULL)
 		return (NULL);
 	else
-		return (ft_strsplit(environ[index] + ft_strlen("PATH="), ':'));
+		return (ft_strsplit(path, ':'));
 }
 
 char	*get_raw_input(void)
