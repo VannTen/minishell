@@ -6,12 +6,13 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 18:24:32 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/18 17:02:17 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/04/18 17:30:51 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "env_interface.h"
 #include "builtins.h"
+#include "libft.h"
 #include <stddef.h>
 #include <sys/param.h>
 
@@ -23,7 +24,7 @@ int	ft_echo(char **argv)
 	while (argv[index] != NULL)
 	{
 		ft_putstr(argv[index]);
-	index++;
+		index++;
 	}
 	ft_putchar('\n');
 	return (EXIT_SUCCESS);
@@ -31,7 +32,20 @@ int	ft_echo(char **argv)
 
 int	ft_cd(char **argv)
 {
-	return (chdir(argv[1]));
+	const char	*home;
+	const char	*arg;
+
+	if (argv[1] == NULL)
+	{
+		home = get_env_value("HOME");
+		if (home == NULL)
+			ft_dprintf(STDERR_FILENO, "%s: HOME not set", argv[0]);
+		else
+			arg = home;
+	}
+	else
+		arg = argv[1];
+	return (chdir(arg));
 }
 
 int	ft_exit(char **argv)

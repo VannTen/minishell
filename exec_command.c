@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 17:27:57 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/18 16:46:19 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/04/18 17:16:27 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ char	*find_exec_path(char *exe_name, char **path)
 	while (path[index] != NULL)
 	{
 		exe_full_path = ft_strjoin(path[index], exe_name);
-		ft_printf("Trying path : %s\n", exe_full_path);
 		if (access(exe_full_path, F_OK) == 0)
 			break ;
 		else
@@ -35,7 +34,7 @@ char	*find_exec_path(char *exe_name, char **path)
 		index++;
 	}
 	if (exe_full_path == NULL)
-		ft_printf("%s : not found\n", exe_name);
+		ft_dprintf(STDERR_FILENO, "%s : not found\n", exe_name);
 	return (exe_full_path);
 }
 
@@ -83,7 +82,6 @@ int		exec_input(t_input com_and_args, char **path)
 	child_process = fork();
 	if (child_process == 0)
 	{
-		ft_printf("Child process before execve\n");
 		exe_path = find_exec_path(com_and_args[0], path);
 		if (exe_path == NULL)
 			return (-1);
@@ -91,7 +89,6 @@ int		exec_input(t_input com_and_args, char **path)
 	}
 	else if (child_process > 0)
 	{
-		ft_printf("Parent process\n");
 		ft_free_string_array(&com_and_args);
 		wait(&stat_loc);
 	}
