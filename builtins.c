@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 18:24:32 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/18 17:30:51 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/04/18 18:41:37 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	ft_echo(char **argv)
 	while (argv[index] != NULL)
 	{
 		ft_putstr(argv[index]);
+		ft_putchar(' ');
 		index++;
 	}
 	ft_putchar('\n');
