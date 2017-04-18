@@ -6,7 +6,7 @@
 #*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
 #*   Created: 2016/11/04 13:12:11 by mgautier          #+#    #+#             *#
-#*   Updated: 2017/04/13 20:45:45 by mgautier         ###   ########.fr       *#
+#*   Updated: 2017/04/18 17:08:39 by mgautier         ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
@@ -15,7 +15,7 @@ $(info Begin Makefile parsing...)
 ## Variable stuff
 ##
 
-DEFAULT_RULE := all
+DEFAULT_RULE := debug
 QUIET := @
 #ifeq ($(MAKECMDGOALS),debug)
 #BUILD_PREFIX := debug
@@ -59,8 +59,8 @@ SYSTEM = $(shell uname)
 ERROR_FLAGS := -Wall -Wextra -Werror $(STANDARD) -pedantic-errors
 DEBUG_FLAGS := -g -fsanitize=undefined -fsanitize=address -fno-omit-frame-pointer
 SYNTAX_FLAGS := -fsyntax-only -ferror-limit=0
-OPTI_FLAGS := -flto -Ofast
-LD_OPTI_FLAGS := -flto
+OPTI_CFLAGS := -flto -Ofast
+OPTI_LDFLAGS := -flto
 PROFILE_FLAGS :=
 CFLAGS := $(CFLAGS) $(ERROR_FLAGS)
 
@@ -236,12 +236,13 @@ $(GENERATED_SUBDIRS):
 # Because the Norm said so.................
 
 NAME = ___name___
-all: $(NAME)
+all: $(DEFAULT_RULE)
+opti: $(NAME)
 
 $(NAME): $(TARGET_$(DIR))
 
 # Make sure the default target is always all
-.DEFAULT_GOAL:= $(DEFAULT_RULE)
+.DEFAULT_GOAL:= all
 
 clean:
 	$(QUIET)$(RM) $(CLEAN)
@@ -259,17 +260,19 @@ mrproper: fclean mkclean
 
 re: fclean all
 
-debug: all
+debug: $(NAME)
 
-profile: all
+profile: $(NAME)
 
-syn: all
+syn: $(NAME)
 
 syn: CFLAGS := $(CFLAGS) $(SYNTAX_FLAGS)
 syn: QUIET := @
 syn: LDFLAGS := $(LDFLAGS) $(SYNTAX_FLAGS)
 debug: CFLAGS := $(CFLAGS) $(DEBUG_FLAGS)
 debug: LDFLAGS := $(LDFLAGS) $(DEBUG_FLAGS)
+opti: CFLAGS := $(CFLAGS) $(OPTI_CFLAGS)
+opti: LDFLAGS := $(LDFLAGS) $(OPTI_LDFLAGS)
 profile: CFLAGS := $(CFLAGS) $(PROFILE_FLAGS)
 profile: LDFLAGS := $(LDFLAGS) $(PROFILE_FLAGS)
 .PHONY: $(NAME) debug all clean fclean mkclean dirclean re
