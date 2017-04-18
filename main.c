@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:48:04 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/18 18:39:14 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/04/18 19:37:25 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,6 @@
 #include <stddef.h>
 
 extern char	**environ;
-
-void	print_strings(char **strings)
-{
-	size_t	index;
-
-	index = 0;
-	while (strings[index] != NULL)
-	{
-		ft_putendl(strings[index]);
-		index++;
-	}
-}
 
 char	**get_path(void)
 {
@@ -65,7 +53,6 @@ int main(void)
 	char	**path;
 
 	path = get_path();
-	print_strings(path);
 	while (1)
 	{
 		ft_printf(PROMPT);
