@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 17:30:14 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/18 17:30:25 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/04/18 20:52:35 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,7 @@
 # define ENV_INTERFACE_H
 
 const char	*get_env_value(const char *key);
+char		*get_env_entry(const char *key);
+char		*get_key(const char *env_entry);
 
 #endif
