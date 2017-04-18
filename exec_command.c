@@ -6,10 +6,11 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 17:27:57 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/17 18:24:07 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/04/18 16:46:19 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "builtins.h"
 #include "minishell.h"
 #include "libft.h"
 #include <unistd.h>
@@ -46,7 +47,8 @@ int		search_for_builtin(char **cmd_and_args)
 		"setenv",
 		"unsetenv",
 		"env",
-		"exit"
+		"exit",
+		NULL
 	};
 	const t_builtin	functions[] = {
 		ft_echo,
@@ -59,10 +61,10 @@ int		search_for_builtin(char **cmd_and_args)
 	size_t	index;
 
 	index = 0;
-	while (cmd_and_args[index] != NULL
-			&& ft_strcmp(cmd_ands_args[0], cmd_and_args[index]) != 0)
+	while (builtins[index] != NULL
+			&& ft_strcmp(cmd_and_args[0], builtins[index]) != 0)
 		index++;
-	if (cmd_and_args[index] == NULL)
+	if (builtins[index] == NULL)
 		return (-1);
 	else
 		return (functions[index](cmd_and_args));
@@ -75,7 +77,9 @@ int		exec_input(t_input com_and_args, char **path)
 	int		stat_loc;
 
 	stat_loc = 0;
-	search_for_builtin(com_and_args);
+	stat_loc = search_for_builtin(com_and_args);
+	if (stat_loc != -1)
+		return (stat_loc);
 	child_process = fork();
 	if (child_process == 0)
 	{

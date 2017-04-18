@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/17 15:54:49 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/18 13:43:27 by mgautier         ###   ########.fr       */
+/*   Created: 2017/04/18 13:39:24 by mgautier          #+#    #+#             */
+/*   Updated: 2017/04/18 13:43:24 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef BUILTINS_H
+# define BUILTINS_H
+# include "minishell.h"
 
-/*
-** Prompt shall be defined with printf style
-*/
-
-# define PROMPT "$>"
-
-typedef char**	t_input;
-
-/*
-** Commands execution
-** Implementation file : exec_command.c
-*/
-
-int		exec_input(t_input com_and_args, char **path);
+typedef	int		(*t_builtin)(t_input);
+int 		ft_echo(char **argv);
+int 		ft_cd(char **argv);
+int 		ft_setenv(char **argv);
+int 		ft_unsetenv(char **argv);
+int 		ft_env(char **argv);
+int 		ft_exit(char **argv);
 #endif

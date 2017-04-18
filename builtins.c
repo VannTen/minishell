@@ -6,11 +6,12 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 18:24:32 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/17 19:10:11 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/04/18 13:43:22 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "builtins.h"
 #include <stddef.h>
 #include <sys/param.h>
 
@@ -43,4 +44,22 @@ int	ft_exit(char **argv)
 		exit_status = 1;
 	exit(exit_status);
 	return (exit_status);
+}
+
+int	ft_setenv(char **argv)
+{
+	ft_putendl(argv[0]);
+	return (1);
+}
+
+int	ft_unsetenv(char **argv)
+{
+	ft_putendl(argv[0]);
+	return (1);
+}
+
+int	ft_env(char **argv)
+{
+	ft_putendl(argv[0]);
+	return (1);
 }
