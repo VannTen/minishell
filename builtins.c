@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 18:24:32 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/18 13:43:22 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/04/18 17:02:17 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_exit(char **argv)
 	if (argv[1] != NULL)
 		exit_status = ft_atoi(argv[1]);
 	else
-		exit_status = 1;
+		exit_status = EXIT_SUCCESS;
 	exit(exit_status);
 	return (exit_status);
 }
