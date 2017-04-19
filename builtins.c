@@ -6,12 +6,12 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 18:24:32 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/18 20:57:11 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/04/19 11:54:32 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env_interface.h"
-#include "builtins.h"
+#include "builtins_defs.h"
 #include "libft.h"
 #include <stddef.h>
 #include <sys/param.h>
@@ -59,20 +59,8 @@ int	ft_setenv(char **argv)
 {
 	static t_bool	environ_is_allocated = FALSE;
 	char			**tmp_environ;
-	char			*key_entry;
-	char			*env_entry;
 
-	if (argv[1] != NULL)
-	{
-		key_entry = get_key(env_entry);
-		if (key_entry != NULL)
-		{
-			env_entry = get_env_
-			if (ft_strlen(argv[1] + ft_strlen(key_entry) + 1)
-					<= ft_strlen(get_env_value(key_entry))
-					ft_strcpy(
-		}
-	}
+	(void)argv;
 	if (!environ_is_allocated)
 	{
 		tmp_environ = ft_string_array_dup((const char **)environ);
@@ -100,4 +88,35 @@ int	ft_env(char **argv)
 	(void)argv;
 	ft_print_string_array(environ, '\n');
 	return (1);
+}
+
+int		search_for_builtin(char **cmd_and_args)
+{
+	const char		*builtins[] = {
+		"echo",
+		"cd",
+		"setenv",
+		"unsetenv",
+		"env",
+		"exit",
+		NULL
+	};
+	const t_builtin	functions[] = {
+		ft_echo,
+		ft_cd,
+		ft_setenv,
+		ft_unsetenv,
+		ft_env,
+		ft_exit
+	};
+	size_t	index;
+
+	index = 0;
+	while (builtins[index] != NULL
+			&& ft_strcmp(cmd_and_args[0], builtins[index]) != 0)
+		index++;
+	if (builtins[index] == NULL)
+		return (-1);
+	else
+		return (functions[index](cmd_and_args));
 }

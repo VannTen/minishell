@@ -6,17 +6,18 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 17:27:57 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/18 17:16:27 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/04/19 12:01:36 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include "builtins_interface.h"
 #include "minishell.h"
 #include "libft.h"
 #include <unistd.h>
 #include <sys/wait.h>
 
 extern char	**environ;
+
 char	*find_exec_path(char *exe_name, char **path)
 {
 	size_t	index;
@@ -38,37 +39,6 @@ char	*find_exec_path(char *exe_name, char **path)
 	return (exe_full_path);
 }
 
-int		search_for_builtin(char **cmd_and_args)
-{
-	const char		*builtins[] = {
-		"echo",
-		"cd",
-		"setenv",
-		"unsetenv",
-		"env",
-		"exit",
-		NULL
-	};
-	const t_builtin	functions[] = {
-		ft_echo,
-		ft_cd,
-		ft_setenv,
-		ft_unsetenv,
-		ft_env,
-		ft_exit
-	};
-	size_t	index;
-
-	index = 0;
-	while (builtins[index] != NULL
-			&& ft_strcmp(cmd_and_args[0], builtins[index]) != 0)
-		index++;
-	if (builtins[index] == NULL)
-		return (-1);
-	else
-		return (functions[index](cmd_and_args));
-}
-
 int		exec_input(t_input com_and_args, char **path)
 {
 	pid_t	child_process;
@@ -77,7 +47,7 @@ int		exec_input(t_input com_and_args, char **path)
 
 	stat_loc = 0;
 	stat_loc = search_for_builtin(com_and_args);
-	if (stat_loc != -1)
+	if (IS_BUILTIN(stat_loc))
 		return (stat_loc);
 	child_process = fork();
 	if (child_process == 0)
