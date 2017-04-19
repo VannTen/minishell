@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   shell_defs.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/17 15:54:49 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/18 13:43:27 by mgautier         ###   ########.fr       */
+/*   Created: 2017/04/19 13:31:37 by mgautier          #+#    #+#             */
+/*   Updated: 2017/04/19 13:54:11 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef SHELL_DEFS_H
+# define SHELL_DEFS_H
+# include "shell_interface.h"
+# include "libft.h"
 
-/*
-** Prompt shall be defined with printf style
-*/
+struct s_shell
+{
+	char	**env;
+	t_bool	env_has_changed;
+	char	**path;
+}
 
-# define PROMPT "$>"
-
-typedef char**	t_input;
-
-/*
-** Commands execution
-** Implementation file : exec_command.c
-*/
-
-int		exec_input(t_input com_and_args, char **path);
 #endif

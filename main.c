@@ -6,12 +6,12 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:48:04 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/18 19:37:25 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/04/19 13:34:16 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env_interface.h"
-#include "minishell.h"
+#include "shell_interface.h"
 #include "libft.h"
 #include <stddef.h>
 

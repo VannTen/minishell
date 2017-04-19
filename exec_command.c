@@ -6,12 +6,12 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 17:27:57 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/19 12:01:36 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/04/19 13:36:03 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins_interface.h"
-#include "minishell.h"
+#include "shell_interface.h"
 #include "libft.h"
 #include <unistd.h>
 #include <sys/wait.h>
