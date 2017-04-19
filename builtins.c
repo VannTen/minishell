@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 18:24:32 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/19 11:54:32 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/04/19 19:26:30 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,19 @@
 
 extern char	**environ;
 
-int	ft_echo(char **argv)
+int	ft_echo(char **argv, t_shell *shell_state)
 {
+	(void)shell_state;
 	ft_print_string_array(argv + 1, ' ');
 	ft_putchar('\n');
 	return (EXIT_SUCCESS);
 }
 
-int	ft_cd(char **argv)
+int	ft_cd(char **argv, t_shell *shell_state)
 {
 	const char	*home;
 	const char	*arg;
+	(void)shell_state;
 
 	if (argv[1] == NULL)
 	{
@@ -43,9 +45,10 @@ int	ft_cd(char **argv)
 	return (chdir(arg));
 }
 
-int	ft_exit(char **argv)
+int	ft_exit(char **argv, t_shell *shell_state)
 {
 	int	exit_status;
+	(void)shell_state;
 
 	if (argv[1] != NULL)
 		exit_status = ft_atoi(argv[1]);
@@ -55,10 +58,11 @@ int	ft_exit(char **argv)
 	return (exit_status);
 }
 
-int	ft_setenv(char **argv)
+int	ft_setenv(char **argv, t_shell *shell_state)
 {
 	static t_bool	environ_is_allocated = FALSE;
 	char			**tmp_environ;
+	(void)shell_state;
 
 	(void)argv;
 	if (!environ_is_allocated)
@@ -77,20 +81,14 @@ int	ft_setenv(char **argv)
 	return (1);
 }
 
-int	ft_unsetenv(char **argv)
+int	ft_unsetenv(char **argv, t_shell *shell_state)
 {
+	(void)shell_state;
 	ft_putendl(argv[0]);
 	return (1);
 }
 
-int	ft_env(char **argv)
-{
-	(void)argv;
-	ft_print_string_array(environ, '\n');
-	return (1);
-}
-
-int		search_for_builtin(char **cmd_and_args)
+int		search_for_builtin(char **cmd_and_args, t_shell *shell_state)
 {
 	const char		*builtins[] = {
 		"echo",
@@ -118,5 +116,5 @@ int		search_for_builtin(char **cmd_and_args)
 	if (builtins[index] == NULL)
 		return (-1);
 	else
-		return (functions[index](cmd_and_args));
+		return (functions[index](cmd_and_args, shell_state));
 }

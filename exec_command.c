@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 17:27:57 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/19 15:12:30 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/04/19 19:19:25 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 extern char	**environ;
 
-char	*find_exec_path(char *exe_name, char **path)
+char	*find_exec_path(const char *exe_name, char *const *path)
 {
 	size_t	index;
 	char	*exe_full_path;
@@ -39,7 +39,7 @@ char	*find_exec_path(char *exe_name, char **path)
 	return (exe_full_path);
 }
 
-int		exec_command(t_input com_and_args, char **path)
+int		exec_command(t_input com_and_args, char *const *env, char *const *path)
 {
 	pid_t	child_process;
 	int		stat_loc;
@@ -52,7 +52,7 @@ int		exec_command(t_input com_and_args, char **path)
 		exe_path = find_exec_path(com_and_args[0], path);
 		if (exe_path == NULL)
 			return (-1);
-		execve(exe_path, com_and_args, environ);
+		execve(exe_path, com_and_args, env);
 	}
 	else if (child_process > 0)
 	{
@@ -60,18 +60,19 @@ int		exec_command(t_input com_and_args, char **path)
 		wait(&stat_loc);
 	}
 	return (stat_loc);
-
 }
 
 int		exec_input(t_input com_and_args, t_shell *shell_state)
 {
-	int		stat_loc;
+	int			stat_loc;
 	char	**path;
+	char	**env;
 
 	stat_loc = 0;
-	stat_loc = search_for_builtin(com_and_args);
+	stat_loc = search_for_builtin(com_and_args, shell_state);
 	if (IS_BUILTIN(stat_loc))
 		return (stat_loc);
 	path = get_updated_path(shell_state);
-	return (exec_command(com_and_args, path));
+	env = get_env(shell_state);
+	return (exec_command(com_and_args, env, path));
 }

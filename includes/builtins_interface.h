@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 13:39:24 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/19 13:34:42 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/04/19 18:43:15 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 # include "shell_interface.h"
 # define IS_BUILTIN(x) (x != -1)
 
-int		search_for_builtin(char **cmd_and_args);
+int		search_for_builtin(char **cmd_and_args, t_shell *shell_state);
 
 #endif

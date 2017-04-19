@@ -6,12 +6,13 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:48:04 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/19 14:52:05 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/04/19 17:13:43 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env_interface.h"
 #include "shell_interface.h"
+#include "error_interface.h"
 #include "libft.h"
 #include <stddef.h>
 
@@ -42,6 +43,8 @@ int			 main(void)
 	t_shell	*shell_state;
 
 	shell_state = init_shell();
+	if (shell_state == NULL)
+		return (SHELL_ENOMEM);
 	while (1)
 	{
 		ft_printf(PROMPT);
