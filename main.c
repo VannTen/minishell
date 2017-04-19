@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:48:04 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/19 13:34:16 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/04/19 14:52:05 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,7 @@
 
 extern char	**environ;
 
-char	**get_path(void)
-{
-	const char	*path;
-
-	path = get_env_value("PATH");
-	if (path == NULL)
-		return (NULL);
-	else
-		return (ft_strsplit(path, ':'));
-}
-
-char	*get_raw_input(void)
+char		*get_raw_input(void)
 {
 	char *input;
 
@@ -36,7 +25,7 @@ char	*get_raw_input(void)
 	return (input);
 }
 
-t_input	parse_input(char *raw)
+t_input		parse_input(char *raw)
 {
 	char **commands_and_args;
 
@@ -45,20 +34,20 @@ t_input	parse_input(char *raw)
 	return (commands_and_args);
 }
 
-int main(void)
+int			 main(void)
 {
 	char	*raw_input;
 	t_input	input;
 	int		return_status;
-	char	**path;
+	t_shell	*shell_state;
 
-	path = get_path();
+	shell_state = init_shell();
 	while (1)
 	{
 		ft_printf(PROMPT);
 		raw_input = get_raw_input();
 		input = parse_input(raw_input);
-		return_status = exec_input(input, path);
+		return_status = exec_input(input, shell_state);
 		ft_printf("Command return : %d\n", return_status);
 	}
 }

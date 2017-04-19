@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 17:17:49 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/18 20:54:01 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/04/19 15:07:58 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ const char	*get_env_value(const char *key)
 	key_length = ft_strlen(key);
 	while (environ[index] != NULL
 			&& ft_strncmp(key, environ[index], key_length) != 0)
-			index++;
+		index++;
 	return (environ[index] + key_length + 1);
 }
 
@@ -40,7 +40,7 @@ char		*get_env_entry(const char *key)
 	key_length = ft_strlen(key);
 	while (environ[index] != NULL
 			&& ft_strncmp(key, environ[index], key_length) != 0)
-			index++;
+		index++;
 	return (environ[index]);
 }
 

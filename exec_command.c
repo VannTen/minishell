@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 17:27:57 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/19 13:36:03 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/04/19 15:12:30 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,13 @@ char	*find_exec_path(char *exe_name, char **path)
 	return (exe_full_path);
 }
 
-int		exec_input(t_input com_and_args, char **path)
+int		exec_command(t_input com_and_args, char **path)
 {
 	pid_t	child_process;
-	char	*exe_path;
 	int		stat_loc;
+	char	*exe_path;
 
 	stat_loc = 0;
-	stat_loc = search_for_builtin(com_and_args);
-	if (IS_BUILTIN(stat_loc))
-		return (stat_loc);
 	child_process = fork();
 	if (child_process == 0)
 	{
@@ -63,4 +60,18 @@ int		exec_input(t_input com_and_args, char **path)
 		wait(&stat_loc);
 	}
 	return (stat_loc);
+
+}
+
+int		exec_input(t_input com_and_args, t_shell *shell_state)
+{
+	int		stat_loc;
+	char	**path;
+
+	stat_loc = 0;
+	stat_loc = search_for_builtin(com_and_args);
+	if (IS_BUILTIN(stat_loc))
+		return (stat_loc);
+	path = get_updated_path(shell_state);
+	return (exec_command(com_and_args, path));
 }
