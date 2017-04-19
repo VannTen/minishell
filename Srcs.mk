@@ -6,7 +6,7 @@
 #    By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/19 07:58:53 by mgautier          #+#    #+#              #
-#*   Updated: 2017/04/19 14:51:21 by mgautier         ###   ########.fr       *#
+#*   Updated: 2017/04/19 19:37:35 by mgautier         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRC :=\
 	main.c\
 	shell.c\
 	exec_command.c\
+	builtin_env.c\
 	env_tools.c\
 	builtins.c
 
