@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 17:17:49 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/24 20:10:11 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/04/25 12:59:32 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,12 +140,13 @@ char		**ft_putenv(const char *key, const char *value, char **env)
 		index++;
 	if (env[index] == NULL)
 	{
-		new_env = (malloc(sizeof(char*) * index + 2));
+		new_env = (malloc(sizeof(char*) * (index + 2)));
 		if (new_env != NULL)
 		{
 			copy_env(env, new_env);
-			new_env[index + 1] = ft_strvajoin(3, key, "=", value);
-			if (new_env[index + 1] != NULL)
+			new_env[index] = ft_strvajoin(3, key, "=", value);
+			new_env[index + 1] = NULL;
+			if (new_env[index] != NULL)
 			{
 				free(env);
 				env = new_env;
