@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 17:17:49 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/24 16:40:10 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/04/24 20:10:11 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,16 @@ char		*get_key(const char *env_entry)
 	if (env_entry[index] != '\0')
 		key = ft_strndup(env_entry, index);
 	return (key);
+}
+
+const char	*get_value(const char *env_entry)
+{
+	size_t	index;
+
+	index = 0;
+	while (env_entry[index] != '=')
+		index++;
+	return (env_entry + index + 1);
 }
 
 char		**copy_env(char * const * src, char **dst)
