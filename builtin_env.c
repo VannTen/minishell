@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 17:33:48 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/02 10:10:44 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/02 10:15:53 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ static	t_env_param *default_param(char **argv, int *opt_nbr)
 
 	index = 0;
 	while (index < OPT_NBR)
+	{
 		options[index] = FALSE;
+		index++;
+	}
 	params.options = options;
 	*opt_nbr =
 		apply_cmdline_opt(ENV_SYNOPSIS, (const char**)argv, (void*)&params, apply_opt);
@@ -113,11 +116,11 @@ int	ft_env(char	**argv, t_shell *shell_state)
 		param->env = ft_string_array_dup((const char**)get_env(shell_state));
 	option_param_nbr = param_options(argv + option_number, param);
 	total_opt = option_param_nbr + option_number;
-/*
-	if (argv[total_opt] != NULL)
-		return_status = exec_any(argv[total_opt], argv + total_opt, env_cpy);
-	else*/
-		ft_print_string_array(param->env, '\n');
+	/*
+	   if (argv[total_opt] != NULL)
+	   return_status = exec_any(argv[total_opt], argv + total_opt, env_cpy);
+	   else*/
+	ft_print_string_array(param->env, '\n');
 	ft_free_string_array(&param->env);
 	return (return_status);
 }
