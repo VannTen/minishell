@@ -6,13 +6,14 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 17:33:48 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/19 19:50:05 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/02 10:10:44 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+#include "env_interface.h"
 #include "builtin_env_defs.h"
 #include "builtins_defs.h"
-#include "libft.h"
 
 static void	apply_i(void *v_param)
 {
@@ -49,19 +50,55 @@ static	t_env_param *default_param(char **argv, int *opt_nbr)
 	return (&params);
 }
 
-/*
-static void	apply_u(char *arg, void *v_param)
+static void	apply_u(void *v_param, const char *arg)
 {
 	t_env_param	*param;
+	char		*key;
 
 	param = v_param;
-	intern_unset_env(arg, param->env);
+	key = get_key(arg);
+	param->env = ft_removeenv(key, param->env);
+	ft_strdel(&key);
 }
-*/
+
+static void	apply_P(void *v_param, const char *arg)
+{
+	t_env_param	*param;
+	char		*key;
+
+	param = v_param;
+	key = get_key(arg);
+	param->env = ft_removeenv(key, param->env);
+	ft_strdel(&key);
+}
+
+static void	apply_S(void *v_param, const char *arg)
+{
+	t_env_param	*param;
+	char		*key;
+
+	param = v_param;
+	key = get_key(arg);
+	param->env = ft_removeenv(key, param->env);
+	ft_strdel(&key);
+}
+
+static int	param_options(char	**argv, t_env_param *param)
+{
+	const t_apply_opt_param	param_opt[OPT_ARG_NBR] = {
+		apply_P,
+		apply_S,
+		apply_u
+	};
+	size_t					index;
+
+	index = 0;
+	return (apply_parameters_options(
+				ENV_ARG_SYNOPSIS, (const char**)argv, param, param_opt));
+}
 
 int	ft_env(char	**argv, t_shell *shell_state)
 {
-	char		**env_cpy;
 	int			option_number;
 	int			option_param_nbr;
 	int			total_opt;
@@ -71,17 +108,16 @@ int	ft_env(char	**argv, t_shell *shell_state)
 	param = default_param(argv, &option_number);
 	return_status = 0;
 	if (param->options[IGNORE_ENV])
-		env_cpy = ft_string_array_dup((const char**)get_env(shell_state));
+		param->env = NULL;
 	else
-		env_cpy = NULL;
-	//option_param_nbr = apply_parameter_options(param, argv + option_number);
-	option_param_nbr = 0;
+		param->env = ft_string_array_dup((const char**)get_env(shell_state));
+	option_param_nbr = param_options(argv + option_number, param);
 	total_opt = option_param_nbr + option_number;
 /*
 	if (argv[total_opt] != NULL)
 		return_status = exec_any(argv[total_opt], argv + total_opt, env_cpy);
 	else*/
-		ft_print_string_array(env_cpy, '\n');
-	ft_free_string_array(&env_cpy);
+		ft_print_string_array(param->env, '\n');
+	ft_free_string_array(&param->env);
 	return (return_status);
 }
