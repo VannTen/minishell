@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 14:49:17 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/19 19:17:12 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/02 10:27:12 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ t_shell	*init_shell(void)
 {
 	static t_shell	shell;
 
-	shell.path = ft_string_array_dup((const char**)environ);
-	shell.env = NULL;
+	shell.env = ft_string_array_dup((const char**)environ);
+	shell.path = NULL;
 	shell.env_has_changed_since_path_update = TRUE;
-	return (shell.path != NULL ? &shell : NULL);
+	return (shell.env != NULL ? &shell : NULL);
 }
 
 char	**get_updated_path(t_shell *shell_state)
