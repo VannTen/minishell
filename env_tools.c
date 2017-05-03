@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 17:17:49 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/25 16:38:17 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/03 15:49:10 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char		*get_env_entry(const char *key)
 	return (environ[index]);
 }
 
-char		*get_key(const char *env_entry)
+const char	*get_key(const char *env_entry)
 {
 	size_t	index;
 	char	*key;
@@ -232,4 +232,17 @@ char	**ft_removeenv(const char *key, char **env)
 		}
 	}
 	return (env);
+}
+
+char	**ft_seten_intern(char **env, const char *setenv)
+{
+	const char	*key;
+	const char	*value;
+	char		**new_env;
+
+	key = get_key(setenv);
+	value = get_value(setenv);
+	new_env = ft_putenv(key, value, env);
+	ft_strdel(&key);
+	return (new_env);
 }
