@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 17:33:48 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/03 15:49:27 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/03 16:44:40 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ static	t_env_param *default_param(char **env)
 		index++;
 	}
 	params.options = options;
+	params.path_string = NULL;
 	params.env = ft_string_array_dup((const char**)env);
 	if (params.env == NULL)
 		return (NULL);
@@ -128,6 +129,7 @@ int	ft_env(const char **argv, t_shell *shell_state)
 	int			option_number;
 	int			return_status;
 	int			index;
+	char *const	*path;
 	t_env_param	*param;
 
 	param = default_param(get_env(shell_state));
@@ -141,6 +143,9 @@ int	ft_env(const char **argv, t_shell *shell_state)
 	}
 	if (argv[index] != NULL)
 	{
+		path = ft_strsplit(param->path_string == NULL ?
+				get_value("PATH") : param->path_string,
+				':');
 		return_status = exec_any(argv[option_number],
 				argv + index, param->env);
 	}

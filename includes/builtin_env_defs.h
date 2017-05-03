@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 17:36:12 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/03 14:48:12 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/03 15:59:13 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ struct	s_env_param
 	t_bool		*options;
 	const char	*prog_name;
 	char		**env;
+	char		*path_string;
 };
 
 #endif
