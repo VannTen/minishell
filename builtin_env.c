@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 17:33:48 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/03 16:44:40 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/03 17:09:09 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int	ft_env(const char **argv, t_shell *shell_state)
 	int			option_number;
 	int			return_status;
 	int			index;
-	char *const	*path;
+	t_shell		*shell_state;
 	t_env_param	*param;
 
 	param = default_param(get_env(shell_state));
