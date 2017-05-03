@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 17:41:04 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/02 10:10:00 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/03 14:58:39 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ enum	e_env_option_arg
 	OPT_ARG_NBR
 };
 
-# define ENV_SYNOPSIS "iv"
-# define ENV_ARG_SYNOPSIS "PSu"
+# define ENV_OPT_STRING "iv"
+# define ENV_OPT_ARG_STRING "PSu"
 #endif
