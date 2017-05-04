@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 17:27:57 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/04 15:26:46 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/04 17:08:49 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,19 @@ char	*find_exec_path(const char *exe_name, char *const *path)
 	char	*exe_full_path;
 
 	index = 0;
+	exe_full_path = NULL;
 	exe_name = ft_strjoin("/", exe_name);
-	while (path[index] != NULL)
+	if (path != NULL)
 	{
-		exe_full_path = ft_strjoin(path[index], exe_name);
-		if (access(exe_full_path, F_OK) == 0)
-			break ;
-		else
-			ft_strdel(&exe_full_path);
-		index++;
+		while (path[index] != NULL)
+		{
+			exe_full_path = ft_strjoin(path[index], exe_name);
+			if (access(exe_full_path, F_OK) == 0)
+				break ;
+			else
+				ft_strdel(&exe_full_path);
+			index++;
+		}
 	}
 	if (exe_full_path == NULL)
 		ft_dprintf(STDERR_FILENO, "%s : not found\n", exe_name);

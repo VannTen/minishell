@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:48:04 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/04 09:35:23 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/04 15:44:03 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,28 @@ t_input		parse_input(char *raw)
 	char **commands_and_args;
 
 	commands_and_args = ft_strsplit(raw, ' ');
-	ft_strdel(&raw);
 	return (commands_and_args);
+}
+
+t_input		get_input(void)
+{
+	char	*raw_input;
+	t_input	input;
+
+	raw_input = get_raw_input();
+	input = parse_input(raw_input);
+	ft_strdel(&raw_input);
+	return (input);
+}
+
+void		delete_input(t_input *to_del)
+{
+	ft_free_string_array(to_del);
+	*to_del = NULL;
 }
 
 int			 main(void)
 {
-	char	*raw_input;
 	t_input	input;
 	int		return_status;
 	t_shell	*shell_state;
@@ -48,9 +63,9 @@ int			 main(void)
 	while (1)
 	{
 		ft_printf(PROMPT);
-		raw_input = get_raw_input();
-		input = parse_input(raw_input);
+		input = get_input();
 		return_status = exec_input(input, shell_state);
+		delete_input(&input);
 		ft_printf("Command return : %d\n", return_status);
 	}
 }
