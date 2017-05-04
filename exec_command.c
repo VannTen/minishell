@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 17:27:57 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/19 19:19:25 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/04 10:49:07 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int		exec_input(t_input com_and_args, t_shell *shell_state)
 	char	**env;
 
 	stat_loc = 0;
-	stat_loc = search_for_builtin(com_and_args, shell_state);
+	stat_loc = search_for_builtin((const char **)com_and_args, shell_state);
 	if (IS_BUILTIN(stat_loc))
 		return (stat_loc);
 	path = get_updated_path(shell_state);

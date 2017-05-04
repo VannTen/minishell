@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 17:33:48 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/03 17:09:09 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/04 10:46:00 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int	ft_env(const char **argv, t_shell *shell_state)
 	int			option_number;
 	int			return_status;
 	int			index;
-	t_shell		*shell_state;
+	t_shell		*pseudo_sub_shell;
 	t_env_param	*param;
 
 	param = default_param(get_env(shell_state));
@@ -143,14 +143,14 @@ int	ft_env(const char **argv, t_shell *shell_state)
 	}
 	if (argv[index] != NULL)
 	{
-		path = ft_strsplit(param->path_string == NULL ?
-				get_value("PATH") : param->path_string,
-				':');
-		return_status = exec_any(argv[option_number],
-				argv + index, param->env);
+		pseudo_sub_shell = init_shell((const char**)param->env);
+		if (param->path_string != NULL)
+			force_path(pseudo_sub_shell, param->path_string);
+		return_status = exec_input((t_input)argv + index, pseudo_sub_shell);
+		deinit_shell(&pseudo_sub_shell);
 	}
 	else
-		ft_print_string_array(param->env, '\n');
+		ft_print_string_array((const char**)param->env, '\n');
 	ft_free_string_array(&param->env);
 	return (return_status);
 }

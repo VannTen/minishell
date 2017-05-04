@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 11:44:36 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/03 15:49:56 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/04 10:41:06 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 # include "builtins_interface.h"
 # include "shell_interface.h"
 
-typedef	int		(*t_builtin)(t_input, t_shell*);
-int 		ft_echo(char **argv, t_shell *shell_state);
-int 		ft_cd(char **argv, t_shell *shell_state);
-int 		ft_setenv(char **argv, t_shell *shell_state);
-int 		ft_unsetenv(char **argv, t_shell *shell_state);
+typedef	int		(*t_builtin)(const char**, t_shell*);
+int 		ft_echo(const char **argv, t_shell *shell_state);
+int 		ft_cd(const char **argv, t_shell *shell_state);
+int 		ft_setenv(const char **argv, t_shell *shell_state);
+int 		ft_unsetenv(const char **argv, t_shell *shell_state);
 int 		ft_env(const char **argv, t_shell *shell_state);
-int 		ft_exit(char **argv, t_shell *shell_state);
+int 		ft_exit(const char **argv, t_shell *shell_state);
 
 #endif

@@ -6,19 +6,20 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 18:24:32 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/19 19:26:30 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/04 10:59:27 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env_interface.h"
 #include "builtins_defs.h"
+#include "shell_defs.h"
 #include "libft.h"
 #include <stddef.h>
 #include <sys/param.h>
 
 extern char	**environ;
 
-int	ft_echo(char **argv, t_shell *shell_state)
+int	ft_echo(const char **argv, t_shell *shell_state)
 {
 	(void)shell_state;
 	ft_print_string_array(argv + 1, ' ');
@@ -26,7 +27,7 @@ int	ft_echo(char **argv, t_shell *shell_state)
 	return (EXIT_SUCCESS);
 }
 
-int	ft_cd(char **argv, t_shell *shell_state)
+int	ft_cd(const char **argv, t_shell *shell_state)
 {
 	const char	*home;
 	const char	*arg;
@@ -45,7 +46,7 @@ int	ft_cd(char **argv, t_shell *shell_state)
 	return (chdir(arg));
 }
 
-int	ft_exit(char **argv, t_shell *shell_state)
+int	ft_exit(const char **argv, t_shell *shell_state)
 {
 	int	exit_status;
 	(void)shell_state;
@@ -58,37 +59,20 @@ int	ft_exit(char **argv, t_shell *shell_state)
 	return (exit_status);
 }
 
-int	ft_setenv(char **argv, t_shell *shell_state)
+int	ft_setenv(const char **argv, t_shell *shell_state)
 {
-	static t_bool	environ_is_allocated = FALSE;
-	char			**tmp_environ;
-	(void)shell_state;
-
-	(void)argv;
-	if (!environ_is_allocated)
-	{
-		tmp_environ = ft_string_array_dup((const char **)environ);
-		if (tmp_environ == NULL)
-			return (-1);
-		else
-		{
-			environ = tmp_environ;
-			environ_is_allocated = TRUE;
-		}
-	}
-	else
-		free(environ);
-	return (1);
+	shell_state->env = ft_setenv_intern(shell_state->env, argv[0]);
+	return (0);
 }
 
-int	ft_unsetenv(char **argv, t_shell *shell_state)
+int	ft_unsetenv(const char **argv, t_shell *shell_state)
 {
 	(void)shell_state;
 	ft_putendl(argv[0]);
 	return (1);
 }
 
-int		search_for_builtin(char **cmd_and_args, t_shell *shell_state)
+int		search_for_builtin(const char **cmd_and_args, t_shell *shell_state)
 {
 	const char		*builtins[] = {
 		"echo",
