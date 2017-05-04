@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:48:04 by mgautier          #+#    #+#             */
-/*   Updated: 2017/04/19 17:13:43 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/04 09:35:23 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int			 main(void)
 	int		return_status;
 	t_shell	*shell_state;
 
-	shell_state = init_shell();
+	shell_state = init_shell((const char**)environ);
 	if (shell_state == NULL)
 		return (SHELL_ENOMEM);
 	while (1)

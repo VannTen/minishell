@@ -6,23 +6,42 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 14:49:17 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/03 17:09:06 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/04 10:09:44 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell_defs.h"
 #include "env_interface.h"
 
-extern char	**environ;
 
 t_shell	*init_shell(const char **env)
 {
-	static t_shell	shell;
+	t_shell	*shell;
 
-	shell.env = ft_string_array_dup(env != NULL ? env : (const char**)environ);
-	shell.path = NULL;
-	shell.env_has_changed_since_path_update = TRUE;
-	return (shell.env != NULL ? &shell : NULL);
+	shell = malloc(sizeof(t_shell));
+	if (shell != NULL)
+	{
+		shell->env = ft_string_array_dup(env);
+		shell->path = NULL;
+		shell->env_has_changed_since_path_update = TRUE;
+		if (shell->env == NULL)
+			deinit_shell(&shell);
+	}
+	return (shell);
+}
+
+void	deinit_shell(t_shell **shell)
+{
+	t_shell	*to_del;
+
+	to_del = *shell;
+	if (to_del != NULL)
+	{
+		ft_free_string_array(&to_del->env);
+		ft_free_string_array(&to_del->path);
+		free(shell);
+		*shell = NULL;
+	}
 }
 
 char	**get_updated_path(t_shell *shell_state)
@@ -37,6 +56,14 @@ char	**get_updated_path(t_shell *shell_state)
 			shell_state->path = ft_strsplit(path_string, ':');
 		shell_state->env_has_changed_since_path_update = FALSE;
 	}
+	return (shell_state->path);
+}
+
+char	**force_path(t_shell *shell_state, const char *path_string)
+{
+	ft_free_string_array(&shell_state->path);
+	shell_state->path = ft_strsplit(path_string, PATH_SEP);
+	shell_state->env_has_changed_since_path_update = FALSE;
 	return (shell_state->path);
 }
 
