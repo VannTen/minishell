@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 17:27:57 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/04 11:13:02 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/04 15:26:46 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 #include "libft.h"
 #include <unistd.h>
 #include <sys/wait.h>
-
-extern char	**environ;
 
 char	*find_exec_path(const char *exe_name, char *const *path)
 {

@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 18:24:32 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/04 15:18:37 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/04 15:26:38 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 #include "libft.h"
 #include <stddef.h>
 #include <sys/param.h>
-
-extern char	**environ;
 
 int	ft_echo(const char **argv, t_shell *shell_state)
 {
