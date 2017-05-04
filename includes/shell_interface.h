@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:54:49 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/04 09:53:01 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/04 11:11:49 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** Prompt shall be defined with printf style
 */
 
-# define PROMPT "$>"
+# define PROMPT "\n$>"
 
 typedef struct s_shell	t_shell;
 typedef char**			t_input;
