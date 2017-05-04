@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 14:49:17 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/04 10:09:44 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/04 11:46:51 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	deinit_shell(t_shell **shell)
 	{
 		ft_free_string_array(&to_del->env);
 		ft_free_string_array(&to_del->path);
-		free(shell);
+		free(to_del);
 		*shell = NULL;
 	}
 }

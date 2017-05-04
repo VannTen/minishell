@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 17:33:48 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/04 11:10:17 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/04 11:34:24 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	apply_i(void *v_param)
 
 	param = v_param;
 	param->options[IGNORE_ENV] = TRUE;
-	ft_free_string_array(&param->env);
+	param->env = empty_env(param->env);
 	return (OPT_SUCCESS);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 17:17:49 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/04 11:00:28 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/04 11:35:29 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,7 @@ char		**add_new_entry(size_t index, const char *key,
 	}
 	return (env);
 }
+
 char		**ft_putenv(const char *key, const char *value, char **env)
 {
 	size_t	index;
@@ -197,6 +198,17 @@ char		**ft_putenv(const char *key, const char *value, char **env)
 			env = NULL;
 	}
 	return (env);
+}
+
+char	**empty_env(char **env)
+{
+	char	**new_env;
+
+	ft_free_string_array(&env);
+	new_env = malloc(sizeof(char*) * 1);
+	if (new_env != NULL)
+		new_env[0] = NULL;
+	return (new_env);
 }
 
 t_bool	is_valid_setenv(const char *arg)
