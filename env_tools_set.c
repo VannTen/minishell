@@ -6,11 +6,12 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 15:00:48 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/04 15:14:15 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/04 15:24:02 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env_interface.h"
+#include "libft.h"
 #include <stddef.h>
 
 
@@ -22,7 +23,7 @@ static char	**add_new_entry(size_t index, const char *key,
 	new_env = (malloc(sizeof(char*) * (index + 2)));
 	if (new_env != NULL)
 	{
-		copy_env(env, new_env);
+		ft_str_array_cpy(env, new_env);
 		new_env[index] = ft_strvajoin(3, key, "=", value);
 		new_env[index + 1] = NULL;
 		if (new_env[index] != NULL)

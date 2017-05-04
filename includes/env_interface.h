@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 17:30:14 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/04 15:13:43 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/04 15:23:29 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,6 @@ char		**ft_putenv(const char *key, const char *value, char **env);
 char		**ft_removeenv(const char *key, char **env);
 char		**ft_setenv_intern(char **env, const char *setenv);
 char		**empty_env(char **env);
-
-/*
-** General things for env
-** Implementation file : env_tools_gen.c
-*/
-
-char		**copy_env(char * const * src, char **dst);
 
 /*
 **

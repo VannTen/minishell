@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 18:24:32 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/04 10:59:27 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/04 15:18:37 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,10 @@ int	ft_cd(const char **argv, t_shell *shell_state)
 {
 	const char	*home;
 	const char	*arg;
-	(void)shell_state;
 
 	if (argv[1] == NULL)
 	{
-		home = get_env_value("HOME");
+		home = get_env_value("HOME", get_env(shell_state));
 		if (home == NULL)
 			ft_dprintf(STDERR_FILENO, "%s: HOME not set", argv[0]);
 		else
@@ -72,7 +71,7 @@ int	ft_unsetenv(const char **argv, t_shell *shell_state)
 	return (1);
 }
 
-int		search_for_builtin(const char **cmd_and_args, t_shell *shell_state)
+int	search_for_builtin(const char **cmd_and_args, t_shell *shell_state)
 {
 	const char		*builtins[] = {
 		"echo",

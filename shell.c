@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 14:49:17 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/04 11:46:51 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/04 15:05:32 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	**get_updated_path(t_shell *shell_state)
 	if (shell_state->env_has_changed_since_path_update)
 	{
 		ft_free_string_array(&shell_state->path);
-		path_string = get_env_value("PATH");
+		path_string = get_env_value("PATH", shell_state->env);
 		if (path_string != NULL)
 			shell_state->path = ft_strsplit(path_string, ':');
 		shell_state->env_has_changed_since_path_update = FALSE;
