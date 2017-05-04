@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 17:33:48 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/04 10:46:00 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/04 11:10:17 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static int	apply_i(void *v_param)
 
 	param = v_param;
 	param->options[IGNORE_ENV] = TRUE;
+	ft_free_string_array(&param->env);
 	return (OPT_SUCCESS);
 }
 
@@ -36,12 +37,9 @@ static int	apply_v(void *v_param)
 static int	apply_u(void *v_param, const char *arg)
 {
 	t_env_param	*param;
-	char		*key;
 
 	param = v_param;
-	key = get_key(arg);
-	param->env = ft_removeenv(key, param->env);
-	ft_strdel(&key);
+	param->env = ft_removeenv(arg, param->env);
 	return (OPT_SUCCESS);
 }
 
