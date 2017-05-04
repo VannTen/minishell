@@ -6,11 +6,40 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 15:00:48 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/04 15:03:09 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/04 15:14:15 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char		**ft_putenv(const char *key, const char *value, char **env)
+#include "env_interface.h"
+#include <stddef.h>
+
+
+static char	**add_new_entry(size_t index, const char *key,
+		const char *value, char **env)
+{
+	char	**new_env;
+
+	new_env = (malloc(sizeof(char*) * (index + 2)));
+	if (new_env != NULL)
+	{
+		copy_env(env, new_env);
+		new_env[index] = ft_strvajoin(3, key, "=", value);
+		new_env[index + 1] = NULL;
+		if (new_env[index] != NULL)
+		{
+			free(env);
+			env = new_env;
+		}
+		else
+		{
+			free(new_env);
+			env = NULL;
+		}
+	}
+	return (env);
+}
+
+char	**ft_putenv(const char *key, const char *value, char **env)
 {
 	size_t	index;
 	char	*new_entry;
@@ -22,7 +51,7 @@ char		**ft_putenv(const char *key, const char *value, char **env)
 		env = add_new_entry(index, key, value, env);
 	else
 	{
-		new_entry = replace_env(env[index], key, value);
+		new_entry = replace_env_entry(env[index], key, value);
 		if (new_entry != NULL)
 			env[index] = new_entry;
 		else

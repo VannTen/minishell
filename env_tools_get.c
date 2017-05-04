@@ -6,9 +6,12 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 13:59:25 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/04 15:04:03 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/04 15:14:46 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
+#include <stddef.h>
 
 const char	*get_env_value(const char *key, char **env)
 {
@@ -17,7 +20,7 @@ const char	*get_env_value(const char *key, char **env)
 
 	index = 0;
 	key_length = ft_strlen(key);
-	while (environ[index] != NULL
+	while (env[index] != NULL
 			&& ft_strncmp(key, env[index], key_length) != 0)
 		index++;
 	return (env[index] + key_length + 1);
@@ -30,10 +33,10 @@ char		*get_env_entry(const char *key, char **env)
 
 	index = 0;
 	key_length = ft_strlen(key);
-	while (environ[index] != NULL
-			&& ft_strncmp(key, environ[index], key_length) != 0)
+	while (env[index] != NULL
+			&& ft_strncmp(key, env[index], key_length) != 0)
 		index++;
-	return (environ[index]);
+	return (env[index]);
 }
 
 const char	*get_value(const char *env_entry)
