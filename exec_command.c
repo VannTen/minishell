@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 17:27:57 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/04 10:49:07 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/04 11:13:02 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int		exec_command(t_input com_and_args, char *const *env, char *const *path)
 	}
 	else if (child_process > 0)
 	{
-		ft_free_string_array(&com_and_args);
 		wait(&stat_loc);
 	}
 	return (stat_loc);
