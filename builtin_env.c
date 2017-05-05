@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 17:33:48 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/04 11:34:24 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/05 11:46:41 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ int	ft_env(const char **argv, t_shell *shell_state)
 		pseudo_sub_shell = init_shell((const char**)param->env);
 		if (param->path_string != NULL)
 			force_path(pseudo_sub_shell, param->path_string);
-		return_status = exec_input((t_input)argv + index, pseudo_sub_shell);
+		return_status = search_and_execute_command((t_input)argv + index, pseudo_sub_shell);
 		deinit_shell(&pseudo_sub_shell);
 	}
 	else

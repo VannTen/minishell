@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:48:04 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/04 15:44:03 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/05 11:45:50 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int			 main(void)
 	{
 		ft_printf(PROMPT);
 		input = get_input();
-		return_status = exec_input(input, shell_state);
+		return_status = search_and_execute_command(input, shell_state);
 		delete_input(&input);
 		ft_printf("Command return : %d\n", return_status);
 	}
