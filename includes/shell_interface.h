@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:54:49 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/05 14:51:09 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/05 15:01:57 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,20 @@ int		deinit_shell(t_shell **shell);
 ** Implementation file : shell.c
 */
 
+/*
+** Shell env and path get
+** Implementation file : shell_get_env.c
+*/
+
 char	**get_path(t_shell *shell_state);
-char	**set_path(t_shell *shell_state, const char *path_string);
 char	**get_env(t_shell *shell_state);
+
+/*
+** Shell env and path set
+** Implementation file : shell_set_env.c
+*/
+
+char	**set_path(t_shell *shell_state, const char *path_string);
 void	set_env(t_shell *shell, const char *setenv);
 void	unset_env(t_shell *shell, const char *key);
 void	empty_shell_env(t_shell *shell);
