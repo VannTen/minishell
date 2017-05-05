@@ -6,7 +6,7 @@
 #    By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/19 07:58:53 by mgautier          #+#    #+#              #
-#*   Updated: 2017/05/05 11:39:27 by mgautier         ###   ########.fr       *#
+#*   Updated: 2017/05/05 14:36:44 by mgautier         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,11 @@ TARGET := minishell
 SRC :=\
 	main.c\
 	shell.c\
+	shell_init.c\
 	search_command.c\
 	builtin_env.c\
+	builtin_env_intern.c\
+	builtin_env_options.c\
 	env_tools.c\
 	env_tools_get.c\
 	env_tools_set.c\
