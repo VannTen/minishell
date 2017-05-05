@@ -6,13 +6,13 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 18:24:32 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/04 15:26:38 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/05 15:11:08 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env_interface.h"
 #include "builtins_defs.h"
-#include "shell_defs.h"
+#include "shell_interface.h"
 #include "libft.h"
 #include <stddef.h>
 #include <sys/param.h>
@@ -46,30 +46,29 @@ int	ft_cd(const char **argv, t_shell *shell_state)
 int	ft_exit(const char **argv, t_shell *shell_state)
 {
 	int	exit_status;
-	(void)shell_state;
 
 	if (argv[1] != NULL)
 		exit_status = ft_atoi(argv[1]);
 	else
 		exit_status = EXIT_SUCCESS;
-	exit(exit_status);
+	set_exit_status(shell_state, exit_status);
+	will_exit(shell_state);
 	return (exit_status);
 }
 
 int	ft_setenv(const char **argv, t_shell *shell_state)
 {
-	shell_state->env = ft_setenv_intern(shell_state->env, argv[0]);
+	set_env(shell_state, argv[1]);
 	return (0);
 }
 
 int	ft_unsetenv(const char **argv, t_shell *shell_state)
 {
-	(void)shell_state;
-	ft_putendl(argv[0]);
+	unset_env(shell_state, argv[1]);
 	return (1);
 }
 
-int	search_for_builtin(const char **cmd_and_args, t_shell *shell_state)
+t_builtin	search_for_builtin(const char *cmd)
 {
 	const char		*builtins[] = {
 		"echo",
@@ -86,16 +85,13 @@ int	search_for_builtin(const char **cmd_and_args, t_shell *shell_state)
 		ft_setenv,
 		ft_unsetenv,
 		ft_env,
-		ft_exit
+		ft_exit,
+		NULL
 	};
-	size_t	index;
+	size_t			index;
 
 	index = 0;
-	while (builtins[index] != NULL
-			&& ft_strcmp(cmd_and_args[0], builtins[index]) != 0)
+	while (builtins[index] != NULL && ft_strcmp(cmd, builtins[index]) != 0)
 		index++;
-	if (builtins[index] == NULL)
-		return (-1);
-	else
-		return (functions[index](cmd_and_args, shell_state));
+	return (functions[index]);
 }

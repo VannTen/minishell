@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 17:30:14 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/04 15:23:29 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/05 11:42:40 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ char		**empty_env(char **env);
 **
 */
 
-char		**get_path(void);
 t_bool		is_valid_setenv(const char *arg);
 
 

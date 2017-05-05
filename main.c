@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:48:04 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/04 15:44:03 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/05 16:12:32 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,21 @@ void		delete_input(t_input *to_del)
 
 int			 main(void)
 {
-	t_input	input;
-	int		return_status;
-	t_shell	*shell_state;
+	t_input				input;
+	t_exit_status		return_status;
+	t_shell				*shell_state;
 
 	shell_state = init_shell((const char**)environ);
 	if (shell_state == NULL)
 		return (SHELL_ENOMEM);
-	while (1)
+	while (!shall_exit(shell_state))
 	{
-		ft_printf(PROMPT);
+		prompt_user(shell_state);;
 		input = get_input();
-		return_status = exec_input(input, shell_state);
+		return_status = search_and_execute_command(input, shell_state);
+		set_exit_status(shell_state, return_status);
 		delete_input(&input);
-		ft_printf("Command return : %d\n", return_status);
 	}
+	return_status = deinit_shell(&shell_state);
+	return (return_status);
 }

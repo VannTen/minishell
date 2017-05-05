@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_env_interface.h                            :+:      :+:    :+:   */
+/*   shell_set.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/19 17:41:04 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/05 14:25:02 by mgautier         ###   ########.fr       */
+/*   Created: 2017/05/05 14:43:20 by mgautier          #+#    #+#             */
+/*   Updated: 2017/05/05 14:46:23 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_ENV_INTERFACE_H
-# define BUILTIN_ENV_INTERFACE_H
+#include "shell_defs.h"
 
-# define ENV_OPT_STRING "iv"
-# define ENV_OPT_ARG_STRING "PSu"
-#endif
+void	will_exit(t_shell *shell)
+{
+	shell->shall_exit = TRUE;
+}
+
+void	set_exit_status(t_shell *shell, int status)
+{
+	shell->exit_status = status;
+}

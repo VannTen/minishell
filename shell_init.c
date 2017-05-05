@@ -1,18 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell.c                                            :+:      :+:    :+:   */
+/*   shell_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/19 14:49:17 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/04 15:05:32 by mgautier         ###   ########.fr       */
+/*   Created: 2017/05/05 12:10:34 by mgautier          #+#    #+#             */
+/*   Updated: 2017/05/05 16:14:41 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell_defs.h"
-#include "env_interface.h"
-
 
 t_shell	*init_shell(const char **env)
 {
@@ -23,51 +21,30 @@ t_shell	*init_shell(const char **env)
 	{
 		shell->env = ft_string_array_dup(env);
 		shell->path = NULL;
-		shell->env_has_changed_since_path_update = TRUE;
+		shell->persistent_path = FALSE;
+		shell->shall_exit = FALSE;
+		shell->exit_status = 0;
 		if (shell->env == NULL)
 			deinit_shell(&shell);
 	}
 	return (shell);
 }
 
-void	deinit_shell(t_shell **shell)
+int		deinit_shell(t_shell **shell)
 {
+	int		exit_status;
 	t_shell	*to_del;
 
 	to_del = *shell;
 	if (to_del != NULL)
 	{
+		exit_status = to_del->exit_status;
 		ft_free_string_array(&to_del->env);
 		ft_free_string_array(&to_del->path);
 		free(to_del);
 		*shell = NULL;
 	}
-}
-
-char	**get_updated_path(t_shell *shell_state)
-{
-	const char	*path_string;
-
-	if (shell_state->env_has_changed_since_path_update)
-	{
-		ft_free_string_array(&shell_state->path);
-		path_string = get_env_value("PATH", shell_state->env);
-		if (path_string != NULL)
-			shell_state->path = ft_strsplit(path_string, ':');
-		shell_state->env_has_changed_since_path_update = FALSE;
-	}
-	return (shell_state->path);
-}
-
-char	**force_path(t_shell *shell_state, const char *path_string)
-{
-	ft_free_string_array(&shell_state->path);
-	shell_state->path = ft_strsplit(path_string, PATH_SEP);
-	shell_state->env_has_changed_since_path_update = FALSE;
-	return (shell_state->path);
-}
-
-char	**get_env(t_shell *shell_state)
-{
-	return (shell_state->env);
+	else
+		exit_status = -1;
+	return (exit_status);
 }

@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_env_interface.h                            :+:      :+:    :+:   */
+/*   shell_tools.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/19 17:41:04 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/05 14:25:02 by mgautier         ###   ########.fr       */
+/*   Created: 2017/05/05 16:09:07 by mgautier          #+#    #+#             */
+/*   Updated: 2017/05/05 16:15:21 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_ENV_INTERFACE_H
-# define BUILTIN_ENV_INTERFACE_H
+#include "shell_defs.h"
+#include "libft.h"
 
-# define ENV_OPT_STRING "iv"
-# define ENV_OPT_ARG_STRING "PSu"
-#endif
+void	prompt_user(const t_shell *shell)
+{
+	ft_printf("(last : %d)\n$>", get_exit_status(shell));
+}
