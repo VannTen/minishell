@@ -6,12 +6,13 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:54:49 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/05 13:46:53 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/05 14:51:09 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHELL_INTERFACE_H
 # define SHELL_INTERFACE_H
+# include "libft.h"
 
 /*
 ** Prompt shall be defined with printf style
@@ -35,7 +36,7 @@ int		search_and_execute_command(char **args, t_shell *shell_state);
 */
 
 t_shell	*init_shell(const char **env);
-void	deinit_shell(t_shell **shell);
+int		deinit_shell(t_shell **shell);
 
 /*
 ** Shell state
@@ -48,5 +49,20 @@ char	**get_env(t_shell *shell_state);
 void	set_env(t_shell *shell, const char *setenv);
 void	unset_env(t_shell *shell, const char *key);
 void	empty_shell_env(t_shell *shell);
+
+/*
+** Get info about the shell state
+** Implemenation file : shell_get.c
+*/
+
+t_bool	shall_exit(const t_shell *shell);
+
+/*
+** Set state of the shell
+** Implementation file : shell_set.c
+*/
+
+void	will_exit(t_shell *shell);
+void	set_exit_status(t_shell *shell, int status);
 
 #endif

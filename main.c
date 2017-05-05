@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:48:04 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/05 11:45:50 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/05 14:50:28 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int			 main(void)
 	shell_state = init_shell((const char**)environ);
 	if (shell_state == NULL)
 		return (SHELL_ENOMEM);
-	while (1)
+	while (!shall_exit(shell_state))
 	{
 		ft_printf(PROMPT);
 		input = get_input();
@@ -68,4 +68,6 @@ int			 main(void)
 		delete_input(&input);
 		ft_printf("Command return : %d\n", return_status);
 	}
+	return_status = deinit_shell(&shell_state);
+	return (return_status);
 }

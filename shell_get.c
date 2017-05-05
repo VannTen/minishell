@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_defs.h                                       :+:      :+:    :+:   */
+/*   shell_get.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/19 13:31:37 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/05 14:47:49 by mgautier         ###   ########.fr       */
+/*   Created: 2017/05/05 14:41:32 by mgautier          #+#    #+#             */
+/*   Updated: 2017/05/05 14:47:08 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELL_DEFS_H
-# define SHELL_DEFS_H
-# include "shell_interface.h"
-# include "libft.h"
+#include "shell_defs.h"
 
-struct s_shell
+t_bool	shall_exit(const t_shell *shell)
 {
-	char	**env;
-	char	**path;
-	t_bool	persistent_path;
-	t_bool	shall_exit;
-	int		exit_status;
-};
-
-#endif
+	return (shell->shall_exit);
+}
+int		get_exit_status(const t_shell *shell)
+{
+	return (shell->exit_status);
+}
