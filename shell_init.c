@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 12:10:34 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/05 12:11:01 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/05 13:54:41 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_shell	*init_shell(const char **env)
 	{
 		shell->env = ft_string_array_dup(env);
 		shell->path = NULL;
+		shell->persistent_path = FALSE;
 		if (shell->env == NULL)
 			deinit_shell(&shell);
 	}

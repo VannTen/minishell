@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 13:31:37 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/05 11:50:22 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/05 13:33:01 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ struct s_shell
 {
 	char	**env;
 	char	**path;
+	t_bool	persistent_path;
 };
 
 #endif
