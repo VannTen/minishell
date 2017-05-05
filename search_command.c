@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 09:48:30 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/05 15:57:01 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/05 16:33:59 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,12 @@ int	execute_command(char *const *args, char **env)
 		execve(args[0], args, env);
 	if (child > 0)
 		waitpid(child, &status, 0);
+	if (WIFEXITED(status))
+		status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		status = 128 + WTERMSIG(status);
+	else if (WIFSTOPPED(status))
+		status = WSTOPSIG(status);
 	return (status);
 }
 
