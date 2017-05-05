@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 14:49:17 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/04 15:05:32 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/05 11:50:14 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ t_shell	*init_shell(const char **env)
 	{
 		shell->env = ft_string_array_dup(env);
 		shell->path = NULL;
-		shell->env_has_changed_since_path_update = TRUE;
 		if (shell->env == NULL)
 			deinit_shell(&shell);
 	}
@@ -44,17 +43,15 @@ void	deinit_shell(t_shell **shell)
 	}
 }
 
-char	**get_updated_path(t_shell *shell_state)
+char	**get_path(t_shell *shell_state)
 {
 	const char	*path_string;
 
-	if (shell_state->env_has_changed_since_path_update)
+	if (shell_state->path == NULL)
 	{
-		ft_free_string_array(&shell_state->path);
 		path_string = get_env_value("PATH", shell_state->env);
 		if (path_string != NULL)
 			shell_state->path = ft_strsplit(path_string, ':');
-		shell_state->env_has_changed_since_path_update = FALSE;
 	}
 	return (shell_state->path);
 }
@@ -63,7 +60,6 @@ char	**force_path(t_shell *shell_state, const char *path_string)
 {
 	ft_free_string_array(&shell_state->path);
 	shell_state->path = ft_strsplit(path_string, PATH_SEP);
-	shell_state->env_has_changed_since_path_update = FALSE;
 	return (shell_state->path);
 }
 

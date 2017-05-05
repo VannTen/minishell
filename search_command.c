@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 09:48:30 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/05 11:45:33 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/05 11:57:32 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,11 @@ int	search_and_execute_command(char **args, t_shell *shell_state)
 	t_builtin	builtin_utility;
 	char		*exe_name;
 
-	if (!string_has_char(args[0], '/'))
+	if (!(string_has_char(args[0], '/')))
 	{
 		builtin_utility = search_for_builtin(args[0]);
 		if (builtin_utility != NULL)
-			return (builtin_utility((const char**)args + 1, shell_state));
+			return (builtin_utility((const char**)args, shell_state));
 		else
 		{
 			exe_name = find_exe_path(args[0], get_path(shell_state));
