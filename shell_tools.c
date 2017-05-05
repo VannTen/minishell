@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_interface.h                                  :+:      :+:    :+:   */
+/*   shell_tools.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/19 17:12:41 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/05 16:01:24 by mgautier         ###   ########.fr       */
+/*   Created: 2017/05/05 16:09:07 by mgautier          #+#    #+#             */
+/*   Updated: 2017/05/05 16:15:21 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_INTERFACE_H
-# define ERROR_INTERFACE_H
+#include "shell_defs.h"
+#include "libft.h"
 
-typedef enum	e_exit_status
+void	prompt_user(const t_shell *shell)
 {
-	SHELL_ENOMEM,
-	COULD_NOT_EXECUTE_COMMAND = 126,
-	COMMAND_NOT_FOUND = 127
-}				t_exit_status;
-
-#endif
+	ft_printf("(last : %d)\n$>", get_exit_status(shell));
+}

@@ -6,12 +6,13 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 09:48:30 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/05 11:57:32 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/05 15:57:01 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins_interface.h"
 #include "shell_interface.h"
+#include "error_interface.h"
 #include "libft.h"
 #include <unistd.h>
 #include <sys/wait.h>
@@ -79,7 +80,7 @@ int	search_and_execute_command(char **args, t_shell *shell_state)
 			else
 			{
 				ft_dprintf(STDERR_FILENO, "%s: command not found\n", args[0]);
-				return (127);
+				return (COMMAND_NOT_FOUND);
 			}
 		}
 	}

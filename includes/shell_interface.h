@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:54:49 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/05 15:01:57 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/05 16:14:12 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 /*
 ** Prompt shall be defined with printf style
 */
-
-# define PROMPT "\n$>"
 
 typedef struct s_shell	t_shell;
 typedef char**			t_input;
@@ -67,6 +65,7 @@ void	empty_shell_env(t_shell *shell);
 */
 
 t_bool	shall_exit(const t_shell *shell);
+int		get_exit_status(const t_shell *shell);
 
 /*
 ** Set state of the shell
@@ -75,5 +74,12 @@ t_bool	shall_exit(const t_shell *shell);
 
 void	will_exit(t_shell *shell);
 void	set_exit_status(t_shell *shell, int status);
+
+/*
+** Shell tools
+** Implementation file : shell_tools.c
+*/
+
+void	prompt_user(const t_shell *shell);
 
 #endif

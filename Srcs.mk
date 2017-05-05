@@ -6,7 +6,7 @@
 #    By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/19 07:58:53 by mgautier          #+#    #+#              #
-#*   Updated: 2017/05/05 15:03:47 by mgautier         ###   ########.fr       *#
+#*   Updated: 2017/05/05 16:13:06 by mgautier         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRC :=\
 	shell_set_env.c\
 	shell_get_env.c\
 	shell_init.c\
+	shell_tools.c\
 	search_command.c\
 	builtin_env.c\
 	builtin_env_intern.c\
