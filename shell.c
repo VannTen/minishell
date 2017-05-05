@@ -6,42 +6,13 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 14:49:17 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/05 11:50:14 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/05 12:23:33 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell_defs.h"
 #include "env_interface.h"
 
-
-t_shell	*init_shell(const char **env)
-{
-	t_shell	*shell;
-
-	shell = malloc(sizeof(t_shell));
-	if (shell != NULL)
-	{
-		shell->env = ft_string_array_dup(env);
-		shell->path = NULL;
-		if (shell->env == NULL)
-			deinit_shell(&shell);
-	}
-	return (shell);
-}
-
-void	deinit_shell(t_shell **shell)
-{
-	t_shell	*to_del;
-
-	to_del = *shell;
-	if (to_del != NULL)
-	{
-		ft_free_string_array(&to_del->env);
-		ft_free_string_array(&to_del->path);
-		free(to_del);
-		*shell = NULL;
-	}
-}
 
 char	**get_path(t_shell *shell_state)
 {
@@ -56,14 +27,34 @@ char	**get_path(t_shell *shell_state)
 	return (shell_state->path);
 }
 
-char	**force_path(t_shell *shell_state, const char *path_string)
+char	**get_env(t_shell *shell_state)
+{
+	return (shell_state->env);
+}
+
+char	**set_path(t_shell *shell_state, const char *path_string)
 {
 	ft_free_string_array(&shell_state->path);
 	shell_state->path = ft_strsplit(path_string, PATH_SEP);
 	return (shell_state->path);
 }
 
-char	**get_env(t_shell *shell_state)
+void	set_env(t_shell *shell, const char *setenv)
 {
-	return (shell_state->env);
+	shell->env = ft_setenv_intern(shell->env, setenv);
+	if (key_are_equal("PATH", setenv))
+		ft_free_string_array(shell->path);
+}
+
+void	unset_env(t_shell *shell, const char *key)
+{
+	shell->env = ft_removeenv(key, shell->env);
+	if (ft_strcmp(key, "PATH") == 0)
+		ft_free_string_array(shell->path);
+}
+
+void	empty_shell_env(t_shell *shell)
+{
+	shell->env = empty_env(shell->env);
+	ft_free_string_array(shell->path);
 }
