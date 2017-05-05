@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 17:27:57 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/04 17:08:49 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/05 09:30:50 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,14 @@ int		exec_command(t_input com_and_args, char *const *env, char *const *path)
 	char	*exe_path;
 
 	stat_loc = 0;
+	exe_path = find_exec_path(com_and_args[0], path);
+	if (exe_path == NULL)
+		return (-1);
 	child_process = fork();
 	if (child_process == 0)
-	{
-		exe_path = find_exec_path(com_and_args[0], path);
-		if (exe_path == NULL)
-			return (-1);
 		execve(exe_path, com_and_args, env);
-	}
 	else if (child_process > 0)
-	{
-		wait(&stat_loc);
-	}
+		waitpid(child_process, &stat_loc, 0);
 	return (stat_loc);
 }
 
