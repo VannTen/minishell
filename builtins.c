@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 18:24:32 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/05 15:11:08 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/10 18:44:47 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	ft_echo(const char **argv, t_shell *shell_state)
 	return (EXIT_SUCCESS);
 }
 
+/*
 int	ft_cd(const char **argv, t_shell *shell_state)
 {
 	const char	*home;
@@ -42,6 +43,7 @@ int	ft_cd(const char **argv, t_shell *shell_state)
 		arg = argv[1];
 	return (chdir(arg));
 }
+*/
 
 int	ft_exit(const char **argv, t_shell *shell_state)
 {

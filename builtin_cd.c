@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 17:13:46 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/10 15:56:56 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/10 19:02:03 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ static char	*produce_dir_operand(const char *directory, const t_shell *shell)
 {
 	char		*final_dir;
 	const char	*home_dir;
-	const char	cdpath;
 
 	final_dir = NULL;
 	home_dir = get_shell_env_value("HOME", shell);
@@ -92,16 +91,16 @@ void delete_dot(char *path)
 	copy = path;
 	while (path[index] != '\0')
 	{
-		while (ft_strncmp("./", path[index], 2) == 0)
+		while (ft_strncmp("./", path + index, 2) == 0)
 			path += 2;
 		copy[index] = path[index];
 		if (copy[index] == '\0')
 			break ;
 		index++;
 	}
-	return (copy);
+	copy[index] = '\0';
 }
-static char	*convert_to_canonical(char *dir, const char *pwd)
+static void	convert_to_canonical(char *dir, const char *pwd)
 {
 	char	*new_dir;
 
@@ -112,7 +111,6 @@ static char	*convert_to_canonical(char *dir, const char *pwd)
 		else
 			new_dir = ft_strvajoin(3, pwd, "/", dir);
 	}
-
 }
 
 static int	internal_cd(const char *dir_operand, t_shell *shell,
@@ -121,19 +119,21 @@ static int	internal_cd(const char *dir_operand, t_shell *shell,
 	char	*directory;
 
 	directory =
-		produce_dir_operand(dir_operand, get_shell_env_value(shell));
+		produce_dir_operand(dir_operand,shell);
 	if (directory == NULL)
 		return (EXIT_FAILURE);
 	else
 	{
 		if (dot_dot_logically)
 		{
-			directory = canonical_form_conversion(directory,
+			convert_to_canonical(directory,
 					get_shell_env_value("PWD", shell));
 		}
+	}
+	return (0);
 }
 
 int	ft_cd(const char **argv, t_shell *shell_state)
 {
-
+	return (internal_cd(argv[1], shell_state, TRUE));
 }
