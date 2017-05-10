@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 15:02:23 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/05 15:03:40 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/10 11:59:46 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,9 @@ char	**get_path(t_shell *shell_state)
 char	**get_env(t_shell *shell_state)
 {
 	return (shell_state->env);
+}
+
+const char	*get_shell_env_value(const char *key, const t_shell *shell)
+{
+	return (get_env_value(key, shell->env));
 }
