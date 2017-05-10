@@ -6,11 +6,12 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 15:02:56 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/05 15:03:09 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/10 15:50:01 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell_defs.h"
+#include "path_constants.h"
 #include "env_interface.h"
 
 char	**set_path(t_shell *shell_state, const char *path_string)

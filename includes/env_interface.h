@@ -6,19 +6,13 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 17:30:14 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/05 11:42:40 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/10 15:49:31 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENV_INTERFACE_H
 # define ENV_INTERFACE_H
 # include "libft.h"
-
-/*
-** Constants definitions
-*/
-
-# define PATH_SEP ':'
 
 /*
 ** Get value from env
