@@ -6,7 +6,7 @@
 #*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
 #*   Created: 2016/11/04 13:12:11 by mgautier          #+#    #+#             *#
-#*   Updated: 2017/04/18 17:08:39 by mgautier         ###   ########.fr       *#
+#*   Updated: 2017/05/10 18:12:34 by mgautier         ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
@@ -129,15 +129,15 @@ endef
 # Assure a clean state before computing rules in a subdir
 EMPTY_SRCS.MK := TARGET \
  SRC \
- LIBRARIES \
- OBJECTS \
- ELSE \
  SRC_DIR \
  INC_DIR \
  OBJ_DIR \
  DEP_DIR \
  TEST_DIR \
  SUBDIRS 
+EMPTY_DEPS.MK := LIBRARY ELSE OBJECTS SUBDIRS
+CLEAR_VAR_LIST = $(foreach VARIABLE, $1,$(eval $(VARIABLE):= )) 
+
 
 ##
 ## Build rules

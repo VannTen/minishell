@@ -6,7 +6,7 @@
 #*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
 #*   Created: 2016/12/13 19:41:31 by mgautier          #+#    #+#             *#
-#*   Updated: 2017/04/03 15:36:31 by mgautier         ###   ########.fr       *#
+#*   Updated: 2017/05/10 18:42:28 by mgautier         ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
@@ -23,21 +23,14 @@ DIR_$(STACK_POINTER) := $(DIR)
 DIR := $(DIR)$(SUBDIR)
 
 $(info Begin parsing $(DIR)Rules.mk)
+
 # Includes Srcs.mk, which defines directory data (source files, target name,
 # additional dependencies, libraries needed)
 # Clean variables before, so we dont catch some from a previous dir
 # if there is a problem with Srcs.mk
 
-$(foreach VARIABLE,$(EMPTY_SRCS.MK),$(eval $(VARIABLE):= ))
+$(call CLEAR_VAR_LIST, $(EMPTY_SRCS.MK))
 include $(DIR)Srcs.mk
-
-# Inclusion of subdirs Rules.mk
-
-$(foreach SUBDIR,$(addsuffix /,$(LIBRARY)),$(eval $(INCLUDE_SUBDIRS)))
-$(foreach SUBDIR,$(addsuffix /,$(SUBDIRS)),$(eval $(INCLUDE_SUBDIRS)))
-$(foreach VARIABLE,$(EMPTY_SRCS.MK),$(eval $(VARIABLE):= ))
-include $(DIR)Srcs.mk
-$(TARGET): LIB_INCLUDES := $(LIBRARY)
 
 # Give the full path to the locals directories (by appending DIR before them)
 # add a slash only if necessary
@@ -47,6 +40,26 @@ $(TARGET): LIB_INCLUDES := $(LIBRARY)
 
 OBJ_DIR := $(BUILD_PREFIX)$(OBJ_DIR)
 $(foreach TYPE,SRC OBJ DEP INC,$(eval $(call ADD_SLASH,$(TYPE))))
+# Standard expansion of the SRC into the local OBJ and DEP
+# + add them to clean-up variables
+
+OBJ_$(DIR) := $(OBJ)
+DEP_$(DIR) := $(DEP)
+
+TARGET_$(DIR) := $(DIR)$(BUILD_PREFIX)$(TARGET)
+
+# Include additionnal deps from a separate file
+
+$(call CLEAR_VAR_LIST, $(EMPTY_DEPS.MK))
+include $(DIR)Dependencies.mk
+$(TARGET): LIB_INCLUDES := $(LIBRARY)
+LIBS_$(DIR) := $(LIBRARY)
+
+# Inclusion of subdirs Rules.mk
+
+$(foreach SUBDIR,$(addsuffix /,$(LIBRARY)),$(eval $(INCLUDE_SUBDIRS)))
+$(foreach SUBDIR,$(addsuffix /,$(SUBDIRS)),$(eval $(INCLUDE_SUBDIRS)))
+
 
 # Add the obj and dependency dir to the list of generated dir
 # only if they are different from the DIR (which is not generated)
@@ -58,31 +71,24 @@ ifdef DEP_DIR
 GENERATED_SUBDIRS += $(DEP_LOCAL_$(DIR))
 endif
 
-# Standard expansion of the SRC into the local OBJ and DEP
-# + add them to clean-up variables
-
-OBJ_$(DIR) := $(OBJ)
-DEP_$(DIR) := $(DEP)
-
 # + check if the target of this directory is indicated
 # If it is, a vpath directive allow rules that use that target
 # as a prerequisites to locate it easily
 
-ifdef TARGET
-TARGET_$(DIR) := $(DIR)$(BUILD_PREFIX)$(TARGET)
-vpath $(TARGET) $(DIR)
-$(basename $(TARGET))_PATH := $(DIR)
+ifdef TARGET_$(DIR)
+vpath $(notdir $(TARGET_$(DIR))) $(DIR)
+$(basename $(TARGET_$(DIR)))_PATH := $(DIR)
 else
-$(eval $(TARGET_ERROR))
+$(eval $(TARGET_$(DIR)_ERROR))
 endif
 
 # If the target is a static library, use the approriate recipe.
 # Otherwise, use the linker for an executable
 
-ifeq ($(suffix $(TARGET)),.a)
+ifeq ($(suffix $(TARGET_$(DIR))),.a)
 $(TARGET_$(DIR)): RECIPE = $(LINK_STATIC_LIB)
 LIBPATH_INC += $(DIR)
-else ifeq ($(suffix $(TARGET)),.so)
+else ifeq ($(suffix $(TARGET_$(DIR))),.so)
 $(TARGET_$(DIR)): RECIPE = $(LINK_SHARED_LIB)
 LIBPATH_INC += $(DIR)
 else
@@ -91,7 +97,7 @@ endif
 
 # Local rules
 
-$(TARGET_$(DIR)): $(OBJ_$(DIR)) $(ELSE) $(patsubst lib%,-l$(BUILD_PREFIX)%,$(LIBRARY))
+$(TARGET_$(DIR)): $(OBJ_$(DIR)) $(ELSE) $(patsubst lib%,-l$(BUILD_PREFIX)%,$(LIBS_$(DIR)))
 	$(QUIET) $(RECIPE)
 
 $(eval $(STATIC_OBJ_RULE))
@@ -125,7 +131,7 @@ endif
 
 # Inclusion of depency files (auto-generated)
 
-DEP_FILES+= $(DEP_$(DIR))
+DEP_FILES += $(DEP_$(DIR))
 
 # Tracking current directory
 
