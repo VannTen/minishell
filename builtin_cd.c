@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 17:13:46 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/11 17:48:44 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/11 19:08:46 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,60 @@ char	*begin_next_component(char *path, size_t index)
 	return (path + index);
 }
 
+t_bool	should_delete_component(const char *path, size_t index, size_t index_preceding)
+{
+	return (ft_strnequ("..", path + index, ft_strlen(".."))
+			&& (!ft_strnequ("..", path + index_preceding, ft_strlen("..")))
+			&& !(path[index_preceding] == '/'));
+}
+
+char	*try_to_delete(char *const path)
+{
+	size_t	index;
+
+	index = 0;
+	if (!ft_strnequ("../", path, ft_strlen("../")))
+	{
+		while (path[index] != '/')
+			index++;
+		index++;
+		if (ft_strnequ("..", path + index, ft_strlen(".."))
+				&& (path[index + ft_strlen("..")] == '\0'
+					|| path[index + ft_strlen("..")] == '/'))
+		{
+			if (valid_path_component(path, index - 1))
+			{
+				ft_strcpy(path, path + index +
+						ft_strlen("..") +
+						((path[index + ft_strlen("..")] == '/') ? 1 : 0));
+			}
+			else
+				return (NULL);
+		}
+	}
+	return (path);
+}
+
+char	*alt_delete_dot_dot(char *path)
+{
+	size_t	index;
+
+	index = 0;
+	if (try_to_delete(path) == NULL)
+		return (NULL);
+	while (path[index] != '\0')
+	{
+		if (path[index] == '/')
+		{
+			index++;
+			if (try_to_delete(path + index) == NULL)
+				return (NULL);
+		}
+		else
+			index++;
+	}
+	return (path);
+}
 char	*delete_dot_dot(char *path)
 {
 	size_t	index;
@@ -140,13 +194,12 @@ char	*delete_dot_dot(char *path)
 			while (path[index + size_current] != '/'
 					&& path[index + size_current] != '\0')
 				size_current++;
-			if (ft_strnequ("..", path + index, ft_strlen(".."))
-					&& (!ft_strnequ("..", path + index_preceding, ft_strlen("..")))
-					&& !(path[index_preceding] == '/'))
+			if (should_delete_component(path, index, index_preceding))
 			{
 				if (valid_path_component(path, index - 1))
 				{
-					ft_strcpy(path + index_preceding, begin_next_component(path, index));
+					ft_strcpy(path + index_preceding,
+							begin_next_component(path, index));
 					index = index_preceding;
 				}
 				else
