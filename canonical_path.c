@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/12 14:14:09 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/12 18:09:36 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/12 19:20:31 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ t_bool	path_component_are_equal(const char *path1, const char *path2)
 
 t_bool	is_root_component(const char *path, size_t index)
 {
-	return (index == 0 && path[0] == '/');
+	while (index != 0 && path[index] == '/')
+		index--;
+	return (path[index] == '/');
 }
 
 t_bool	should_delete(const char *path, size_t index, size_t index_previous)
