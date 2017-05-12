@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/12 14:14:09 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/12 17:01:01 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/12 18:09:36 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ size_t		get_previous_component(char *path, size_t index_start)
 	index_start_previous = index_end_previous;
 	while (path[index_start_previous] != '/' && index_start_previous != 0)
 		index_start_previous--;
+	if (path[index_start_previous] == '/')
+		index_start_previous++;
 	return (index_start_previous);
 }
 
@@ -66,16 +68,19 @@ t_bool	should_delete(const char *path, size_t index, size_t index_previous)
 			&& !is_root_component(path, index_previous));
 }
 
-const char	*advance_nbr_path_comp(const char *path, size_t nbr)
+size_t	advance_nbr_path_comp(const char *path, size_t nbr)
 {
-	while (nbr != 0 && *path != '\0')
+	size_t	index;
+
+	index = 0;
+	while (nbr != 0 && path[index] != '\0')
 	{
-		path += path_comp_len(path);
-		while (*path == '/')
-			path++;
+		index += path_comp_len(path + index);
+		while (path[index] == '/')
+			index++;
 		nbr--;
 	}
-	return (path);
+	return (index);
 }
 
 size_t	advance_to_second_comp(const char *path)
@@ -106,7 +111,7 @@ char	*delete_parent_ref(char *path)
 				if (valid_path_component(path, index - 1))
 				{
 					ft_strcpy(path + index_previous,
-							advance_nbr_path_comp(path + index, 1));
+							path + index + advance_nbr_path_comp(path + index, 1));
 					index = index_previous;
 					continue ;
 				}
@@ -114,7 +119,7 @@ char	*delete_parent_ref(char *path)
 					return (NULL);
 			}
 		}
-		index++;
+		index += advance_nbr_path_comp(path + index, 1);
 	}
 	return (path);
 }
