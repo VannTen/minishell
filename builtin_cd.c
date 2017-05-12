@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 17:13:46 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/11 19:08:46 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/12 12:29:12 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,15 +130,17 @@ t_bool	should_delete_component(const char *path, size_t index, size_t index_prec
 			&& !(path[index_preceding] == '/'));
 }
 
-char	*try_to_delete(char *const path)
+char	*try_to_delete(char *const path, size_t	begin_index)
 {
 	size_t	index;
 
-	index = 0;
-	if (!ft_strnequ("../", path, ft_strlen("../")))
+	index = begin_index;
+	if (!ft_strnequ("../", path + begin_index, ft_strlen("../")))
 	{
-		while (path[index] != '/')
+		while (path[index] != '/' && path[index] != '\0')
 			index++;
+		if (path[index] == '\0')
+			return (path);
 		index++;
 		if (ft_strnequ("..", path + index, ft_strlen(".."))
 				&& (path[index + ft_strlen("..")] == '\0'
@@ -146,9 +148,10 @@ char	*try_to_delete(char *const path)
 		{
 			if (valid_path_component(path, index - 1))
 			{
-				ft_strcpy(path, path + index +
+				ft_strcpy(path + begin_index, path + index +
 						ft_strlen("..") +
 						((path[index + ft_strlen("..")] == '/') ? 1 : 0));
+				return (try_to_delete(path, begin_index));
 			}
 			else
 				return (NULL);
@@ -162,14 +165,17 @@ char	*alt_delete_dot_dot(char *path)
 	size_t	index;
 
 	index = 0;
-	if (try_to_delete(path) == NULL)
-		return (NULL);
+	if (path[index] != '/')
+	{
+		if (try_to_delete(path, index) == NULL)
+			return (NULL);
+	}
 	while (path[index] != '\0')
 	{
 		if (path[index] == '/')
 		{
 			index++;
-			if (try_to_delete(path + index) == NULL)
+			if (try_to_delete(path, index) == NULL)
 				return (NULL);
 		}
 		else
