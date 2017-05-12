@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/12 14:14:09 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/12 19:20:31 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/12 20:35:16 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,4 +124,33 @@ char	*delete_parent_ref(char *path)
 		index += advance_nbr_path_comp(path + index, 1);
 	}
 	return (path);
+}
+
+void	delete_unneeded_slash(char *path)
+{
+	char	*copy;
+	size_t	index;
+
+	index = 0;
+	copy = path;
+	while (path[index] == '/' && index < 2)
+		index++;
+	while (path[index] != '\0')
+	{
+		while (path[index] == '/')
+			path++;
+		while (path[index] != '/' && path[index] != '\0')
+		{
+			copy[index] = path[index];
+			index++;
+		}
+		copy[index] = path[index];
+		if (path[index] == '/')
+			index++;
+	}
+	index--;
+	while (copy[index] == '/' && index != 0)
+		index--;
+	if (copy[index] != '/' && copy[index] != '\0')
+		copy[index + 1] = '\0';
 }
