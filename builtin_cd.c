@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 17:13:46 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/15 12:29:48 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/15 13:17:11 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	*try_path(const char *dir_name, const char *path_name)
 {
 	char	*path_try;
 
-	if (*path_name == '\0')
+	if (path_name == NULL || *path_name == '\0')
 		path_name = ".";
 	if (last_char_of(path_name) == '/')
 		path_try = ft_strjoin(path_name, dir_name);
@@ -53,6 +53,8 @@ static char	*try_directory_paths(const char *dir_name, const char *cdpath)
 			index++;
 		}
 	}
+	else
+		path_try = try_path(dir_name, NULL);
 	ft_free_string_array(&paths);
 	return (path_try);
 }
@@ -74,7 +76,7 @@ static char	*produce_dir_operand(const char *directory, const t_shell *shell)
 	if (directory != NULL
 			&& directory[0] != '/' && directory[0] != '.')
 	{
-		final_dir = try_directory_paths(final_dir,
+		final_dir = try_directory_paths(directory,
 				get_shell_env_value("CDPATH", shell));
 	}
 	return (final_dir);
