@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 17:13:46 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/15 13:17:11 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/15 15:31:54 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "path_constants.h"
 #include "libft.h"
 #include <stddef.h>
+#include <limits.h>
 
 /*
 ** Attempt to implement cd following the steps prescribed by POSIX at
@@ -56,6 +57,8 @@ static char	*try_directory_paths(const char *dir_name, const char *cdpath)
 	else
 		path_try = try_path(dir_name, NULL);
 	ft_free_string_array(&paths);
+	if (path_try == NULL)
+		path_try = ft_strdup(dir_name);
 	return (path_try);
 }
 
@@ -79,8 +82,9 @@ static char	*produce_dir_operand(const char *directory, const t_shell *shell)
 		final_dir = try_directory_paths(directory,
 				get_shell_env_value("CDPATH", shell));
 	}
+	else
+		final_dir = ft_strdup(directory);
 	return (final_dir);
-
 }
 
 static char	*get_add_pwd(const char *dir, const char *pwd)
@@ -115,6 +119,11 @@ static int	internal_cd(const char *dir_operand, t_shell *shell,
 					get_add_pwd(directory, get_shell_env_value("PWD", shell));
 				ft_strdel(&tmp);
 			}
+			if (canonize_path(directory) == NULL || directory[0] == '\0')
+				return (EXIT_FAILURE);
+			if (ft_strlen(directory) >= PATH_MAX
+					&& ft_strlen(dir_operand) < PATH_MAX)
+				(void)1;
 		}
 	}
 	return (0);
