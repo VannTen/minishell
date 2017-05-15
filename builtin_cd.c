@@ -6,10 +6,11 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 17:13:46 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/12 12:29:12 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/15 11:39:17 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "builtin_cd_defs.h"
 #include "shell_interface.h"
 #include "path_constants.h"
 #include "libft.h"
@@ -82,145 +83,7 @@ static char	*produce_dir_operand(const char *directory, const t_shell *shell)
 
 }
 
-void	delete_dot(char *path)
-{
-	size_t	index;
-	char	*copy;
-
-	index = 0;
-	copy = path;
-	while (path[index] != '\0')
-	{
-		while (((index == 0 && path == copy) || path[index - 1] == '/')
-				&& ft_strncmp("./", path + index, 2) == 0)
-			path += 2;
-		if (path[index + 1] == '\0' && path[index] == '.'
-				&& (index == 0 || path[index - 1] == '/'))
-			path += 1;
-		copy[index] = path[index];
-		if (copy[index] == '\0')
-			break ;
-		index++;
-	}
-	copy[index] = '\0';
-}
-
-t_bool	valid_path_component(char *path, size_t	index)
-{
-	t_bool	path_is_valid;
-
-	path[index] = '\0';
-	path_is_valid = is_dir(path);
-	path[index] = '/';
-	return (path_is_valid);
-}
-
-char	*begin_next_component(char *path, size_t index)
-{
-	index += ft_strlen("..");
-	if (path[index] != '\0')
-		index++;
-	return (path + index);
-}
-
-t_bool	should_delete_component(const char *path, size_t index, size_t index_preceding)
-{
-	return (ft_strnequ("..", path + index, ft_strlen(".."))
-			&& (!ft_strnequ("..", path + index_preceding, ft_strlen("..")))
-			&& !(path[index_preceding] == '/'));
-}
-
-char	*try_to_delete(char *const path, size_t	begin_index)
-{
-	size_t	index;
-
-	index = begin_index;
-	if (!ft_strnequ("../", path + begin_index, ft_strlen("../")))
-	{
-		while (path[index] != '/' && path[index] != '\0')
-			index++;
-		if (path[index] == '\0')
-			return (path);
-		index++;
-		if (ft_strnequ("..", path + index, ft_strlen(".."))
-				&& (path[index + ft_strlen("..")] == '\0'
-					|| path[index + ft_strlen("..")] == '/'))
-		{
-			if (valid_path_component(path, index - 1))
-			{
-				ft_strcpy(path + begin_index, path + index +
-						ft_strlen("..") +
-						((path[index + ft_strlen("..")] == '/') ? 1 : 0));
-				return (try_to_delete(path, begin_index));
-			}
-			else
-				return (NULL);
-		}
-	}
-	return (path);
-}
-
-char	*alt_delete_dot_dot(char *path)
-{
-	size_t	index;
-
-	index = 0;
-	if (path[index] != '/')
-	{
-		if (try_to_delete(path, index) == NULL)
-			return (NULL);
-	}
-	while (path[index] != '\0')
-	{
-		if (path[index] == '/')
-		{
-			index++;
-			if (try_to_delete(path, index) == NULL)
-				return (NULL);
-		}
-		else
-			index++;
-	}
-	return (path);
-}
-char	*delete_dot_dot(char *path)
-{
-	size_t	index;
-	size_t	size_current;
-	size_t	index_preceding;
-
-	index = 0;
-	index_preceding = 0;
-	while (path[index] != '\0')
-	{
-		if (path[index] == '/')
-		{
-			index++;
-			size_current = 0;
-			while (path[index + size_current] != '/'
-					&& path[index + size_current] != '\0')
-				size_current++;
-			if (should_delete_component(path, index, index_preceding))
-			{
-				if (valid_path_component(path, index - 1))
-				{
-					ft_strcpy(path + index_preceding,
-							begin_next_component(path, index));
-					index = index_preceding;
-				}
-				else
-					return (NULL);
-			}
-			else
-				index_preceding = index;
-		}
-		else
-			index++;
-	}
-	return (path);
-}
-
-static void	convert_to_canonical(char *dir, const char *pwd)
+static void	add_pwd(char *dir, const char *pwd)
 {
 	char	*new_dir;
 
@@ -246,8 +109,7 @@ static int	internal_cd(const char *dir_operand, t_shell *shell,
 	{
 		if (dot_dot_logically)
 		{
-			convert_to_canonical(directory,
-					get_shell_env_value("PWD", shell));
+			add_pwd(directory, get_shell_env_value("PWD", shell));
 		}
 	}
 	return (0);
