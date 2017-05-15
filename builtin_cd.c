@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 17:13:46 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/15 11:39:17 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/15 12:23:55 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,17 +83,15 @@ static char	*produce_dir_operand(const char *directory, const t_shell *shell)
 
 }
 
-static void	add_pwd(char *dir, const char *pwd)
+static char	*get_add_pwd(const char *dir, const char *pwd)
 {
 	char	*new_dir;
 
-	if (dir[0] != '/')
-	{
-		if (last_char_of(pwd) == '/')
-			new_dir = ft_strjoin(pwd, dir);
-		else
-			new_dir = ft_strvajoin(3, pwd, "/", dir);
-	}
+	if (last_char_of(pwd) == '/')
+		new_dir = ft_strjoin(pwd, dir);
+	else
+		new_dir = ft_strvajoin(3, pwd, "/", dir);
+	return (new_dir);
 }
 
 static int	internal_cd(const char *dir_operand, t_shell *shell,
@@ -109,7 +107,8 @@ static int	internal_cd(const char *dir_operand, t_shell *shell,
 	{
 		if (dot_dot_logically)
 		{
-			add_pwd(directory, get_shell_env_value("PWD", shell));
+			if (directory[0] == '/')
+				get_add_pwd(directory, get_shell_env_value("PWD", shell));
 		}
 	}
 	return (0);
