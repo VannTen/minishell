@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 17:13:46 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/15 12:23:55 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/15 12:29:48 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,12 @@ static char	*produce_dir_operand(const char *directory, const t_shell *shell)
 	if (directory == NULL || ft_strcmp(directory, "-") == 0)
 	{
 		if (home_dir == NULL || ft_strcmp(home_dir, "") == 0)
-			final_dir = NULL;
+			directory = NULL;
 		else
-			final_dir = ft_strdup(home_dir);
+			directory = home_dir;
 	}
-	else
-		final_dir = ft_strdup(directory);
-	if (final_dir != NULL
-			&& final_dir[0] != '/' && final_dir[0] != '.')
+	if (directory != NULL
+			&& directory[0] != '/' && directory[0] != '.')
 	{
 		final_dir = try_directory_paths(final_dir,
 				get_shell_env_value("CDPATH", shell));
@@ -98,6 +96,7 @@ static int	internal_cd(const char *dir_operand, t_shell *shell,
 		t_bool dot_dot_logically)
 {
 	char	*directory;
+	char	*tmp;
 
 	directory =
 		produce_dir_operand(dir_operand,shell);
@@ -107,8 +106,13 @@ static int	internal_cd(const char *dir_operand, t_shell *shell,
 	{
 		if (dot_dot_logically)
 		{
-			if (directory[0] == '/')
-				get_add_pwd(directory, get_shell_env_value("PWD", shell));
+			if (directory[0] != '/')
+			{
+				tmp = directory;
+				directory =
+					get_add_pwd(directory, get_shell_env_value("PWD", shell));
+				ft_strdel(&tmp);
+			}
 		}
 	}
 	return (0);
