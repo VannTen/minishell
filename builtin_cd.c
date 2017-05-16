@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 17:13:46 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/16 11:54:24 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/16 17:21:23 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "shell_interface.h"
 #include "path_constants.h"
 #include "libft.h"
+#include <unistd.h>
 #include <stdlib.h>
 #include <limits.h>
 #ifdef __gnu_linux__
@@ -106,9 +107,11 @@ static int	internal_cd(const char *dir_operand, t_shell *shell,
 {
 	char	*directory;
 	char	*tmp;
+	char	*cwd;
+	const char	*final_dir;
+	int			return_is;
 
-	directory =
-		produce_dir_operand(dir_operand,shell);
+	directory = produce_dir_operand(dir_operand,shell);
 	if (directory == NULL)
 		return (EXIT_FAILURE);
 	else
@@ -126,10 +129,29 @@ static int	internal_cd(const char *dir_operand, t_shell *shell,
 				return (EXIT_FAILURE);
 			if (ft_strlen(directory) >= PATH_MAX
 					&& ft_strlen(dir_operand) < PATH_MAX)
-				(void)1;
+			{
+				cwd = getcwd(NULL, 0);
+				final_dir = convert_path_abs_to_rel(directory, cwd);
+				if (final_dir == NULL)
+					final_dir = directory;
+			}
+			else
+				final_dir = directory;
 		}
+		if (chdir(final_dir) == -1)
+		{
+			ft_dprintf(STDERR_FILENO, "Error on cd when calling chdir"
+					"\ndir is : %s\nfinal dir is : %s", directory, final_dir);
+			return_is = 1;
+		}
+		else
+		{
+			return_is = 0;
+			update_pwd(final_dir, shell);
+		}
+		ft_strdel(&directory);
 	}
-	return (0);
+	return (return_is);
 }
 
 int	ft_cd(const char **argv, t_shell *shell_state)
