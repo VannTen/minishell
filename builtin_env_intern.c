@@ -6,13 +6,14 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:02:35 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/05 14:34:29 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/16 11:29:26 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin_env_options.h"
 #include "builtin_env_defs.h"
-#include <stddef.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 static t_bool	opt_is_valid(int opt_return_status)
 {

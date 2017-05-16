@@ -6,12 +6,13 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 13:43:39 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/05 14:36:27 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/16 11:29:49 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin_env_defs.h"
 #include "shell_interface.h"
+#include <unistd.h>
 
 int	apply_i(void *v_param)
 {

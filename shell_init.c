@@ -6,11 +6,12 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 12:10:34 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/05 16:14:41 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/16 11:56:00 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell_defs.h"
+#include <stdlib.h>
 
 t_shell	*init_shell(const char **env)
 {

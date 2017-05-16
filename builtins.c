@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 18:24:32 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/10 18:44:47 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/16 11:28:46 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "builtins_defs.h"
 #include "shell_interface.h"
 #include "libft.h"
-#include <stddef.h>
+#include <stdlib.h>
 #include <sys/param.h>
 
 int	ft_echo(const char **argv, t_shell *shell_state)

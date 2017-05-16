@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 17:13:46 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/15 15:31:54 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/16 11:54:24 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 #include "shell_interface.h"
 #include "path_constants.h"
 #include "libft.h"
-#include <stddef.h>
+#include <stdlib.h>
 #include <limits.h>
+#ifdef __gnu_linux__
+# include <linux/limits.h>
+#endif
 
 /*
 ** Attempt to implement cd following the steps prescribed by POSIX at

@@ -6,14 +6,13 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 15:00:48 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/04 15:24:02 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/16 11:55:35 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env_interface.h"
 #include "libft.h"
-#include <stddef.h>
-
+#include <stdlib.h>
 
 static char	**add_new_entry(size_t index, const char *key,
 		const char *value, char **env)
