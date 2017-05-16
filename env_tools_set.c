@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 15:00:48 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/16 11:55:35 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/16 12:26:31 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,9 @@ char	**ft_removeenv(const char *key, char **env)
 	}
 	if (env[index] != NULL)
 	{
+		ft_strdel(env + index);
+		env[index] = env[index + 1];
+		index++;
 		while (env[index] != NULL)
 		{
 			env[index] = env[index + 1];

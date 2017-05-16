@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 18:24:32 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/16 11:28:46 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/16 12:28:03 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	ft_setenv(const char **argv, t_shell *shell_state)
 int	ft_unsetenv(const char **argv, t_shell *shell_state)
 {
 	unset_env(shell_state, argv[1]);
-	return (1);
+	return (0);
 }
 
 t_builtin	search_for_builtin(const char *cmd)
