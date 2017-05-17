@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 17:13:46 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/16 17:21:23 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/17 11:42:59 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,21 @@ static char	*get_add_pwd(const char *dir, const char *pwd)
 	else
 		new_dir = ft_strvajoin(3, pwd, "/", dir);
 	return (new_dir);
+}
+
+/*
+** OLDPWD shall be set before PWD is set to the new_value, since old_pwd is not
+** a copy of PWD value, it points to it.
+** Therefore modifying PWD value modify old_pwd content.
+*/
+
+static void	update_pwd(const char *new_pwd, t_shell *shell)
+{
+	const char	*old_pwd;
+
+	old_pwd = get_shell_env_value("PWD", shell);
+	set_env_key("OLDPWD", old_pwd, shell);
+	set_env_key("PWD", new_pwd, shell);
 }
 
 static int	internal_cd(const char *dir_operand, t_shell *shell,
