@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:02:35 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/16 11:29:26 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/19 12:07:22 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int		apply_options(const char **argv, t_env_param *param)
 	synopsis = init_synopsis(ENV_OPT_STRING, apply_opt,
 			ENV_OPT_ARG_STRING, param_opt);
 	add_opt_validator(synopsis, opt_is_valid);
-	add_usage(synopsis, env_usage);
+	add_usage(synopsis, env_usage, argv[0]);
 	options_return = apply_cmdline_opt(synopsis, argv, param);
 	return (options_return);
 }
