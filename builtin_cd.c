@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 17:13:46 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/19 11:07:16 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/19 12:12:20 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,18 @@ static void get_add_pwd(char **dir, const char *pwd)
 static void	update_pwd(const char *new_pwd, t_shell *shell)
 {
 	const char	*old_pwd;
+	char		*cwd;
 
 	old_pwd = get_shell_env_value("PWD", shell);
 	set_env_key("OLDPWD", old_pwd, shell);
-	set_env_key("PWD", new_pwd, shell);
+	if (new_pwd != NULL)
+		set_env_key("PWD", new_pwd, shell);
+	else
+	{
+		cwd = getcwd(NULL, 0);
+		set_env_key("PWD", cwd, shell);
+		ft_strdel(&cwd);
+	}
 }
 
 static const char	*handle_dot_dot_logically(char *directory)
@@ -164,7 +172,7 @@ static int	more_internal_cd(const char *dir_operand, t_shell *shell,
 		if (dot_dot_logically)
 			update_pwd(*directory, shell);
 		else
-			update_pwd(*directory, shell);
+			update_pwd(NULL, shell);
 	}
 	return (return_is);
 }
