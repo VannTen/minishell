@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 17:13:46 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/17 14:37:46 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/19 11:07:16 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,15 +91,16 @@ static char	*produce_dir_operand(const char *directory, const t_shell *shell)
 	return (final_dir);
 }
 
-static char	*get_add_pwd(const char *dir, const char *pwd)
+static void get_add_pwd(char **dir, const char *pwd)
 {
 	char	*new_dir;
 
 	if (last_char_of(pwd) == '/')
-		new_dir = ft_strjoin(pwd, dir);
+		new_dir = ft_strjoin(pwd, *dir);
 	else
-		new_dir = ft_strvajoin(3, pwd, "/", dir);
-	return (new_dir);
+		new_dir = ft_strvajoin(3, pwd, "/", *dir);
+	ft_strdel(dir);
+	*dir = new_dir;
 }
 
 /*
@@ -125,43 +126,45 @@ static const char	*handle_dot_dot_logically(char *directory)
 		return (directory);
 }
 
-const char		*relative_pathname(const char *directory)
+size_t	relative_pathname(const char *directory)
 {
-	const char	*final_dir;
+	size_t		rel_part_begin;
 	char		*cwd;
 
 	cwd = getcwd(NULL, 0);
-	final_dir = give_rel_path_from_abs(directory, cwd);
+	rel_part_begin = give_rel_path_from_abs(directory, cwd);
 	ft_strdel(&cwd);
-	return (final_dir);
+	return (rel_part_begin);
 }
 
 static int	more_internal_cd(const char *dir_operand, t_shell *shell,
-		t_bool dot_dot_logically, const char *directory)
+		t_bool dot_dot_logically, char **directory)
 {
-	char	*tmp;
-	const char	*final_dir;
-	int			return_is;
+	size_t	rel_part_index;
+	int		return_is;
 
+	rel_part_index = 0;
 	if (dot_dot_logically)
 	{
-		tmp = get_add_pwd(directory, get_shell_env_value("PWD", shell));
-		handle_dot_dot_logically(tmp);
-		if (ft_strlen(tmp) >= PATH_MAX
+		get_add_pwd(directory, get_shell_env_value("PWD", shell));
+		handle_dot_dot_logically(*directory);
+		if (ft_strlen(*directory) >= PATH_MAX
 				&& ft_strlen(dir_operand) < PATH_MAX)
-			final_dir = relative_pathname(tmp);
+			rel_part_index = relative_pathname(*directory);
 	}
-	final_dir = directory;
-	if (chdir(final_dir) == -1)
+	if (chdir(*directory + rel_part_index) == -1)
 	{
 		ft_dprintf(STDERR_FILENO, "Error on cd when calling chdir"
-				"\ndir is : %s\nfinal dir is : %s", directory, final_dir);
+				"\ndir is : %s\n", *directory);
 		return_is = 1;
 	}
 	else
 	{
 		return_is = 0;
-		update_pwd(final_dir, shell);
+		if (dot_dot_logically)
+			update_pwd(*directory, shell);
+		else
+			update_pwd(*directory, shell);
 	}
 	return (return_is);
 }
@@ -178,7 +181,7 @@ static int	internal_cd(const char *dir_operand, t_shell *shell,
 	else
 	{
 		return_is = more_internal_cd(dir_operand, shell,
-					dot_dot_logically, directory);
+				dot_dot_logically, &directory);
 		ft_strdel(&directory);
 	}
 	return (return_is);
