@@ -195,7 +195,48 @@ static int	internal_cd(const char *dir_operand, t_shell *shell,
 	return (return_is);
 }
 
+static int	apply_P(void *v_dot_dot_logic)
+{
+	t_bool	*dot_dot_logic;
+
+	dot_dot_logic = v_dot_dot_logic;
+	*dot_dot_logic = FALSE;
+	return (0);
+}
+
+static int	apply_L(void *v_dot_dot_logic)
+{
+	t_bool	*dot_dot_logic;
+
+	dot_dot_logic = v_dot_dot_logic;
+	*dot_dot_logic = TRUE;
+	return (0);
+}
+
+static t_bool	valid_options(int opt_ret)
+{
+	return (opt_ret == 0);
+}
+
+static void		cd_usage(const char *prog_name)
+{
+	ft_printf("%1$s: usage : %1$s [-L|-P] [dir]\n", prog_name);
+}
+
 int	ft_cd(const char **argv, t_shell *shell_state)
 {
-	return (internal_cd(argv[1], shell_state, TRUE));
+	t_bool		dot_dot_logically;
+	t_synopsis	*syn;
+	const t_apply_opt	opt[] = {apply_P, apply_L};
+	const char			opt_letters[] = "PL";
+	int					opt_numbers;
+
+	syn = init_synopsis(opt_letters, opt, NULL, NULL);
+	add_opt_validator(syn, valid_options);
+	add_usage(syn, cd_usage, argv[0]);
+	dot_dot_logically = TRUE;
+	opt_numbers = apply_cmdline_opt(syn, argv, &dot_dot_logically);
+	if (opt_numbers == USAGE_ERROR)
+		return (1);
+	return (internal_cd(argv[opt_numbers], shell_state, dot_dot_logically));
 }
