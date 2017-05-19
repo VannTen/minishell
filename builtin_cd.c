@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 17:13:46 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/19 12:12:20 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/19 12:24:57 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,8 @@ static int	more_internal_cd(const char *dir_operand, t_shell *shell,
 	rel_part_index = 0;
 	if (dot_dot_logically)
 	{
-		get_add_pwd(directory, get_shell_env_value("PWD", shell));
+		if (**directory != '/')
+			get_add_pwd(directory, get_shell_env_value("PWD", shell));
 		handle_dot_dot_logically(*directory);
 		if (ft_strlen(*directory) >= PATH_MAX
 				&& ft_strlen(dir_operand) < PATH_MAX)
