@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 17:13:46 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/19 12:24:57 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/19 18:46:59 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,17 +132,6 @@ static const char	*handle_dot_dot_logically(char *directory)
 		return (NULL);
 	else
 		return (directory);
-}
-
-size_t	relative_pathname(const char *directory)
-{
-	size_t		rel_part_begin;
-	char		*cwd;
-
-	cwd = getcwd(NULL, 0);
-	rel_part_begin = give_rel_path_from_abs(directory, cwd);
-	ft_strdel(&cwd);
-	return (rel_part_begin);
 }
 
 static int	more_internal_cd(const char *dir_operand, t_shell *shell,
