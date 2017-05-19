@@ -6,7 +6,7 @@
 #    By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/19 07:58:53 by mgautier          #+#    #+#              #
-#*   Updated: 2017/05/10 17:10:04 by mgautier         ###   ########.fr       *#
+#*   Updated: 2017/05/19 18:53:27 by mgautier         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,9 @@ BUILTIN_ENV ?=\
 	builtin_env_intern.c\
 	builtin_env_options.c
 BUILTIN_CD ?=\
-	builtin_cd.c
+	builtin_cd.c\
+	builtin_cd_intern.c\
+	builtin_cd_intern_operand.c
 ENV_TOOLS ?=\
 	env_tools.c\
 	env_tools_get.c\
