@@ -6,14 +6,14 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 14:57:38 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/04 15:16:10 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/19 19:07:11 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stddef.h>
 
-char		*get_key(const char *env_entry)
+char			*get_key(const char *env_entry)
 {
 	size_t	index;
 	char	*key;
@@ -27,7 +27,7 @@ char		*get_key(const char *env_entry)
 	return (key);
 }
 
-t_bool		key_are_equal(const char *searched_key, const char *env_entry)
+t_bool			key_are_equal(const char *searched_key, const char *env_entry)
 {
 	size_t	index;
 
@@ -42,14 +42,14 @@ t_bool		key_are_equal(const char *searched_key, const char *env_entry)
 		return (FALSE);
 }
 
-static size_t		get_entry_value_len(const char *env_entry)
+static size_t	get_entry_value_len(const char *env_entry)
 {
 	while (*env_entry != '=')
 		env_entry++;
 	return (ft_strlen(env_entry + 1));
 }
 
-static void			put_entry_value(char *env_entry, const char *new_value)
+static void		put_entry_value(char *env_entry, const char *new_value)
 {
 	while (*env_entry != '=')
 		env_entry++;
@@ -63,7 +63,7 @@ static void			put_entry_value(char *env_entry, const char *new_value)
 	*env_entry = '\0';
 }
 
-char		*replace_env_entry(char *old_env_entry,
+char			*replace_env_entry(char *old_env_entry,
 		const char *key, const char *new_value)
 {
 	size_t	old_value_len;

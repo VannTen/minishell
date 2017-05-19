@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 15:00:48 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/16 12:26:31 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/19 19:08:12 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static char	**add_new_entry(size_t index, const char *key,
 	return (env);
 }
 
-char	**ft_putenv(const char *key, const char *value, char **env)
+char		**ft_putenv(const char *key, const char *value, char **env)
 {
 	size_t	index;
 	char	*new_entry;
@@ -60,7 +60,7 @@ char	**ft_putenv(const char *key, const char *value, char **env)
 	return (env);
 }
 
-char	**ft_removeenv(const char *key, char **env)
+char		**ft_removeenv(const char *key, char **env)
 {
 	size_t	index;
 
@@ -85,9 +85,9 @@ char	**ft_removeenv(const char *key, char **env)
 	return (env);
 }
 
-char	**ft_setenv_intern(char **env, const char *setenv)
+char		**ft_setenv_intern(char **env, const char *setenv)
 {
-	char	*key;
+	char		*key;
 	const char	*value;
 	char		**new_env;
 
@@ -98,7 +98,7 @@ char	**ft_setenv_intern(char **env, const char *setenv)
 	return (new_env);
 }
 
-char	**empty_env(char **env)
+char		**empty_env(char **env)
 {
 	char	**new_env;
 

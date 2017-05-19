@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/19 18:49:18 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/19 18:56:29 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/19 19:01:17 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,9 @@ int					internal_cd(const char *dir_operand, t_shell *shell,
 		t_bool dot_dot_logically)
 {
 	char	*directory;
-	int			return_is;
+	int		return_is;
 
-	directory = produce_dir_operand(dir_operand,shell);
+	directory = produce_dir_operand(dir_operand, shell);
 	if (directory == NULL)
 		return_is = EXIT_FAILURE;
 	else

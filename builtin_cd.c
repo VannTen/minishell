@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 17:13:46 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/19 18:56:29 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/19 19:02:49 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 ** Therefore modifying PWD value modify old_pwd content.
 */
 
-static int	apply_P(void *v_dot_dot_logic)
+static int		apply_big_p(void *v_dot_dot_logic)
 {
 	t_bool	*dot_dot_logic;
 
@@ -34,7 +34,7 @@ static int	apply_P(void *v_dot_dot_logic)
 	return (0);
 }
 
-static int	apply_L(void *v_dot_dot_logic)
+static int		apply_big_l(void *v_dot_dot_logic)
 {
 	t_bool	*dot_dot_logic;
 
@@ -53,11 +53,11 @@ static void		cd_usage(const char *prog_name)
 	ft_printf("%1$s: usage : %1$s [-L|-P] [dir]\n", prog_name);
 }
 
-int	ft_cd(const char **argv, t_shell *shell_state)
+int				ft_cd(const char **argv, t_shell *shell_state)
 {
-	t_bool		dot_dot_logically;
-	t_synopsis	*syn;
-	const t_apply_opt	opt[] = {apply_P, apply_L};
+	t_bool				dot_dot_logically;
+	t_synopsis			*syn;
+	const t_apply_opt	opt[] = {apply_big_p, apply_big_l};
 	const char			opt_letters[] = "PL";
 	int					opt_numbers;
 

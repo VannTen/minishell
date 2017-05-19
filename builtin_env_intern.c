@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:02:35 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/19 12:07:22 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/19 19:05:12 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void		env_usage(const char *prog_name)
 			prog_name);
 }
 
-void		deinit_param(t_env_param **params)
+void			deinit_param(t_env_param **params)
 {
 	t_env_param	*to_del;
 
@@ -41,7 +41,7 @@ void		deinit_param(t_env_param **params)
 	}
 }
 
-t_env_param *init_param(const char **env)
+t_env_param		*init_param(const char **env)
 {
 	t_env_param	*params;
 	size_t		index;
@@ -57,11 +57,11 @@ t_env_param *init_param(const char **env)
 	return (params);
 }
 
-int		apply_options(const char **argv, t_env_param *param)
+int				apply_options(const char **argv, t_env_param *param)
 {
 	const t_apply_opt_param	param_opt[] = {
-		apply_P,
-		apply_S,
+		apply_big_p,
+		apply_big_s,
 		apply_u
 	};
 	const t_apply_opt		apply_opt[] = {
