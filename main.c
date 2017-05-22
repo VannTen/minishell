@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:48:04 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/15 16:52:18 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/22 16:47:24 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ void		delete_input(t_input *to_del)
 	*to_del = NULL;
 }
 
+t_bool		input_is_empty(t_input input)
+{
+	return (input == NULL || input[0] == NULL);
+}
+
 int			 main(void)
 {
 	t_input				input;
@@ -65,8 +70,11 @@ int			 main(void)
 	{
 		prompt_user(shell_state);;
 		input = get_input();
-		return_status = search_and_execute_command(input, shell_state);
-		set_exit_status(shell_state, return_status);
+		if (!input_is_empty(input))
+		{
+			return_status = search_and_execute_command(input, shell_state);
+			set_exit_status(shell_state, return_status);
+		}
 		delete_input(&input);
 	}
 	return_status = deinit_shell(&shell_state);
