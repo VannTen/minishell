@@ -6,14 +6,13 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 15:00:48 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/04 15:24:02 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/19 19:08:12 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env_interface.h"
 #include "libft.h"
-#include <stddef.h>
-
+#include <stdlib.h>
 
 static char	**add_new_entry(size_t index, const char *key,
 		const char *value, char **env)
@@ -40,7 +39,7 @@ static char	**add_new_entry(size_t index, const char *key,
 	return (env);
 }
 
-char	**ft_putenv(const char *key, const char *value, char **env)
+char		**ft_putenv(const char *key, const char *value, char **env)
 {
 	size_t	index;
 	char	*new_entry;
@@ -61,7 +60,7 @@ char	**ft_putenv(const char *key, const char *value, char **env)
 	return (env);
 }
 
-char	**ft_removeenv(const char *key, char **env)
+char		**ft_removeenv(const char *key, char **env)
 {
 	size_t	index;
 
@@ -74,6 +73,9 @@ char	**ft_removeenv(const char *key, char **env)
 	}
 	if (env[index] != NULL)
 	{
+		ft_strdel(env + index);
+		env[index] = env[index + 1];
+		index++;
 		while (env[index] != NULL)
 		{
 			env[index] = env[index + 1];
@@ -83,9 +85,9 @@ char	**ft_removeenv(const char *key, char **env)
 	return (env);
 }
 
-char	**ft_setenv_intern(char **env, const char *setenv)
+char		**ft_setenv_intern(char **env, const char *setenv)
 {
-	char	*key;
+	char		*key;
 	const char	*value;
 	char		**new_env;
 
@@ -96,7 +98,7 @@ char	**ft_setenv_intern(char **env, const char *setenv)
 	return (new_env);
 }
 
-char	**empty_env(char **env)
+char		**empty_env(char **env)
 {
 	char	**new_env;
 

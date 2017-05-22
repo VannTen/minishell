@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:48:04 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/05 16:12:32 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/15 16:52:18 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "error_interface.h"
 #include "libft.h"
 #include <stddef.h>
+#include <unistd.h>
 
 extern char	**environ;
 

@@ -6,13 +6,14 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:02:35 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/05 14:34:29 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/22 14:43:48 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin_env_options.h"
 #include "builtin_env_defs.h"
-#include <stddef.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 static t_bool	opt_is_valid(int opt_return_status)
 {
@@ -27,7 +28,7 @@ static void		env_usage(const char *prog_name)
 			prog_name);
 }
 
-void		deinit_param(t_env_param **params)
+void			deinit_param(t_env_param **params)
 {
 	t_env_param	*to_del;
 
@@ -40,7 +41,7 @@ void		deinit_param(t_env_param **params)
 	}
 }
 
-t_env_param *init_param(const char **env)
+t_env_param		*init_param(const char **env)
 {
 	t_env_param	*params;
 	size_t		index;
@@ -56,11 +57,11 @@ t_env_param *init_param(const char **env)
 	return (params);
 }
 
-int		apply_options(const char **argv, t_env_param *param)
+int				apply_options(const char **argv, t_env_param *param)
 {
 	const t_apply_opt_param	param_opt[] = {
-		apply_P,
-		apply_S,
+		apply_big_p,
+		apply_big_s,
 		apply_u
 	};
 	const t_apply_opt		apply_opt[] = {
@@ -72,8 +73,14 @@ int		apply_options(const char **argv, t_env_param *param)
 
 	synopsis = init_synopsis(ENV_OPT_STRING, apply_opt,
 			ENV_OPT_ARG_STRING, param_opt);
-	add_opt_validator(synopsis, opt_is_valid);
-	add_usage(synopsis, env_usage);
-	options_return = apply_cmdline_opt(synopsis, argv, param);
+	if (synopsis != NULL)
+	{
+		add_opt_validator(synopsis, opt_is_valid);
+		add_usage(synopsis, env_usage, argv[0]);
+		options_return = apply_cmdline_opt(synopsis, argv, param);
+		deinit_synopsis(&synopsis);
+	}
+	else
+		return (-1);
 	return (options_return);
 }

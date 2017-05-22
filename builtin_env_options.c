@@ -6,12 +6,13 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 13:43:39 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/05 14:36:27 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/19 19:03:24 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin_env_defs.h"
 #include "shell_interface.h"
+#include <unistd.h>
 
 int	apply_i(void *v_param)
 {
@@ -44,7 +45,7 @@ int	apply_u(void *v_param, const char *arg)
 	return (OPT_SUCCESS);
 }
 
-int	apply_P(void *v_param, const char *arg)
+int	apply_big_p(void *v_param, const char *arg)
 {
 	t_env_param	*param;
 
@@ -53,7 +54,7 @@ int	apply_P(void *v_param, const char *arg)
 	return (OPT_SUCCESS);
 }
 
-int	apply_S(void *v_param, const char *arg)
+int	apply_big_s(void *v_param, const char *arg)
 {
 	(void)v_param;
 	(void)arg;

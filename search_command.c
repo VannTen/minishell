@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 09:48:30 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/05 16:33:59 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/16 11:27:46 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "error_interface.h"
 #include "libft.h"
 #include <unistd.h>
+#include <sys/types.h>
 #include <sys/wait.h>
 
 /*

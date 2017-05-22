@@ -6,7 +6,7 @@
 #*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
 #*   Created: 2016/11/04 13:12:11 by mgautier          #+#    #+#             *#
-#*   Updated: 2017/04/18 17:08:39 by mgautier         ###   ########.fr       *#
+#*   Updated: 2017/05/11 11:37:33 by mgautier         ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
@@ -17,6 +17,7 @@ $(info Begin Makefile parsing...)
 
 DEFAULT_RULE := debug
 QUIET := @
+PRINT_INFO := KK
 #ifeq ($(MAKECMDGOALS),debug)
 #BUILD_PREFIX := debug
 #endif
@@ -95,11 +96,15 @@ $(word 2,$^).tmp > $(word 2,$^)
 
 # Add objects files to archive (static library)
 define LINK_STATIC_LIB
-$(AR) $(ARFLAGS) $@ $?
-$(RANLIB) $@
+$(if $(PRINT_INFO),$(info Archiving in static library $@ ...))
+$(QUIET)$(AR) $(ARFLAGS) $@ $?
+$(QUIET)$(RANLIB) $@
 endef
 # Linker
-LINK_EXE = $(CC) $(LDFLAGS) $(LD_OPTI_FLAGS) $^ -o $@ $(LDFLAGS_TGT)
+define LINK_EXE
+$(if $(PRINT_INFO),$(info Linking $@ ...))
+$(QUIET)$(CC) $(LDFLAGS) $(LD_OPTI_FLAGS) $^ -o $@ $(LDFLAGS_TGT)
+endef
 
 
 ##
@@ -129,15 +134,15 @@ endef
 # Assure a clean state before computing rules in a subdir
 EMPTY_SRCS.MK := TARGET \
  SRC \
- LIBRARIES \
- OBJECTS \
- ELSE \
  SRC_DIR \
  INC_DIR \
  OBJ_DIR \
  DEP_DIR \
  TEST_DIR \
  SUBDIRS 
+EMPTY_DEPS.MK := LIBRARY ELSE OBJECTS SUBDIRS
+CLEAR_VAR_LIST = $(foreach VARIABLE, $1,$(eval $(VARIABLE):= )) 
+
 
 ##
 ## Build rules
@@ -153,6 +158,7 @@ EMPTY_SRCS.MK := TARGET \
 define	STATIC_OBJ_RULE
 $(OBJ_$(DIR)): $(OBJ_LOCAL_$(DIR))%.o: $(SRC_LOCAL_$(DIR))%.c\
 $(DEP_LOCAL_$(DIR))%.dep | $(OBJ_LOCAL_$(DIR)) $(DEP_LOCAL_$(DIR))
+	$(if $(PRINT_INFO), $$(info Compiling $$@ ...))
 	$$(QUIET) $$(COMPILE)
 	$$(QUIET) $$(POSTCOMPILE)
 	$$(QUIET) $(RM) $$(word 2,$$^).tmp
