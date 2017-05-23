@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 09:48:30 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/16 11:27:46 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/23 14:56:20 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,30 +66,35 @@ int	execute_command(char *const *args, char **env)
 	return (status);
 }
 
+int	verify_command(const char *full_cmd_path)
+{
+	if (full_cmd_path == NULL)
+		return (COMMAND_NOT_FOUND);
+	if (access(full_cmd_path, X_OK))
+	{
+		ft_dprintf(STDERR_FILENO, "%s: Permission denied\n", full_cmd_path);
+		return (COULD_NOT_EXECUTE_COMMAND);
+	}
+	return (NO_ERROR);
+}
+
 int	search_and_execute_command(char **args, t_shell *shell_state)
 {
 	t_builtin	builtin_utility;
 	char		*exe_name;
+	int			command_search_result;
 
 	if (!(string_has_char(args[0], '/')))
 	{
 		builtin_utility = search_for_builtin(args[0]);
 		if (builtin_utility != NULL)
 			return (builtin_utility((const char**)args, shell_state));
-		else
-		{
-			exe_name = find_exe_path(args[0], get_path(shell_state));
-			if (exe_name != NULL)
-			{
-				ft_strdel((char**)args);
-				args[0] = exe_name;
-			}
-			else
-			{
-				ft_dprintf(STDERR_FILENO, "%s: command not found\n", args[0]);
-				return (COMMAND_NOT_FOUND);
-			}
-		}
+		exe_name = find_exe_path(args[0], get_path(shell_state));
+		ft_strdel((char**)args);
+		args[0] = exe_name;
 	}
+	command_search_result = verify_command(args[0]);
+	if (command_search_result != NO_ERROR)
+		return (command_search_result);
 	return (execute_command(args, get_env(shell_state)));
 }
