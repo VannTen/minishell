@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 09:48:30 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/23 14:56:20 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/23 15:12:01 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <stdlib.h>
 
 /*
 ** Attempt to follow the POSIX specifications defined at
@@ -54,7 +55,10 @@ int	execute_command(char *const *args, char **env)
 	status = 0;
 	child = fork();
 	if (child == 0)
-		execve(args[0], args, env);
+	{
+		status = execve(args[0], args, env);
+		exit(COULD_NOT_EXECUTE_COMMAND);
+	}
 	if (child > 0)
 		waitpid(child, &status, 0);
 	if (WIFEXITED(status))
