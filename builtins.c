@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 18:24:32 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/23 12:12:42 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/23 17:41:56 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "builtins_defs.h"
 #include "shell_interface.h"
 #include "libft.h"
+#include "error_interface.h"
 #include <stdlib.h>
 #include <sys/param.h>
 
@@ -30,7 +31,11 @@ int			ft_exit(const char **argv, t_shell *shell_state)
 	int	exit_status;
 
 	if (argv[1] != NULL)
-		exit_status = ft_atoi(argv[1]);
+	{
+		exit_status = string_is_digit(argv[1]) ?
+			ft_strict_atoi(argv[1]) :
+			EXIT_STATUS_OUT_OF_RANGE;
+	}
 	else
 		exit_status = EXIT_SUCCESS;
 	set_exit_status(shell_state, exit_status);
