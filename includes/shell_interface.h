@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:54:49 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/23 12:12:30 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/23 18:39:51 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 */
 
 typedef struct s_shell	t_shell;
-typedef char**			t_input;
 
 /*
 ** Commands execution

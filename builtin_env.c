@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 17:33:48 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/23 12:15:28 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/23 18:40:47 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_env(const char **argv, t_shell *shell_state)
 	if (argv[index] != NULL)
 	{
 		return_status = search_and_execute_command(
-					(t_input)argv + index,
+					(char**)argv + index,
 					param->sub_shell);
 	}
 	else

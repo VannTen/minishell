@@ -6,7 +6,7 @@
 #    By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/19 07:58:53 by mgautier          #+#    #+#              #
-#*   Updated: 2017/05/19 18:53:27 by mgautier         ###   ########.fr       *#
+#*   Updated: 2017/05/23 18:42:02 by mgautier         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ TARGET := minishell
 #BUILTIN_CD = $(NOTHING)
 #ENV_TOOLS = $(NOTHING)
 #MY_SHELL = $(NOTHING)
+#SHELL_INPUT = $(NOTHING)
 
 BUILTIN_ENV ?=\
 	builtin_env.c\
@@ -39,6 +40,8 @@ MY_SHELL ?=\
 	shell_get_env.c\
 	shell_init.c\
 	shell_tools.c
+SHELL_INPUT ?=\
+	input.c
 SRC :=\
 	main.c\
 	search_command.c\
@@ -46,7 +49,8 @@ SRC :=\
 	$(BUILTIN_ENV)\
 	$(BUILTIN_CD)\
 	$(ENV_TOOLS)\
-	$(MY_SHELL)
+	$(MY_SHELL)\
+	$(SHELL_INPUT)
 
 # Directories
 
