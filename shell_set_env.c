@@ -6,13 +6,14 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 15:02:56 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/17 11:35:25 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/23 12:28:05 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell_defs.h"
 #include "path_constants.h"
 #include "env_interface.h"
+#include "builtins_interface.h"
 
 char	**set_path(t_shell *shell_state, const char *path_string)
 {
@@ -22,11 +23,17 @@ char	**set_path(t_shell *shell_state, const char *path_string)
 	return (shell_state->path);
 }
 
-void	set_env(t_shell *shell, const char *setenv)
+int		set_env(t_shell *shell, const char *setenv)
 {
-	shell->env = ft_setenv_intern(shell->env, setenv);
-	if (key_are_equal("PATH", setenv) && !(shell->persistent_path))
-		ft_free_string_array(&shell->path);
+	if (is_valid_setenv(setenv))
+	{
+		shell->env = ft_setenv_intern(shell->env, setenv);
+		if (key_are_equal("PATH", setenv) && !(shell->persistent_path))
+			ft_free_string_array(&shell->path);
+		return (BUILTIN_EXIT_SUCCESS);
+	}
+	else
+		return (BUILTIN_EXIT_FAILURE);
 }
 
 void	set_env_key(const char *key, const char *value, t_shell *shell)

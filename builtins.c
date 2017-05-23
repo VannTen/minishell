@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 18:24:32 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/19 19:06:43 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/23 12:12:42 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ int			ft_exit(const char **argv, t_shell *shell_state)
 
 int			ft_setenv(const char **argv, t_shell *shell_state)
 {
-	set_env(shell_state, argv[1]);
-	return (0);
+	return (set_env(shell_state, argv[1]));
 }
 
 int			ft_unsetenv(const char **argv, t_shell *shell_state)

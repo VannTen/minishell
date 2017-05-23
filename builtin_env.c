@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 17:33:48 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/05 14:33:09 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/23 12:15:28 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,8 @@ int	ft_env(const char **argv, t_shell *shell_state)
 	option_number = apply_options(argv, param);
 	return_status = 0;
 	index = option_number;
-	while (is_valid_setenv(argv[index]))
-	{
-		set_env(param->sub_shell, argv[index]);
+	while (set_env(param->sub_shell, argv[index]) == BUILTIN_EXIT_SUCCESS)
 		index++;
-	}
 	if (argv[index] != NULL)
 	{
 		return_status = search_and_execute_command(
