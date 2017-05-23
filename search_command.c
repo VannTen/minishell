@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 09:48:30 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/23 15:21:00 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/23 18:54:34 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*find_exe_path(const char *exe_name, char **const path)
 	return (exe_full_path);
 }
 
-int	execute_command(char *const *args, char **env)
+int		execute_command(char *const *args, char **env)
 {
 	pid_t	child;
 	int		status;
@@ -72,7 +72,7 @@ int	execute_command(char *const *args, char **env)
 	return (status);
 }
 
-int	verify_command(const char *full_cmd_path)
+int		verify_command(const char *full_cmd_path)
 {
 	if (full_cmd_path == NULL)
 		return (COMMAND_NOT_FOUND);
@@ -84,7 +84,7 @@ int	verify_command(const char *full_cmd_path)
 	return (NO_ERROR);
 }
 
-int	search_and_execute_command(char **args, t_shell *shell_state)
+int		search_and_execute_command(char **args, t_shell *shell_state)
 {
 	t_builtin	builtin_utility;
 	char		*exe_name;

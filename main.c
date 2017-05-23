@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:48:04 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/23 18:43:00 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/23 18:53:53 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,19 @@
 #include "libft.h"
 #include <stddef.h>
 
-extern char	**environ;
-
-int			 main(void)
+int	main(void)
 {
-	t_input				input;
-	t_exit_status		return_status;
-	t_shell				*shell_state;
+	t_input			input;
+	t_exit_status	return_status;
+	t_shell			*shell_state;
+	extern char		**environ;
 
 	shell_state = init_shell((const char**)environ);
 	if (shell_state == NULL)
 		return (SHELL_ENOMEM);
 	while (!shall_exit(shell_state))
 	{
-		prompt_user(shell_state);;
+		prompt_user(shell_state);
 		input = get_input();
 		if (!input_is_empty(input))
 		{
