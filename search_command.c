@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 09:48:30 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/23 15:12:01 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/23 15:21:00 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,14 @@ int	execute_command(char *const *args, char **env)
 
 	status = 0;
 	child = fork();
+	if (child == -1)
+		return (COULD_NOT_EXECUTE_COMMAND);
 	if (child == 0)
 	{
 		status = execve(args[0], args, env);
 		exit(COULD_NOT_EXECUTE_COMMAND);
 	}
-	if (child > 0)
+	else if (child > 0)
 		waitpid(child, &status, 0);
 	if (WIFEXITED(status))
 		status = WEXITSTATUS(status);
