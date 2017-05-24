@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 18:35:17 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/23 18:42:40 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/24 17:24:32 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,14 @@
 
 char		*get_raw_input(void)
 {
-	char *input;
+	char	*input;
+	int		ret;
 
-	get_next_line(STDIN_FILENO, &input);
-	return (input);
+	ret = get_next_line(STDIN_FILENO, &input);
+	if (ret != ONE_LINE_READ)
+		return (NULL);
+	else
+		return (input);
 }
 
 t_input		parse_input(char *raw)
@@ -37,7 +41,10 @@ t_input		get_input(void)
 	t_input	input;
 
 	raw_input = get_raw_input();
-	input = parse_input(raw_input);
+	if (raw_input != NULL)
+		input = parse_input(raw_input);
+	else
+		return (NULL);
 	ft_strdel(&raw_input);
 	return (input);
 }
