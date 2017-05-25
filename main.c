@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:48:04 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/23 18:53:53 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/25 14:43:04 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	main(void)
 	{
 		prompt_user(shell_state);
 		input = get_input();
+		if (has_input_error(input))
+			break ;
 		if (!input_is_empty(input))
 		{
 			return_status = search_and_execute_command(input, shell_state);

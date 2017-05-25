@@ -6,7 +6,7 @@
 #    By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/19 07:58:53 by mgautier          #+#    #+#              #
-#*   Updated: 2017/05/23 18:42:02 by mgautier         ###   ########.fr       *#
+#*   Updated: 2017/05/25 14:43:16 by mgautier         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,8 @@ MY_SHELL ?=\
 	shell_init.c\
 	shell_tools.c
 SHELL_INPUT ?=\
-	input.c
+	input.c\
+	input_error.c
 SRC :=\
 	main.c\
 	search_command.c\

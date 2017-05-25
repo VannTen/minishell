@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 18:38:04 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/23 18:40:13 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/25 14:43:40 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,23 @@
 
 typedef char**			t_input;
 
+/*
+** Get and parse input
+** Implementation file : input.c
+*/
+
 char		*get_raw_input(void);
 t_input		parse_input(char *raw);
 t_input		get_input(void);
 void		delete_input(t_input *to_del);
+
+/*
+** Input errors
+** Implementation file : input_error.c
+*/
+
 t_bool		input_is_empty(t_input input);
+t_bool		has_input_error(t_input input);
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 18:35:17 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/24 17:24:32 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/25 14:43:01 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,4 @@ void		delete_input(t_input *to_del)
 {
 	ft_free_string_array(to_del);
 	*to_del = NULL;
-}
-
-t_bool		input_is_empty(t_input input)
-{
-	return (input == NULL || input[0] == NULL);
 }
