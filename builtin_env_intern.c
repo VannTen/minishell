@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:02:35 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/22 14:43:48 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/25 15:36:09 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,18 @@ t_env_param		*init_param(const char **env)
 	size_t		index;
 
 	params = malloc(sizeof(t_env_param));
-	index = 0;
-	while (index < FLAGS_NBR)
+	if (params != NULL)
 	{
-		params->flags[index] = FALSE;
-		index++;
+		index = 0;
+		while (index < FLAGS_NBR)
+		{
+			params->flags[index] = FALSE;
+			index++;
+		}
+		params->sub_shell = init_shell(env);
+		if (params->sub_shell == NULL)
+			deinit_param(&params);
 	}
-	params->sub_shell = init_shell(env);
 	return (params);
 }
 
