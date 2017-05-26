@@ -6,14 +6,14 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/19 18:48:34 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/26 16:02:10 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/26 16:28:57 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin_cd_defs.h"
 #include "path_constants.h"
 
-static char	*try_path(const char *dir_name, const char *path_name)
+static char			*try_path(const char *dir_name, const char *path_name)
 {
 	char	*path_try;
 
@@ -28,7 +28,8 @@ static char	*try_path(const char *dir_name, const char *path_name)
 	return (path_try);
 }
 
-static char	*try_directory_paths(const char *dir_name, const char *cdpath)
+static char			*try_directory_paths(const char *dir_name,
+		const char *cdpath)
 {
 	char	**paths;
 	char	*path_try;
@@ -64,7 +65,8 @@ static const char	*get_env_dir_value(const char *key, const t_shell *shell)
 		return (value);
 }
 
-char		*produce_dir_operand(const char *directory, const t_shell *shell)
+char				*produce_dir_operand(const char *directory,
+		const t_shell *shell)
 {
 	char		*final_dir;
 
