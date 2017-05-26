@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 17:33:48 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/25 15:42:58 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/26 15:05:00 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,31 +16,35 @@
 #include "builtins_defs.h"
 #include "shell_interface.h"
 
-int	ft_env(const char **argv, t_shell *shell_state)
+static int	intern_env(const char **argv, const t_env_param *param, int index)
+{
+	while (set_env(param->sub_shell, argv[index]) == BUILTIN_EXIT_SUCCESS)
+		index++;
+	if (argv[index] != NULL)
+		return (search_and_execute_command(
+					(char**)argv + index, param->sub_shell));
+	else
+	{
+		ft_print_string_array((const char**)get_env(param->sub_shell),
+				'\n');
+		return (BUILTIN_EXIT_SUCCESS);
+	}
+}
+
+int			ft_env(const char **argv, t_shell *shell_state)
 {
 	int			option_number;
 	int			return_status;
-	int			index;
 	t_env_param	*param;
 
 	param = init_param((const char **)get_env(shell_state));
+	return_status = BUILTIN_EXIT_FAILURE;
 	if (param != NULL)
 	{
 		option_number = apply_options(argv, param);
-		return_status = 0;
-		index = option_number;
-		while (set_env(param->sub_shell, argv[index]) == BUILTIN_EXIT_SUCCESS)
-			index++;
-		if (argv[index] != NULL)
-			return_status = search_and_execute_command(
-					(char**)argv + index,
-					param->sub_shell);
-		else
-			ft_print_string_array(
-					(const char**)get_env(param->sub_shell),
-					'\n');
+		if (option_number != USAGE_ERROR)
+			return_status = intern_env(argv, param, option_number);
 		deinit_param(&param);
-		return (return_status);
 	}
-	return (BUILTIN_EXIT_FAILURE);
+	return (return_status);
 }
