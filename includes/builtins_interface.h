@@ -6,14 +6,13 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 13:39:24 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/23 12:25:35 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/26 19:28:06 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_INTERFACE_H
 # define BUILTINS_INTERFACE_H
 # include "shell_interface.h"
-# define IS_BUILTIN(x) (x != -1)
 
 enum
 {
