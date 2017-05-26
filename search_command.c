@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 09:48:30 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/26 18:57:24 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/26 19:22:55 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int		verify_command(const char *full_cmd_path)
 {
 	if (full_cmd_path == NULL)
 		return (COMMAND_NOT_FOUND);
-	if (access(full_cmd_path, X_OK))
+	if (access(full_cmd_path, X_OK) == -1)
 	{
 		ft_dprintf(STDERR_FILENO, "%s: Permission denied\n", full_cmd_path);
 		return (COULD_NOT_EXECUTE_COMMAND);
@@ -99,7 +99,11 @@ int		search_and_exe_external_command(char **args, t_shell *shell_state)
 		}
 	}
 	else
+	{
 		exe_name = args[0];
+		if (access(exe_name, F_OK) == -1)
+			return (COMMAND_NOT_FOUND);
+	}
 	command_search_result = verify_command(exe_name);
 	if (command_search_result != NO_ERROR)
 		return (command_search_result);
