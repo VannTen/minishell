@@ -6,11 +6,12 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 17:13:46 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/22 14:38:57 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/26 15:49:12 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin_cd_defs.h"
+#include "builtins_interface.h"
 #include "shell_interface.h"
 #include "libft.h"
 
@@ -68,9 +69,10 @@ int				ft_cd(const char **argv, t_shell *shell_state)
 		add_usage(syn, cd_usage, argv[0]);
 		dot_dot_logically = TRUE;
 		opt_numbers = apply_cmdline_opt(syn, argv, &dot_dot_logically);
+		if (opt_numbers == USAGE_ERROR)
+			return (BUILTIN_EXIT_FAILURE);
+		deinit_synopsis(&syn);
+		return (internal_cd(argv[opt_numbers], shell_state, dot_dot_logically));
 	}
-	if (syn == NULL || opt_numbers == USAGE_ERROR)
-		return (1);
-	deinit_synopsis(&syn);
-	return (internal_cd(argv[opt_numbers], shell_state, dot_dot_logically));
+	return (BUILTIN_EXIT_FAILURE);
 }

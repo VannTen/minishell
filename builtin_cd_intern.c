@@ -6,11 +6,12 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/19 18:49:18 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/19 19:01:17 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/26 15:49:16 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin_cd_defs.h"
+#include "builtins_interface.h"
 #include "shell_interface.h"
 #include "libft.h"
 #include <unistd.h>
@@ -78,11 +79,11 @@ static int			more_internal_cd(const char *dir_operand, t_shell *shell,
 	{
 		ft_dprintf(STDERR_FILENO, "Error on cd when calling chdir"
 				"\ndir is : %s\n", *directory);
-		return_is = 1;
+		return_is = BUILTIN_EXIT_FAILURE;
 	}
 	else
 	{
-		return_is = 0;
+		return_is = BUILTIN_EXIT_SUCCESS;
 		if (dot_dot_logically)
 			update_pwd(*directory, shell);
 		else
@@ -99,7 +100,7 @@ int					internal_cd(const char *dir_operand, t_shell *shell,
 
 	directory = produce_dir_operand(dir_operand, shell);
 	if (directory == NULL)
-		return_is = EXIT_FAILURE;
+		return_is = BUILTIN_EXIT_FAILURE;
 	else
 	{
 		return_is = more_internal_cd(dir_operand, shell,
