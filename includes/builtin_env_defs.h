@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 17:36:12 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/05 14:32:45 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/26 16:40:48 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,14 @@ enum	e_env_opt_return_status
 	OPT_FAILURE
 };
 
-typedef struct s_env_param t_env_param;
-
 enum	e_env_flags
 {
 	VERBOSE,
 	FLAGS_NBR
 };
 
-struct	s_env_param
+typedef struct s_env_param	t_env_param;
+struct		s_env_param
 {
 	t_bool		flags[FLAGS_NBR];
 	const char	*prog_name;
@@ -42,8 +41,9 @@ struct	s_env_param
 ** Implementation file : builtin_env_intern.c
 */
 
-int			apply_options(const char **argv, t_env_param *param);
-t_env_param *init_param(const char **env);
+int			apply_options(const char **argv,
+		t_env_param *param);
+t_env_param	*init_param(const char **env);
 void		deinit_param(t_env_param **params);
 
 #endif

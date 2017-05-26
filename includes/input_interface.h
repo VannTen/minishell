@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 18:38:04 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/25 14:43:40 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/26 16:36:36 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,5 @@ void		delete_input(t_input *to_del);
 
 t_bool		input_is_empty(t_input input);
 t_bool		has_input_error(t_input input);
-
 
 #endif

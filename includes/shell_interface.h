@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:54:49 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/23 18:39:51 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/26 16:37:33 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,15 @@ typedef struct s_shell	t_shell;
 ** Implementation file : exec_command.c
 */
 
-int		search_and_execute_command(char **args, t_shell *shell_state);
+int			search_and_execute_command(char **args, t_shell *shell_state);
 
 /*
 ** Shell state initialization
 ** Implementation file : shell_init.c
 */
 
-t_shell	*init_shell(const char **env);
-int		deinit_shell(t_shell **shell);
+t_shell		*init_shell(const char **env);
+int			deinit_shell(t_shell **shell);
 
 /*
 ** Shell state
@@ -54,33 +54,33 @@ const char	*get_shell_env_value(const char *key, const t_shell *shell);
 ** Implementation file : shell_set_env.c
 */
 
-char	**set_path(t_shell *shell_state, const char *path_string);
-int		set_env(t_shell *shell, const char *setenv);
-void	set_env_key(const char *key, const char *value, t_shell *shell);
-void	unset_env(t_shell *shell, const char *key);
-void	empty_shell_env(t_shell *shell);
+char		**set_path(t_shell *shell_state, const char *path_string);
+int			set_env(t_shell *shell, const char *setenv);
+void		set_env_key(const char *key, const char *value, t_shell *shell);
+void		unset_env(t_shell *shell, const char *key);
+void		empty_shell_env(t_shell *shell);
 
 /*
 ** Get info about the shell state
 ** Implemenation file : shell_get.c
 */
 
-t_bool	shall_exit(const t_shell *shell);
-int		get_exit_status(const t_shell *shell);
+t_bool		shall_exit(const t_shell *shell);
+int			get_exit_status(const t_shell *shell);
 
 /*
 ** Set state of the shell
 ** Implementation file : shell_set.c
 */
 
-void	will_exit(t_shell *shell);
-void	set_exit_status(t_shell *shell, int status);
+void		will_exit(t_shell *shell);
+void		set_exit_status(t_shell *shell, int status);
 
 /*
 ** Shell tools
 ** Implementation file : shell_tools.c
 */
 
-void	prompt_user(const t_shell *shell);
+void		prompt_user(const t_shell *shell);
 
 #endif

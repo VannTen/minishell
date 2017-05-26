@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 17:15:30 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/19 18:54:20 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/26 16:32:11 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,6 @@
 # define BUILTIN_CD_DEFS_H
 # include "shell_interface.h"
 # include "libft.h"
-
-typedef struct s_cd_param	t_cd_param;
-
-struct s_cd_param
-{
-	t_bool	dot_dot_logically;
-};
 
 /*
 ** Cd internal functions
