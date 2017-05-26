@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:02:35 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/25 15:36:09 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/26 14:42:18 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void		env_usage(const char *prog_name)
 {
 	ft_dprintf(STDERR_FILENO, "usage: %s "
 			"[-" ENV_OPT_STRING "] [-P utilpath] [-S string] [-u name]"
-			"\n[name=value ...] [utility [argument ...]]",
+			"\n[name=value ...] [utility [argument ...]]\n",
 			prog_name);
 }
 
