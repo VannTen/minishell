@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 09:48:30 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/23 18:54:34 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/26 18:34:53 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,17 +84,13 @@ int		verify_command(const char *full_cmd_path)
 	return (NO_ERROR);
 }
 
-int		search_and_execute_command(char **args, t_shell *shell_state)
+int		search_and_exe_external_command(char **args, t_shell *shell_state)
 {
-	t_builtin	builtin_utility;
 	char		*exe_name;
 	int			command_search_result;
 
 	if (!(string_has_char(args[0], '/')))
 	{
-		builtin_utility = search_for_builtin(args[0]);
-		if (builtin_utility != NULL)
-			return (builtin_utility((const char**)args, shell_state));
 		exe_name = find_exe_path(args[0], get_path(shell_state));
 		ft_strdel((char**)args);
 		args[0] = exe_name;
@@ -103,4 +99,17 @@ int		search_and_execute_command(char **args, t_shell *shell_state)
 	if (command_search_result != NO_ERROR)
 		return (command_search_result);
 	return (execute_command(args, get_env(shell_state)));
+}
+
+int		search_and_execute_command(char **args, t_shell *shell_state)
+{
+	t_builtin	builtin_utility;
+
+	if (!(string_has_char(args[0], '/')))
+	{
+		builtin_utility = search_for_builtin(args[0]);
+		if (builtin_utility != NULL)
+			return (builtin_utility((const char**)args, shell_state));
+	}
+	return (search_and_exe_external_command(args, shell_state));
 }

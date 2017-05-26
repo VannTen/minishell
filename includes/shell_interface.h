@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:54:49 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/26 16:37:33 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/26 18:36:25 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_shell	t_shell;
 */
 
 int			search_and_execute_command(char **args, t_shell *shell_state);
+int			search_and_exe_external_command(char **args, t_shell *shell_state);
 
 /*
 ** Shell state initialization

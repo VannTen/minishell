@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 17:33:48 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/26 15:05:00 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/26 18:35:52 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	intern_env(const char **argv, const t_env_param *param, int index)
 	while (set_env(param->sub_shell, argv[index]) == BUILTIN_EXIT_SUCCESS)
 		index++;
 	if (argv[index] != NULL)
-		return (search_and_execute_command(
+		return (search_and_exe_external_command(
 					(char**)argv + index, param->sub_shell));
 	else
 	{
