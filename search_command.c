@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 09:48:30 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/26 18:34:53 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/26 18:57:24 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,15 @@ int		search_and_exe_external_command(char **args, t_shell *shell_state)
 	if (!(string_has_char(args[0], '/')))
 	{
 		exe_name = find_exe_path(args[0], get_path(shell_state));
-		ft_strdel((char**)args);
-		args[0] = exe_name;
+		if (exe_name != NULL)
+		{
+			ft_strdel((char**)args);
+			args[0] = exe_name;
+		}
 	}
-	command_search_result = verify_command(args[0]);
+	else
+		exe_name = args[0];
+	command_search_result = verify_command(exe_name);
 	if (command_search_result != NO_ERROR)
 		return (command_search_result);
 	return (execute_command(args, get_env(shell_state)));
