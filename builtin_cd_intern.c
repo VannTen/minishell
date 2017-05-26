@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/19 18:49:18 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/26 16:28:28 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/26 17:50:41 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,18 @@ int					internal_cd(const char *dir_operand, t_shell *shell,
 {
 	char	*directory;
 	int		return_is;
+	t_bool	write_new_dir;
 
-	directory = produce_dir_operand(dir_operand, shell);
+	write_new_dir = FALSE;
+	directory = produce_dir_operand(dir_operand, shell, &write_new_dir);
 	if (directory == NULL)
 		return_is = BUILTIN_EXIT_FAILURE;
 	else
 	{
 		return_is = more_internal_cd(dir_operand, shell,
 				dot_dot_logically, &directory);
+		if (write_new_dir && return_is != BUILTIN_EXIT_FAILURE)
+			ft_putendl(get_shell_env_value("PWD", shell));
 		ft_strdel(&directory);
 	}
 	return (return_is);

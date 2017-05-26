@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 17:15:30 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/26 16:32:11 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/26 17:52:38 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@
 
 int		internal_cd(const char *dir_operand, t_shell *shell,
 		t_bool dot_dot_logically);
-char	*produce_dir_operand(const char *directory, const t_shell *shell);
+char	*produce_dir_operand(const char *directory, const t_shell *shell,
+		t_bool *write_new_dir);
 #endif
