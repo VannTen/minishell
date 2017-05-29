@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_get.c                                        :+:      :+:    :+:   */
+/*   builtin_cd_tools.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/05 14:41:32 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/29 14:52:00 by mgautier         ###   ########.fr       */
+/*   Created: 2017/05/29 17:24:07 by mgautier          #+#    #+#             */
+/*   Updated: 2017/05/29 17:26:57 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell_defs.h"
+#include "shell_interface.h"
+#include <unistd.h>
 
-t_bool		shall_exit(const t_shell *shell)
+void	update_pwd(const char *new_pwd, t_shell *shell)
 {
-	return (shell->shall_exit);
-}
+	const char	*old_pwd;
+	char		*cwd;
 
-int			get_exit_status(const t_shell *shell)
-{
-	return (shell->exit_status);
-}
-
-const char	*get_shell_name(const t_shell *shell)
-{
-	return (shell->name);
+	old_pwd = get_shell_env_value("PWD", shell);
+	set_env_key("OLDPWD", old_pwd, shell);
+	if (new_pwd != NULL)
+		set_env_key("PWD", new_pwd, shell);
+	else
+	{
+		cwd = getcwd(NULL, 0);
+		set_env_key("PWD", cwd, shell);
+		ft_strdel(&cwd);
+	}
 }

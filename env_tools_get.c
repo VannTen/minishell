@@ -6,10 +6,11 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 13:59:25 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/19 19:07:42 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/29 16:04:22 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "env_defs.h"
 #include "libft.h"
 #include <stddef.h>
 
@@ -20,8 +21,7 @@ char		*get_env_entry(const char *key, char **env)
 
 	index = 0;
 	key_length = ft_strlen(key);
-	while (env[index] != NULL
-			&& ft_strncmp(key, env[index], key_length) != 0)
+	while (env[index] != NULL && !key_are_equal(key, env[index]))
 		index++;
 	return (env[index]);
 }

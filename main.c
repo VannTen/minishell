@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:48:04 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/29 13:47:34 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/29 14:51:21 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,12 @@ static int	shell_loop(const char *argv[])
 
 int			main(int argc, const char *argv[])
 {
-
 	if (argc != 1)
 	{
 		ft_dprintf(STDERR_FILENO,
-				"%s only works in interactive mode, cannot readscript\n",
+				"%s only works in interactive mode, cannot read script\n",
 				get_file_part(argv[0]));
-		return (EXIT_FAILURE);;
+		return (EXIT_FAILURE);
 	}
 	else
 		return (shell_loop(argv));
