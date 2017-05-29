@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 09:48:30 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/16 11:27:46 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/26 19:22:55 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <stdlib.h>
 
 /*
 ** Attempt to follow the POSIX specifications defined at
@@ -46,16 +47,21 @@ char	*find_exe_path(const char *exe_name, char **const path)
 	return (exe_full_path);
 }
 
-int	execute_command(char *const *args, char **env)
+int		execute_command(char *const *args, char **env)
 {
 	pid_t	child;
 	int		status;
 
 	status = 0;
 	child = fork();
+	if (child == -1)
+		return (COULD_NOT_EXECUTE_COMMAND);
 	if (child == 0)
-		execve(args[0], args, env);
-	if (child > 0)
+	{
+		status = execve(args[0], args, env);
+		exit(COULD_NOT_EXECUTE_COMMAND);
+	}
+	else if (child > 0)
 		waitpid(child, &status, 0);
 	if (WIFEXITED(status))
 		status = WEXITSTATUS(status);
@@ -66,30 +72,53 @@ int	execute_command(char *const *args, char **env)
 	return (status);
 }
 
-int	search_and_execute_command(char **args, t_shell *shell_state)
+int		verify_command(const char *full_cmd_path)
+{
+	if (full_cmd_path == NULL)
+		return (COMMAND_NOT_FOUND);
+	if (access(full_cmd_path, X_OK) == -1)
+	{
+		ft_dprintf(STDERR_FILENO, "%s: Permission denied\n", full_cmd_path);
+		return (COULD_NOT_EXECUTE_COMMAND);
+	}
+	return (NO_ERROR);
+}
+
+int		search_and_exe_external_command(char **args, t_shell *shell_state)
+{
+	char		*exe_name;
+	int			command_search_result;
+
+	if (!(string_has_char(args[0], '/')))
+	{
+		exe_name = find_exe_path(args[0], get_path(shell_state));
+		if (exe_name != NULL)
+		{
+			ft_strdel((char**)args);
+			args[0] = exe_name;
+		}
+	}
+	else
+	{
+		exe_name = args[0];
+		if (access(exe_name, F_OK) == -1)
+			return (COMMAND_NOT_FOUND);
+	}
+	command_search_result = verify_command(exe_name);
+	if (command_search_result != NO_ERROR)
+		return (command_search_result);
+	return (execute_command(args, get_env(shell_state)));
+}
+
+int		search_and_execute_command(char **args, t_shell *shell_state)
 {
 	t_builtin	builtin_utility;
-	char		*exe_name;
 
 	if (!(string_has_char(args[0], '/')))
 	{
 		builtin_utility = search_for_builtin(args[0]);
 		if (builtin_utility != NULL)
 			return (builtin_utility((const char**)args, shell_state));
-		else
-		{
-			exe_name = find_exe_path(args[0], get_path(shell_state));
-			if (exe_name != NULL)
-			{
-				ft_strdel((char**)args);
-				args[0] = exe_name;
-			}
-			else
-			{
-				ft_dprintf(STDERR_FILENO, "%s: command not found\n", args[0]);
-				return (COMMAND_NOT_FOUND);
-			}
-		}
 	}
-	return (execute_command(args, get_env(shell_state)));
+	return (search_and_exe_external_command(args, shell_state));
 }

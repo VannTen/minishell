@@ -6,14 +6,15 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 12:10:34 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/16 11:56:00 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/29 13:37:54 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell_defs.h"
+#include "libft.h"
 #include <stdlib.h>
 
-t_shell	*init_shell(const char **env)
+t_shell	*init_shell(const char **env, const char *shell_name)
 {
 	t_shell	*shell;
 
@@ -25,6 +26,7 @@ t_shell	*init_shell(const char **env)
 		shell->persistent_path = FALSE;
 		shell->shall_exit = FALSE;
 		shell->exit_status = 0;
+		shell->name = get_file_part(shell_name);
 		if (shell->env == NULL)
 			deinit_shell(&shell);
 	}

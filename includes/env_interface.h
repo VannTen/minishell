@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 17:30:14 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/10 15:49:31 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/26 16:36:22 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ char		**ft_setenv_intern(char **env, const char *setenv);
 char		**empty_env(char **env);
 
 /*
-**
+** Various env tools
+** Implementation file : env_tools.c
 */
 
 t_bool		is_valid_setenv(const char *arg);
-
 
 #endif

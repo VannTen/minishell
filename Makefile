@@ -6,7 +6,7 @@
 #*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
 #*   Created: 2016/11/04 13:12:11 by mgautier          #+#    #+#             *#
-#*   Updated: 2017/05/11 11:37:33 by mgautier         ###   ########.fr       *#
+#*   Updated: 2017/05/26 11:14:44 by mgautier         ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
@@ -58,7 +58,8 @@ SYSTEM = $(shell uname)
 
 # Compiler flags
 ERROR_FLAGS := -Wall -Wextra -Werror $(STANDARD) -pedantic-errors
-DEBUG_FLAGS := -g -fsanitize=undefined -fsanitize=address -fno-omit-frame-pointer
+DEBUG_FLAGS := -g3
+SANITIZE_FLAGS := $(DEBUG_FLAGS) -fsanitize=undefined -fsanitize=address -fno-omit-frame-pointer
 SYNTAX_FLAGS := -fsyntax-only -ferror-limit=0
 OPTI_CFLAGS := -flto -Ofast
 OPTI_LDFLAGS := -flto
@@ -268,6 +269,8 @@ re: fclean all
 
 debug: $(NAME)
 
+sanitize: $(NAME)
+
 profile: $(NAME)
 
 syn: $(NAME)
@@ -277,6 +280,8 @@ syn: QUIET := @
 syn: LDFLAGS := $(LDFLAGS) $(SYNTAX_FLAGS)
 debug: CFLAGS := $(CFLAGS) $(DEBUG_FLAGS)
 debug: LDFLAGS := $(LDFLAGS) $(DEBUG_FLAGS)
+sanitize: CFLAGS := $(CFLAGS) $(SANITIZE_FLAGS)
+sanitize: LDFLAGS := $(LDFLAGS) $(SANITIZE_FLAGS)
 opti: CFLAGS := $(CFLAGS) $(OPTI_CFLAGS)
 opti: LDFLAGS := $(LDFLAGS) $(OPTI_LDFLAGS)
 profile: CFLAGS := $(CFLAGS) $(PROFILE_FLAGS)

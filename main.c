@@ -6,70 +6,34 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:48:04 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/22 16:47:24 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/29 13:47:34 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env_interface.h"
 #include "shell_interface.h"
+#include "input_interface.h"
 #include "error_interface.h"
 #include "libft.h"
-#include <stddef.h>
+#include <stdlib.h>
 #include <unistd.h>
 
-extern char	**environ;
-
-char		*get_raw_input(void)
+static int	shell_loop(const char *argv[])
 {
-	char *input;
+	t_input			input;
+	t_exit_status	return_status;
+	t_shell			*shell_state;
+	extern char		**environ;
 
-	get_next_line(STDIN_FILENO, &input);
-	return (input);
-}
-
-t_input		parse_input(char *raw)
-{
-	char **commands_and_args;
-
-	commands_and_args = ft_strsplit(raw, ' ');
-	return (commands_and_args);
-}
-
-t_input		get_input(void)
-{
-	char	*raw_input;
-	t_input	input;
-
-	raw_input = get_raw_input();
-	input = parse_input(raw_input);
-	ft_strdel(&raw_input);
-	return (input);
-}
-
-void		delete_input(t_input *to_del)
-{
-	ft_free_string_array(to_del);
-	*to_del = NULL;
-}
-
-t_bool		input_is_empty(t_input input)
-{
-	return (input == NULL || input[0] == NULL);
-}
-
-int			 main(void)
-{
-	t_input				input;
-	t_exit_status		return_status;
-	t_shell				*shell_state;
-
-	shell_state = init_shell((const char**)environ);
+	shell_state = init_shell((const char**)environ, argv[0]);
 	if (shell_state == NULL)
 		return (SHELL_ENOMEM);
 	while (!shall_exit(shell_state))
 	{
-		prompt_user(shell_state);;
+		prompt_user(shell_state);
 		input = get_input();
+		if (has_input_error(input))
+			break ;
 		if (!input_is_empty(input))
 		{
 			return_status = search_and_execute_command(input, shell_state);
@@ -79,4 +43,18 @@ int			 main(void)
 	}
 	return_status = deinit_shell(&shell_state);
 	return (return_status);
+}
+
+int			main(int argc, const char *argv[])
+{
+
+	if (argc != 1)
+	{
+		ft_dprintf(STDERR_FILENO,
+				"%s only works in interactive mode, cannot readscript\n",
+				get_file_part(argv[0]));
+		return (EXIT_FAILURE);;
+	}
+	else
+		return (shell_loop(argv));
 }
