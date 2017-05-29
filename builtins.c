@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 18:24:32 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/29 11:50:31 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/29 14:05:35 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,30 @@ int			ft_echo(const char **argv, t_shell *shell_state)
 
 int			ft_setenv(const char **argv, t_shell *shell_state)
 {
-	return (set_env(shell_state, argv[1]));
+	size_t	index;
+	int		exit_status;
+
+	exit_status = BUILTIN_EXIT_SUCCESS;
+	index = 1;
+	while (argv[index] != NULL && exit_status == BUILTIN_EXIT_SUCCESS)
+	{
+		exit_status = set_env(shell_state, argv[index]);
+		index++;
+	}
+	return (exit_status);
 }
 
 int			ft_unsetenv(const char **argv, t_shell *shell_state)
 {
-	unset_env(shell_state, argv[1]);
-	return (0);
+	size_t	index;
+
+	index = 1;
+	while (argv[index] != NULL)
+	{
+		unset_env(shell_state, argv[1]);
+		index++;
+	}
+	return (BUILTIN_EXIT_SUCCESS);
 }
 
 t_builtin	search_for_builtin(const char *cmd)
