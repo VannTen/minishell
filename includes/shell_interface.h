@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:54:49 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/26 18:36:25 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/29 13:41:51 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int			search_and_exe_external_command(char **args, t_shell *shell_state);
 ** Implementation file : shell_init.c
 */
 
-t_shell		*init_shell(const char **env);
+t_shell		*init_shell(const char **env, const char *shell_name);
 int			deinit_shell(t_shell **shell);
 
 /*
@@ -68,6 +68,7 @@ void		empty_shell_env(t_shell *shell);
 
 t_bool		shall_exit(const t_shell *shell);
 int			get_exit_status(const t_shell *shell);
+const char	*get_shell_name(const t_shell *shell);
 
 /*
 ** Set state of the shell
@@ -76,6 +77,7 @@ int			get_exit_status(const t_shell *shell);
 
 void		will_exit(t_shell *shell);
 void		set_exit_status(t_shell *shell, int status);
+void		set_shell_name(t_shell *shell, const char *prog_path);
 
 /*
 ** Shell tools

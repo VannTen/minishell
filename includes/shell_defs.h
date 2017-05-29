@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 13:31:37 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/26 16:37:59 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/29 11:55:19 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@
 
 struct	s_shell
 {
-	char	**env;
-	char	**path;
-	t_bool	persistent_path;
-	t_bool	shall_exit;
-	int		exit_status;
+	const char	*name;
+	char		**env;
+	char		**path;
+	t_bool		persistent_path;
+	t_bool		shall_exit;
+	int			exit_status;
 };
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:02:35 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/26 14:42:18 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/29 13:50:33 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_env_param		*init_param(const char **env)
 			params->flags[index] = FALSE;
 			index++;
 		}
-		params->sub_shell = init_shell(env);
+		params->sub_shell = init_shell(env, "env");
 		if (params->sub_shell == NULL)
 			deinit_param(&params);
 	}
