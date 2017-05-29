@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/29 11:46:35 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/29 13:40:16 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/29 14:16:02 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ int			ft_exit(const char **argv, t_shell *shell)
 	arg_count = ft_string_array_count(argv);
 	if (arg_count == 2)
 		exit_status = intern_exit(argv, shell);
-	else if (arg_count < 2)
+	else if (arg_count > 2)
 	{
 		exit_status = BUILTIN_EXIT_FAILURE;
 		ft_dprintf(STDERR_FILENO,
-				"%s: %s: too many arguments", get_shell_name(shell), "exit");
+				"%s: %s: too many arguments\n", get_shell_name(shell), "exit");
 	}
 	else
 	{
