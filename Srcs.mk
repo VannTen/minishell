@@ -6,7 +6,7 @@
 #    By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/19 07:58:53 by mgautier          #+#    #+#              #
-#*   Updated: 2017/05/29 17:24:49 by mgautier         ###   ########.fr       *#
+#*   Updated: 2017/05/29 19:04:20 by mgautier         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SHELL_INPUT ?=\
 MAIN ?=\
 	main.c\
 	search_command.c\
+	execute_command.c\
 	builtins.c
 SRC :=\
 	$(MAIN)\

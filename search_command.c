@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 09:48:30 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/26 19:22:55 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/29 19:13:21 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 #include "error_interface.h"
 #include "libft.h"
 #include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <stdlib.h>
 
 /*
 ** Attempt to follow the POSIX specifications defined at
@@ -25,7 +22,7 @@
 ** utilities/V3_chap02.html#tag_18_09_01_01
 */
 
-char	*find_exe_path(const char *exe_name, char **const path)
+char		*find_exe_path(const char *exe_name, char **const path)
 {
 	size_t	index;
 	char	*exe_full_path;
@@ -47,70 +44,56 @@ char	*find_exe_path(const char *exe_name, char **const path)
 	return (exe_full_path);
 }
 
-int		execute_command(char *const *args, char **env)
-{
-	pid_t	child;
-	int		status;
-
-	status = 0;
-	child = fork();
-	if (child == -1)
-		return (COULD_NOT_EXECUTE_COMMAND);
-	if (child == 0)
-	{
-		status = execve(args[0], args, env);
-		exit(COULD_NOT_EXECUTE_COMMAND);
-	}
-	else if (child > 0)
-		waitpid(child, &status, 0);
-	if (WIFEXITED(status))
-		status = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		status = 128 + WTERMSIG(status);
-	else if (WIFSTOPPED(status))
-		status = WSTOPSIG(status);
-	return (status);
-}
-
-int		verify_command(const char *full_cmd_path)
+int			verify_command(const char *full_cmd_path, const char *shell_name)
 {
 	if (full_cmd_path == NULL)
+	{
+		shell_error(shell_name, COM_NOT_FOUND, full_cmd_path);
 		return (COMMAND_NOT_FOUND);
+	}
 	if (access(full_cmd_path, X_OK) == -1)
 	{
-		ft_dprintf(STDERR_FILENO, "%s: Permission denied\n", full_cmd_path);
+		shell_error(shell_name, PERM_DENIED, full_cmd_path);
 		return (COULD_NOT_EXECUTE_COMMAND);
 	}
 	return (NO_ERROR);
 }
 
-int		search_and_exe_external_command(char **args, t_shell *shell_state)
+static char	*final_command_path(char **args, t_shell *shell)
+{
+	char *exe_name;
+	exe_name = find_exe_path(args[0], get_path(shell));
+	if (exe_name != NULL)
+	{
+		ft_strdel(args);
+		args[0] = exe_name;
+	}
+	return (exe_name);
+}
+
+int			search_external_command(char **args, t_shell *shell)
 {
 	char		*exe_name;
 	int			command_search_result;
 
-	if (!(string_has_char(args[0], '/')))
-	{
-		exe_name = find_exe_path(args[0], get_path(shell_state));
-		if (exe_name != NULL)
-		{
-			ft_strdel((char**)args);
-			args[0] = exe_name;
-		}
-	}
+	if (!string_has_char(args[0], '/'))
+		exe_name = final_command_path(args, shell);
 	else
 	{
 		exe_name = args[0];
 		if (access(exe_name, F_OK) == -1)
+		{
+			shell_error(get_shell_name(shell), NO_FILE, exe_name);
 			return (COMMAND_NOT_FOUND);
+		}
 	}
-	command_search_result = verify_command(exe_name);
+	command_search_result = verify_command(exe_name, get_shell_name(shell));
 	if (command_search_result != NO_ERROR)
 		return (command_search_result);
-	return (execute_command(args, get_env(shell_state)));
+	return (execute_command(args, get_env(shell)));
 }
 
-int		search_and_execute_command(char **args, t_shell *shell_state)
+int			search_and_execute_command(char **args, t_shell *shell)
 {
 	t_builtin	builtin_utility;
 
@@ -118,7 +101,7 @@ int		search_and_execute_command(char **args, t_shell *shell_state)
 	{
 		builtin_utility = search_for_builtin(args[0]);
 		if (builtin_utility != NULL)
-			return (builtin_utility((const char**)args, shell_state));
+			return (builtin_utility((const char**)args, shell));
 	}
-	return (search_and_exe_external_command(args, shell_state));
+	return (search_external_command(args, shell));
 }

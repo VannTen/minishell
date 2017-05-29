@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:54:49 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/29 13:41:51 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/29 19:05:43 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,19 @@
 typedef struct s_shell	t_shell;
 
 /*
-** Commands execution
-** Implementation file : exec_command.c
+** Commands search
+** Implementation file : search_command.c
 */
 
 int			search_and_execute_command(char **args, t_shell *shell_state);
-int			search_and_exe_external_command(char **args, t_shell *shell_state);
+int			search_external_command(char **args, t_shell *shell_state);
+
+/*
+** Commands execution
+** Implementation file : execute_command.c
+*/
+
+int			execute_command(char *const *args, char **env);
 
 /*
 ** Shell state initialization
@@ -84,6 +91,15 @@ void		set_shell_name(t_shell *shell, const char *prog_path);
 ** Implementation file : shell_tools.c
 */
 
+enum		e_err_code
+{
+	COM_NOT_FOUND,
+	PERM_DENIED,
+	NO_FILE
+};
+
 void		prompt_user(const t_shell *shell);
+void		shell_error(const char *shell_name, enum e_err_code err_code,
+		const char *arg);
 
 #endif
