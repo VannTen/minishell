@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/29 17:24:07 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/30 13:43:59 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/30 13:47:01 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ const char	*get_pwd(t_shell *shell)
 			set_env_key("PWD", pwd_sys, shell);
 			pwd = pwd_sys;
 		}
+		ft_strdel(&pwd_sys);
 	}
 	return (pwd);
 }
