@@ -6,7 +6,7 @@
 #    By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/19 07:58:53 by mgautier          #+#    #+#              #
-#*   Updated: 2017/05/29 19:04:20 by mgautier         ###   ########.fr       *#
+#*   Updated: 2017/05/30 13:43:41 by mgautier         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,8 +31,7 @@ BUILTIN_ENV ?=\
 BUILTIN_CD ?=\
 	builtin_cd.c\
 	builtin_cd_intern.c\
-	builtin_cd_intern_operand.c\
-	builtin_cd_tools.c
+	builtin_cd_intern_operand.c
 ENV_TOOLS ?=\
 	env_tools.c\
 	env_tools_get.c\
@@ -44,7 +43,8 @@ MY_SHELL ?=\
 	shell_set_env.c\
 	shell_get_env.c\
 	shell_init.c\
-	shell_tools.c
+	shell_tools.c\
+	shell_pwd_tools.c
 SHELL_INPUT ?=\
 	input.c\
 	input_error.c
