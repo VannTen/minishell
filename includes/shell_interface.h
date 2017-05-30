@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:54:49 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/29 19:05:43 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/30 13:39:46 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,14 @@ void		set_exit_status(t_shell *shell, int status);
 void		set_shell_name(t_shell *shell, const char *prog_path);
 
 /*
+** PWD tools
+** Implementation file : shell_pwd_tools.c
+*/
+
+const char	*get_pwd(t_shell *shell);
+void		update_pwd(const char *new_pwd, t_shell *shell);
+
+/*
 ** Shell tools
 ** Implementation file : shell_tools.c
 */
@@ -98,7 +106,7 @@ enum		e_err_code
 	NO_FILE
 };
 
-void		prompt_user(const t_shell *shell);
+void		prompt_user(t_shell *shell);
 void		shell_error(const char *shell_name, enum e_err_code err_code,
 		const char *arg);
 
