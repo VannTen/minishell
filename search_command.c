@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 09:48:30 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/29 19:13:21 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/30 12:10:30 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int			verify_command(const char *full_cmd_path, const char *shell_name)
 static char	*final_command_path(char **args, t_shell *shell)
 {
 	char *exe_name;
+
 	exe_name = find_exe_path(args[0], get_path(shell));
 	if (exe_name != NULL)
 	{
