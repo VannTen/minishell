@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/19 18:49:18 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/30 13:21:46 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/30 17:05:52 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,20 @@ static int			change_to_dir(char **directory, size_t rel_part_index,
 static int			more_internal_cd(const char *dir_operand, t_shell *shell,
 		t_bool dot_dot_logically, char **directory)
 {
-	size_t	rel_part_index;
+	size_t		rel_part_index;
+	const char	*pwd;
 
 	rel_part_index = 0;
 	if (dot_dot_logically)
 	{
 		if (**directory != '/')
-			get_add_path_before(directory, get_pwd(shell));
+		{
+			pwd = get_pwd(shell);
+			if (pwd != NULL)
+				get_add_path_before(directory, pwd);
+			else
+				return (BUILTIN_EXIT_FAILURE);
+		}
 		handle_dot_dot_logically(*directory);
 		if (ft_strlen(*directory) >= PATH_MAX
 				&& ft_strlen(dir_operand) < PATH_MAX)
