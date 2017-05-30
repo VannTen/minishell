@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:54:49 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/30 13:39:46 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/30 17:31:10 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void		set_shell_name(t_shell *shell, const char *prog_path);
 */
 
 const char	*get_pwd(t_shell *shell);
-void		update_pwd(const char *new_pwd, t_shell *shell);
+const char	*update_pwd(const char *new_pwd, t_shell *shell);
 
 /*
 ** Shell tools

@@ -6,14 +6,14 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/29 17:24:07 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/30 13:47:01 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/30 17:30:48 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell_interface.h"
 #include <unistd.h>
 
-void		update_pwd(const char *new_pwd, t_shell *shell)
+const char	*update_pwd(const char *new_pwd, t_shell *shell)
 {
 	const char	*old_pwd;
 	char		*cwd;
@@ -25,9 +25,15 @@ void		update_pwd(const char *new_pwd, t_shell *shell)
 	else
 	{
 		cwd = getcwd(NULL, 0);
-		set_env_key("PWD", cwd, shell);
-		ft_strdel(&cwd);
+		if (cwd != NULL)
+		{
+			set_env_key("PWD", cwd, shell);
+			ft_strdel(&cwd);
+		}
+		else
+			new_pwd == NULL;
 	}
+	return (new_pwd);
 }
 
 const char	*get_pwd(t_shell *shell)
