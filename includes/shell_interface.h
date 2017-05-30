@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:54:49 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/30 17:31:10 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/30 18:35:32 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ const char	*get_shell_env_value(const char *key, const t_shell *shell);
 
 char		**set_path(t_shell *shell_state, const char *path_string);
 int			set_env(t_shell *shell, const char *setenv);
-void		set_env_key(const char *key, const char *value, t_shell *shell);
+int			set_env_key(const char *key, const char *value, t_shell *shell);
 void		unset_env(t_shell *shell, const char *key);
 void		empty_shell_env(t_shell *shell);
 
