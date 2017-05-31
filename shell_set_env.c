@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 15:02:56 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/30 19:09:43 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/31 12:18:08 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,17 @@ int		set_env_key(const char *key, const char *value, t_shell *shell)
 	return (EXIT_FAILURE);
 }
 
-void	unset_env(t_shell *shell, const char *key)
+int		unset_env(t_shell *shell, const char *key)
 {
-	shell->env = ft_removeenv(key, shell->env);
-	if (ft_strcmp(key, "PATH") == 0 && !(shell->persistent_path))
-		ft_free_string_array(&shell->path);
+	if (ft_strchr(key, '=') == NULL)
+	{
+		shell->env = ft_removeenv(key, shell->env);
+		if (ft_strcmp(key, "PATH") == 0 && !(shell->persistent_path))
+			ft_free_string_array(&shell->path);
+		return (BUILTIN_EXIT_SUCCESS);
+	}
+	else
+		return (BUILTIN_EXIT_FAILURE);
 }
 
 void	empty_shell_env(t_shell *shell)

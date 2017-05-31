@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 18:24:32 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/31 12:14:34 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/31 12:23:10 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,14 @@ int			ft_setenv(const char **argv, t_shell *shell)
 
 	exit_status = BUILTIN_EXIT_SUCCESS;
 	index = 1;
-	while (argv[index] != NULL)
+	while (argv[index] != NULL && exit_status != BUILTIN_EXIT_SUCCESS)
 	{
 		exit_status = set_env(shell, argv[index]);
-		if (exit_status != BUILTIN_EXIT_SUCCESS)
-		{
-		ft_builtin_error(get_shell_name(shell), "setenv", argv[index],
-				BAD_ARG);
-		}
 		index++;
 	}
+		if (exit_status != BUILTIN_EXIT_SUCCESS)
+			ft_builtin_error(get_shell_name(shell), "setenv", argv[index - 1],
+				BAD_ARG);
 	if (index == 1)
 	{
 		exit_status = BUILTIN_EXIT_FAILURE;
@@ -82,7 +80,7 @@ int			ft_unsetenv(const char **argv, t_shell *shell)
 	index = 1;
 	while (argv[index] != NULL)
 	{
-		unset_env(shell, argv[1]);
+		exit_status = unset_env(shell, argv[1]);
 		index++;
 	}
 	if (index == 1)
