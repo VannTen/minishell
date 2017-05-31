@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 18:24:32 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/31 12:23:10 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/31 12:42:37 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	ft_builtin_error(const char *shell_name, const char *builtin,
 	int			precision;
 	const char	*err_mess[] = {
 		"not enough arguments",
-		"ill-formed argument",
+		"invalid argument",
 	};
 
 	precision = err_code == BAD_ARG ? -1 : 0;
@@ -48,49 +48,39 @@ int			ft_echo(const char **argv, t_shell *shell)
 	return (BUILTIN_EXIT_SUCCESS);
 }
 
-int			ft_setenv(const char **argv, t_shell *shell)
+static int	change_env(const char **argv, t_shell *shell,
+		int (*setter)(t_shell*, const char*))
 {
 	size_t	index;
 	int		exit_status;
 
 	exit_status = BUILTIN_EXIT_SUCCESS;
 	index = 1;
-	while (argv[index] != NULL && exit_status != BUILTIN_EXIT_SUCCESS)
+	while (argv[index] != NULL && exit_status == BUILTIN_EXIT_SUCCESS)
 	{
-		exit_status = set_env(shell, argv[index]);
+		exit_status = setter(shell, argv[index]);
 		index++;
 	}
-		if (exit_status != BUILTIN_EXIT_SUCCESS)
-			ft_builtin_error(get_shell_name(shell), "setenv", argv[index - 1],
+	if (exit_status != BUILTIN_EXIT_SUCCESS)
+		ft_builtin_error(get_shell_name(shell), argv[0], argv[index - 1],
 				BAD_ARG);
 	if (index == 1)
 	{
 		exit_status = BUILTIN_EXIT_FAILURE;
-		ft_builtin_error(get_shell_name(shell), "setenv", NULL,
+		ft_builtin_error(get_shell_name(shell), argv[0], NULL,
 				NOT_ENOUGH_ARGS);
 	}
 	return (exit_status);
 }
 
+int			ft_setenv(const char **argv, t_shell *shell)
+{
+	return (change_env(argv, shell, set_env));
+}
+
 int			ft_unsetenv(const char **argv, t_shell *shell)
 {
-	size_t	index;
-	int		exit_status;
-
-	index = 1;
-	while (argv[index] != NULL)
-	{
-		exit_status = unset_env(shell, argv[1]);
-		index++;
-	}
-	if (index == 1)
-	{
-		exit_status = BUILTIN_EXIT_FAILURE;
-		ft_builtin_error(get_shell_name(shell), "unsetenv", NULL, NOT_ENOUGH_ARGS);
-	}
-	else
-		exit_status = BUILTIN_EXIT_SUCCESS;
-	return (exit_status);
+	return (change_env(argv, shell, unset_env));
 }
 
 t_builtin	search_for_builtin(const char *cmd)
@@ -116,7 +106,7 @@ t_builtin	search_for_builtin(const char *cmd)
 	size_t			index;
 
 	index = 0;
-	while (builtins[index] != NULL && ft_strcmp(cmd, builtins[index]) != 0)
+	while (builtins[index] != NULL && !ft_strequ(cmd, builtins[index]))
 		index++;
 	return (functions[index]);
 }
