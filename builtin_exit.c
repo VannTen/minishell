@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/29 11:46:35 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/29 14:16:02 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/31 14:19:34 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <stddef.h>
 #include <unistd.h>
 
-static int	intern_exit(const char **argv, t_shell *shell)
+static int	intern_exit(char const *const *argv, t_shell *shell)
 {
 	int exit_status;
 
@@ -33,7 +33,7 @@ static int	intern_exit(const char **argv, t_shell *shell)
 	return (exit_status);
 }
 
-int			ft_exit(const char **argv, t_shell *shell)
+int			ft_exit(char const *const *argv, t_shell *shell)
 {
 	int		exit_status;
 	size_t	arg_count;

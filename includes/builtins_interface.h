@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 13:39:24 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/31 12:45:10 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/31 14:14:46 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ enum
 	BUILTIN_EXIT_FAILURE
 };
 
-typedef	int		(*t_builtin)(const char**, t_shell*);
+typedef	int		(*t_builtin)(char const *const *, t_shell*);
 
 /*
 ** Search the appropriate builtin and returns it (as a function pointer)

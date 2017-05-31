@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:48:04 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/29 14:51:21 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/31 14:35:42 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ static int	shell_loop(const char *argv[])
 			break ;
 		if (!input_is_empty(input))
 		{
-			return_status = search_and_execute_command(input, shell_state);
+			return_status =
+				search_and_execute_command((const char**)input, shell_state);
 			set_exit_status(shell_state, return_status);
 		}
 		delete_input(&input);

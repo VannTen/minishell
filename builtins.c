@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 18:24:32 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/31 12:46:41 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/31 14:15:50 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	ft_builtin_error(const char *shell_name, const char *builtin,
 			shell_name, builtin, arg, ": ", err_mess[err_code], precision);
 }
 
-int			ft_echo(const char **argv, t_shell *shell)
+int			ft_echo(char const *const *argv, t_shell *shell)
 {
 	size_t	index;
 
@@ -48,7 +48,7 @@ int			ft_echo(const char **argv, t_shell *shell)
 	return (BUILTIN_EXIT_SUCCESS);
 }
 
-static int	change_env(const char **argv, t_shell *shell,
+static int	change_env(char const *const *argv, t_shell *shell,
 		int (*setter)(t_shell*, const char*))
 {
 	size_t	index;
@@ -73,12 +73,12 @@ static int	change_env(const char **argv, t_shell *shell,
 	return (exit_status);
 }
 
-int			ft_setenv(const char **argv, t_shell *shell)
+int			ft_setenv(char const *const *argv, t_shell *shell)
 {
 	return (change_env(argv, shell, set_env));
 }
 
-int			ft_unsetenv(const char **argv, t_shell *shell)
+int			ft_unsetenv(char const *const *argv, t_shell *shell)
 {
 	return (change_env(argv, shell, unset_env));
 }

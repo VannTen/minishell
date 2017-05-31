@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/29 19:03:17 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/30 12:00:53 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/31 14:05:13 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ static void	signal_error(int signal_number)
 				signal_str[signal_number - 1]);
 }
 
-int			execute_command(char *const *args, char **env)
+int			execute_command(const char *command_path,
+		char const *const *args, char const *const *env)
 {
 	pid_t	child;
 	int		status;
@@ -41,7 +42,7 @@ int			execute_command(char *const *args, char **env)
 		return (COULD_NOT_EXECUTE_COMMAND);
 	if (child == 0)
 	{
-		status = execve(args[0], args, env);
+		status = execve(command_path, (char *const *)args, (char *const *)env);
 		exit(COULD_NOT_EXECUTE_COMMAND);
 	}
 	else if (child > 0)

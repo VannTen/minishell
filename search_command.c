@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 09:48:30 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/30 12:10:30 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/31 14:13:48 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 ** utilities/V3_chap02.html#tag_18_09_01_01
 */
 
-char		*find_exe_path(const char *exe_name, char **const path)
+char		*find_exe_path(const char *exe_name, char const *const *const path)
 {
 	size_t	index;
 	char	*exe_full_path;
@@ -59,20 +59,15 @@ int			verify_command(const char *full_cmd_path, const char *shell_name)
 	return (NO_ERROR);
 }
 
-static char	*final_command_path(char **args, t_shell *shell)
+static char	*final_command_path(const char *const *args, t_shell *shell)
 {
 	char *exe_name;
 
 	exe_name = find_exe_path(args[0], get_path(shell));
-	if (exe_name != NULL)
-	{
-		ft_strdel(args);
-		args[0] = exe_name;
-	}
 	return (exe_name);
 }
 
-int			search_external_command(char **args, t_shell *shell)
+int			search_external_command(char const *const *args, t_shell *shell)
 {
 	char		*exe_name;
 	int			command_search_result;
@@ -81,7 +76,7 @@ int			search_external_command(char **args, t_shell *shell)
 		exe_name = final_command_path(args, shell);
 	else
 	{
-		exe_name = args[0];
+		exe_name = (char*)args[0];
 		if (access(exe_name, F_OK) == -1)
 		{
 			shell_error(get_shell_name(shell), NO_FILE, exe_name);
@@ -91,10 +86,13 @@ int			search_external_command(char **args, t_shell *shell)
 	command_search_result = verify_command(exe_name, get_shell_name(shell));
 	if (command_search_result != NO_ERROR)
 		return (command_search_result);
-	return (execute_command(args, get_env(shell)));
+	command_search_result = execute_command(exe_name, args, get_env(shell));
+	if (exe_name != args[0])
+		ft_strdel(&exe_name);
+	return (command_search_result);
 }
 
-int			search_and_execute_command(char **args, t_shell *shell)
+int			search_and_execute_command(char const *const *args, t_shell *shell)
 {
 	t_builtin	builtin_utility;
 
@@ -102,7 +100,7 @@ int			search_and_execute_command(char **args, t_shell *shell)
 	{
 		builtin_utility = search_for_builtin(args[0]);
 		if (builtin_utility != NULL)
-			return (builtin_utility((const char**)args, shell));
+			return (builtin_utility(args, shell));
 	}
 	return (search_external_command(args, shell));
 }

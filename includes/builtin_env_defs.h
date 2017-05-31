@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 17:36:12 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/26 16:40:48 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/31 14:23:14 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ struct		s_env_param
 ** Implementation file : builtin_env_intern.c
 */
 
-int			apply_options(const char **argv,
+int			apply_options(char const *const *argv,
 		t_env_param *param);
-t_env_param	*init_param(const char **env);
+t_env_param	*init_param(char const *const *env);
 void		deinit_param(t_env_param **params);
 
 #endif

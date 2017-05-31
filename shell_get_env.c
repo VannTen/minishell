@@ -6,14 +6,14 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 15:02:23 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/17 11:26:04 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/31 14:28:35 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell_defs.h"
 #include "env_interface.h"
 
-char		**get_path(t_shell *shell_state)
+char const *const	*get_path(t_shell *shell_state)
 {
 	const char	*path_string;
 
@@ -23,15 +23,15 @@ char		**get_path(t_shell *shell_state)
 		if (path_string != NULL)
 			shell_state->path = ft_strsplit(path_string, ':');
 	}
-	return (shell_state->path);
+	return ((char const *const *)shell_state->path);
 }
 
-char		**get_env(t_shell *shell_state)
+char const *const	*get_env(t_shell *shell_state)
 {
-	return (shell_state->env);
+	return ((char const *const *)shell_state->env);
 }
 
-const char	*get_shell_env_value(const char *key, const t_shell *shell)
+const char			*get_shell_env_value(const char *key, const t_shell *shell)
 {
 	return (get_env_value(key, shell->env));
 }

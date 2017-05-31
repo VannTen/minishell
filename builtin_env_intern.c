@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 14:02:35 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/29 13:50:33 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/31 14:22:34 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void			deinit_param(t_env_param **params)
 	}
 }
 
-t_env_param		*init_param(const char **env)
+t_env_param		*init_param(char const *const *env)
 {
 	t_env_param	*params;
 	size_t		index;
@@ -62,7 +62,7 @@ t_env_param		*init_param(const char **env)
 	return (params);
 }
 
-int				apply_options(const char **argv, t_env_param *param)
+int				apply_options(char const *const *argv, t_env_param *param)
 {
 	const t_apply_opt_param	param_opt[] = {
 		apply_big_p,

@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 11:44:36 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/31 12:07:18 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/31 14:15:51 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ enum	e_built_err
 	BAD_ARG
 };
 
-int	ft_echo(const char **argv, t_shell *shell);
-int	ft_cd(const char **argv, t_shell *shell);
-int	ft_setenv(const char **argv, t_shell *shell);
-int	ft_unsetenv(const char **argv, t_shell *shell);
-int	ft_env(const char **argv, t_shell *shell);
-int	ft_exit(const char **argv, t_shell *shell);
+int	ft_echo(char const *const *argv, t_shell *shell);
+int	ft_cd(char const *const *argv, t_shell *shell);
+int	ft_setenv(char const *const *argv, t_shell *shell);
+int	ft_unsetenv(char const *const *argv, t_shell *shell);
+int	ft_env(char const *const *argv, t_shell *shell);
+int	ft_exit(char const *const *argv, t_shell *shell);
 
 #endif

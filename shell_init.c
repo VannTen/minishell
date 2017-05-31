@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 12:10:34 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/29 13:37:54 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/31 14:23:54 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include <stdlib.h>
 
-t_shell	*init_shell(const char **env, const char *shell_name)
+t_shell	*init_shell(char const *const *env, const char *shell_name)
 {
 	t_shell	*shell;
 
