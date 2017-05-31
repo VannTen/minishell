@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 15:02:56 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/31 12:18:08 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/31 18:23:39 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int		set_env(t_shell *shell, const char *setenv)
 		value = get_value(setenv);
 		if (key != NULL && set_env_key(key, value, shell) == EXIT_SUCCESS)
 			ret = BUILTIN_EXIT_SUCCESS;
+		ft_strdel(&key);
 	}
 	return (ret);
 }
