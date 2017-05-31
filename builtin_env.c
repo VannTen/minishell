@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 17:33:48 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/31 16:41:50 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/31 18:27:17 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@ int			ft_env(char const *const *argv, t_shell *shell)
 		deinit_param(&param);
 	}
 	if (return_status == COMMAND_NOT_FOUND)
-		ft_shell_error(get_shell_name(shell), "env", argv[1], COM_NOT_FOUND);
+		ft_shell_error(get_shell_name(shell), "env", argv[option_number],
+				COM_NOT_FOUND);
 	else if (return_status == COULD_NOT_EXECUTE_COMMAND)
-		ft_shell_error(get_shell_name(shell), "env", argv[1], CANNOT_EXE);
+		ft_shell_error(get_shell_name(shell), "env", argv[option_number],
+				CANNOT_EXE);
 	return (return_status);
 }
