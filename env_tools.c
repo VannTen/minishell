@@ -6,15 +6,11 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 17:17:49 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/23 18:45:29 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/31 18:10:48 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-/*
-** Require that the new value is shorter or equal to the previous one
-*/
 
 t_bool	is_valid_setenv(const char *arg)
 {
