@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 13:39:24 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/26 19:28:06 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/31 12:45:10 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ enum
 };
 
 typedef	int		(*t_builtin)(const char**, t_shell*);
+
+/*
+** Search the appropriate builtin and returns it (as a function pointer)
+** or NULL if no buitin is found.
+** Implementation file : builtins_search.c
+*/
 
 t_builtin		search_for_builtin(const char *cmd);
 

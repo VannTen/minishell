@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 11:44:36 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/26 16:35:13 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/31 12:07:18 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,17 @@
 # include "builtins_interface.h"
 # include "shell_interface.h"
 
-int	ft_echo(const char **argv, t_shell *shell_state);
-int	ft_cd(const char **argv, t_shell *shell_state);
-int	ft_setenv(const char **argv, t_shell *shell_state);
-int	ft_unsetenv(const char **argv, t_shell *shell_state);
-int	ft_env(const char **argv, t_shell *shell_state);
-int	ft_exit(const char **argv, t_shell *shell_state);
+enum	e_built_err
+{
+	NOT_ENOUGH_ARGS,
+	BAD_ARG
+};
+
+int	ft_echo(const char **argv, t_shell *shell);
+int	ft_cd(const char **argv, t_shell *shell);
+int	ft_setenv(const char **argv, t_shell *shell);
+int	ft_unsetenv(const char **argv, t_shell *shell);
+int	ft_env(const char **argv, t_shell *shell);
+int	ft_exit(const char **argv, t_shell *shell);
 
 #endif

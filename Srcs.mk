@@ -6,7 +6,7 @@
 #    By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/19 07:58:53 by mgautier          #+#    #+#              #
-#*   Updated: 2017/05/30 13:43:41 by mgautier         ###   ########.fr       *#
+#*   Updated: 2017/05/31 12:46:28 by mgautier         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ TARGET := minishell
 #BUILTIN_ENV = $(NOTHING)
 #BUILTIN_CD = $(NOTHING)
 #BUILTIN_EXIT = $(NOTHING)
+#BUILTINS = $(NOTHING)
 #ENV_TOOLS = $(NOTHING)
 #MY_SHELL = $(NOTHING)
 #SHELL_INPUT = $(NOTHING)
@@ -48,13 +49,16 @@ MY_SHELL ?=\
 SHELL_INPUT ?=\
 	input.c\
 	input_error.c
+BUILTINS ?=\
+	builtins_search.c\
+	builtins.c
 MAIN ?=\
 	main.c\
 	search_command.c\
-	execute_command.c\
-	builtins.c
+	execute_command.c
 SRC :=\
 	$(MAIN)\
+	$(BUILTINS)\
 	$(BUILTIN_EXIT)\
 	$(BUILTIN_ENV)\
 	$(BUILTIN_CD)\
