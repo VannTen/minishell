@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 15:00:48 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/30 18:36:29 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/31 11:28:30 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	**add_new_entry(size_t index, const char *key,
 {
 	char	**new_env;
 
-	new_env = (malloc(sizeof(char*) * (index + 2)));
+	new_env = malloc(sizeof(char*) * (index + 2));
 	if (new_env != NULL)
 	{
 		ft_str_array_cpy(env, new_env);
