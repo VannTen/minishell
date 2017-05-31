@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 18:35:17 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/25 14:43:01 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/31 19:06:13 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 #include "libft.h"
 #include <unistd.h>
 #include <stddef.h>
+
+static void	strip_unwanted_char(char *iter)
+{
+	if (!ft_isprint(*iter))
+		*iter = ' ';
+}
 
 char		*get_raw_input(void)
 {
@@ -24,7 +30,10 @@ char		*get_raw_input(void)
 	if (ret != ONE_LINE_READ)
 		return (NULL);
 	else
+	{
+		ft_striter(input, strip_unwanted_char);
 		return (input);
+	}
 }
 
 t_input		parse_input(char *raw)
