@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 15:54:49 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/31 14:40:33 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/31 16:31:21 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,15 +103,6 @@ const char			*update_pwd(const char *new_pwd, t_shell *shell);
 ** Implementation file : shell_tools.c
 */
 
-enum				e_err_code
-{
-	COM_NOT_FOUND,
-	PERM_DENIED,
-	NO_FILE
-};
-
 void				prompt_user(t_shell *shell);
-void				shell_error(const char *shell_name,
-		enum e_err_code err_code, const char *arg);
 
 #endif

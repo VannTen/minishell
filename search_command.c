@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 09:48:30 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/31 14:13:48 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/31 17:01:06 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,12 @@ char		*find_exe_path(const char *exe_name, char const *const *const path)
 	return (exe_full_path);
 }
 
-int			verify_command(const char *full_cmd_path, const char *shell_name)
+int			verify_command(const char *full_cmd_path)
 {
 	if (full_cmd_path == NULL)
-	{
-		shell_error(shell_name, COM_NOT_FOUND, full_cmd_path);
 		return (COMMAND_NOT_FOUND);
-	}
 	if (access(full_cmd_path, X_OK) == -1)
-	{
-		shell_error(shell_name, PERM_DENIED, full_cmd_path);
 		return (COULD_NOT_EXECUTE_COMMAND);
-	}
 	return (NO_ERROR);
 }
 
@@ -78,12 +72,9 @@ int			search_external_command(char const *const *args, t_shell *shell)
 	{
 		exe_name = (char*)args[0];
 		if (access(exe_name, F_OK) == -1)
-		{
-			shell_error(get_shell_name(shell), NO_FILE, exe_name);
 			return (COMMAND_NOT_FOUND);
-		}
 	}
-	command_search_result = verify_command(exe_name, get_shell_name(shell));
+	command_search_result = verify_command(exe_name);
 	if (command_search_result != NO_ERROR)
 		return (command_search_result);
 	command_search_result = execute_command(exe_name, args, get_env(shell));
@@ -95,6 +86,7 @@ int			search_external_command(char const *const *args, t_shell *shell)
 int			search_and_execute_command(char const *const *args, t_shell *shell)
 {
 	t_builtin	builtin_utility;
+	int			extern_ret;
 
 	if (!(string_has_char(args[0], '/')))
 	{
@@ -102,5 +94,10 @@ int			search_and_execute_command(char const *const *args, t_shell *shell)
 		if (builtin_utility != NULL)
 			return (builtin_utility(args, shell));
 	}
-	return (search_external_command(args, shell));
+	extern_ret = search_external_command(args, shell);
+	if (extern_ret == COMMAND_NOT_FOUND)
+		ft_shell_error(get_shell_name(shell), args[0], NULL, COM_NOT_FOUND);
+	else if (extern_ret == COULD_NOT_EXECUTE_COMMAND)
+		ft_shell_error(get_shell_name(shell), args[0], NULL, CANNOT_EXE);
+	return (extern_ret);
 }

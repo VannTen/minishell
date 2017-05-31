@@ -6,7 +6,7 @@
 #    By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/19 07:58:53 by mgautier          #+#    #+#              #
-#*   Updated: 2017/05/31 12:46:28 by mgautier         ###   ########.fr       *#
+#*   Updated: 2017/05/31 16:43:07 by mgautier         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ TARGET := minishell
 #MY_SHELL = $(NOTHING)
 #SHELL_INPUT = $(NOTHING)
 #MAIN = $(NOTHING)
+#ERROR = $(NOTHING)
 
 BUILTIN_EXIT ?=\
 	builtin_exit.c
@@ -52,12 +53,15 @@ SHELL_INPUT ?=\
 BUILTINS ?=\
 	builtins_search.c\
 	builtins.c
+ERROR ?=\
+	error.c
 MAIN ?=\
 	main.c\
 	search_command.c\
 	execute_command.c
 SRC :=\
 	$(MAIN)\
+	$(ERROR)\
 	$(BUILTINS)\
 	$(BUILTIN_EXIT)\
 	$(BUILTIN_ENV)\

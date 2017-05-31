@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 17:33:48 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/31 15:56:23 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/31 16:41:50 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "builtin_env_defs.h"
 #include "builtins_defs.h"
 #include "shell_interface.h"
+#include "error_interface.h"
 
 static int	intern_env(char const *const *argv, const t_env_param *param,
 		int index)
@@ -32,13 +33,13 @@ static int	intern_env(char const *const *argv, const t_env_param *param,
 	}
 }
 
-int			ft_env(char const *const *argv, t_shell *shell_state)
+int			ft_env(char const *const *argv, t_shell *shell)
 {
 	int			option_number;
 	int			return_status;
 	t_env_param	*param;
 
-	param = init_param(get_env(shell_state));
+	param = init_param(get_env(shell));
 	return_status = BUILTIN_EXIT_FAILURE;
 	if (param != NULL)
 	{
@@ -47,5 +48,9 @@ int			ft_env(char const *const *argv, t_shell *shell_state)
 			return_status = intern_env(argv, param, option_number);
 		deinit_param(&param);
 	}
+	if (return_status == COMMAND_NOT_FOUND)
+		ft_shell_error(get_shell_name(shell), "env", argv[1], COM_NOT_FOUND);
+	else if (return_status == COULD_NOT_EXECUTE_COMMAND)
+		ft_shell_error(get_shell_name(shell), "env", argv[1], CANNOT_EXE);
 	return (return_status);
 }

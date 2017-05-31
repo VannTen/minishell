@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 12:10:34 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/31 14:23:54 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/31 17:02:02 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_shell	*init_shell(char const *const *env, const char *shell_name)
 		shell->persistent_path = FALSE;
 		shell->shall_exit = FALSE;
 		shell->exit_status = 0;
-		shell->name = get_file_part(shell_name);
+		shell->name = shell_name;
 		if (shell->env == NULL)
 			deinit_shell(&shell);
 	}

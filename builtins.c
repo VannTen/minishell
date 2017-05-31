@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 18:24:32 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/31 14:15:50 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/31 16:27:01 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,6 @@
 #include "error_interface.h"
 #include <stdlib.h>
 #include <unistd.h>
-
-static void	ft_builtin_error(const char *shell_name, const char *builtin,
-		const char *arg,
-		enum e_built_err err_code)
-{
-	int			precision;
-	const char	*err_mess[] = {
-		"not enough arguments",
-		"invalid argument",
-	};
-
-	precision = err_code == BAD_ARG ? -1 : 0;
-	ft_dprintf(STDERR_FILENO, "%1$s: %2$s: %3$.*6$s%4$.*6$s%5$s\n",
-			shell_name, builtin, arg, ": ", err_mess[err_code], precision);
-}
 
 int			ft_echo(char const *const *argv, t_shell *shell)
 {
@@ -62,12 +47,12 @@ static int	change_env(char const *const *argv, t_shell *shell,
 		index++;
 	}
 	if (exit_status != BUILTIN_EXIT_SUCCESS)
-		ft_builtin_error(get_shell_name(shell), argv[0], argv[index - 1],
+		ft_shell_error(get_shell_name(shell), argv[0], argv[index - 1],
 				BAD_ARG);
 	if (index == 1)
 	{
 		exit_status = BUILTIN_EXIT_FAILURE;
-		ft_builtin_error(get_shell_name(shell), argv[0], NULL,
+		ft_shell_error(get_shell_name(shell), argv[0], NULL,
 				NOT_ENOUGH_ARGS);
 	}
 	return (exit_status);
