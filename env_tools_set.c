@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 15:00:48 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/19 19:08:12 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/31 11:28:30 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	**add_new_entry(size_t index, const char *key,
 {
 	char	**new_env;
 
-	new_env = (malloc(sizeof(char*) * (index + 2)));
+	new_env = malloc(sizeof(char*) * (index + 2));
 	if (new_env != NULL)
 	{
 		ft_str_array_cpy(env, new_env);
@@ -33,22 +33,29 @@ static char	**add_new_entry(size_t index, const char *key,
 		else
 		{
 			free(new_env);
-			env = NULL;
+			new_env = NULL;
 		}
 	}
-	return (env);
+	return (new_env);
 }
 
 char		**ft_putenv(const char *key, const char *value, char **env)
 {
 	size_t	index;
 	char	*new_entry;
+	char	**new_env;
 
 	index = 0;
 	while (env[index] != NULL && !key_are_equal(key, env[index]))
 		index++;
 	if (env[index] == NULL)
-		env = add_new_entry(index, key, value, env);
+	{
+		new_env = add_new_entry(index, key, value, env);
+		if (new_env == NULL)
+			env = NULL;
+		else
+			env = new_env;
+	}
 	else
 	{
 		new_entry = replace_env_entry(env[index], key, value);
@@ -83,19 +90,6 @@ char		**ft_removeenv(const char *key, char **env)
 		}
 	}
 	return (env);
-}
-
-char		**ft_setenv_intern(char **env, const char *setenv)
-{
-	char		*key;
-	const char	*value;
-	char		**new_env;
-
-	key = get_key(setenv);
-	value = get_value(setenv);
-	new_env = ft_putenv(key, value, env);
-	ft_strdel(&key);
-	return (new_env);
 }
 
 char		**empty_env(char **env)

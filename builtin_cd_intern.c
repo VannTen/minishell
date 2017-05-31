@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/19 18:49:18 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/30 17:05:52 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/05/30 18:09:11 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,19 @@ void				cd_error(const char *dir, const char *shell)
 static int			change_to_dir(char **directory, size_t rel_part_index,
 		t_shell *shell, t_bool dot_dot_logically)
 {
-	int	return_is;
+	int			return_is;
+	const char	*new_pwd;
 
 	if (chdir(*directory + rel_part_index) == -1)
 		return_is = BUILTIN_EXIT_FAILURE;
 	else
 	{
-		return_is = BUILTIN_EXIT_SUCCESS;
 		if (dot_dot_logically)
-			update_pwd(*directory, shell);
+			new_pwd = *directory;
 		else
-			update_pwd(NULL, shell);
+			new_pwd = NULL;
+		return_is = update_pwd(new_pwd, shell) != NULL ?
+			BUILTIN_EXIT_SUCCESS : BUILTIN_EXIT_FAILURE;
 	}
 	return (return_is);
 }
