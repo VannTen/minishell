@@ -6,7 +6,7 @@
 /*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/29 11:46:35 by mgautier          #+#    #+#             */
-/*   Updated: 2017/05/31 14:19:34 by mgautier         ###   ########.fr       */
+/*   Updated: 2017/06/01 15:59:25 by mgautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int			ft_exit(char const *const *argv, t_shell *shell)
 	}
 	else
 	{
-		exit_status = BUILTIN_EXIT_SUCCESS;
+		exit_status = get_exit_status(shell);
 		will_exit(shell);
 	}
 	return (exit_status);
